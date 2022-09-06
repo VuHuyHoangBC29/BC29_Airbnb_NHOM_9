@@ -9,7 +9,7 @@ export const fetchLocationsListAction = createAsyncThunk(
 
     console.log(response);
 
-    return response.data.content;
+    return response.data;
   }
 );
 
