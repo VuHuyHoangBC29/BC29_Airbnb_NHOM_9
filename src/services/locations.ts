@@ -10,9 +10,7 @@ import { Location } from "../interfaces/location";
 //   });
 // };
 
-export const fetchLocationsListApi = (): AxiosPromise<
-  HttpResponse<Location[]>
-> => {
+export const fetchLocationsListApi = (): AxiosPromise<Location[]> => {
   return request({
     url: `/locations`,
     method: "GET",

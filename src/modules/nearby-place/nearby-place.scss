@@ -1,0 +1,27 @@
+#nearbyPlaces {
+  .ant-carousel {
+    .slick-next {
+      right: 5px;
+    }
+
+    .slick-prev {
+      left: 0px;
+    }
+
+    .slick-prev,
+    .slick-next,
+    // .slick-prev:hover,
+    // .slick-next:hover,
+    .slick-prev:focus,
+    .slick-next:focus {
+      font-size: 1.5rem;
+      color: gray;
+      transition: 0.3s;
+    }
+
+    .slick-prev:hover,
+    .slick-next:hover {
+      color: black;
+    }
+  }
+}
