@@ -3,14 +3,15 @@ import {
   MenuUnfoldOutlined,
   UploadOutlined,
   UserOutlined,
+  EnvironmentOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
-import "./adminpage.scss"
-
+import { Outlet, useNavigate } from "react-router-dom";
+import "./adminpage.scss";
 export default function Adminpage(): JSX.Element {
+  const navigate = useNavigate();
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(false);
 
@@ -26,17 +27,18 @@ export default function Adminpage(): JSX.Element {
             {
               key: "1",
               icon: <UserOutlined />,
-              label: "nav 1",
+              label: "Quản lý người dùng",
+              onClick: () => {
+                navigate("/admin/quanlynguoidung");
+              },
             },
             {
               key: "2",
-              icon: <VideoCameraOutlined />,
-              label: "nav 2",
-            },
-            {
-              key: "3",
-              icon: <UploadOutlined />,
-              label: "nav 3",
+              icon: <EnvironmentOutlined />,
+              label: "Quản lý vị trí",
+              onClick: () => {
+                navigate("/admin/quanlyvitri");
+              },
             },
           ]}
         />
@@ -59,7 +61,7 @@ export default function Adminpage(): JSX.Element {
             minHeight: 280,
           }}
         >
-          <Outlet/>
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
