@@ -1,0 +1,20 @@
+.ant-layout {
+    display: flex;
+    flex: auto;
+    flex-direction: column;
+    min-height: 100vh !important;
+    background: #f0f2f5;
+}
+.ant-layout-header {
+    height: 64px;
+    padding: 0 50px;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 64px;
+    background: #ffffff !important;
+    display: flex;
+    align-items: center;
+}
+.anticon[tabindex] {
+    cursor: pointer;
+    padding: 10px 20px;
+}
