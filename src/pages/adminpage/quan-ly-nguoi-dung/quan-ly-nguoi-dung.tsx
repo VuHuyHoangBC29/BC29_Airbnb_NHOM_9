@@ -1,10 +1,35 @@
-import { Table } from "antd";
+import { Table, Input, Space, Button } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import React from "react";
-import {EditOutlined,SolutionOutlined,DeleteOutlined} from '@ant-design/icons';
+import React, { useState } from "react";
+import {
+  EditOutlined,
+  SolutionOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import moment from "moment";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export default function QuanLyNguoiDung(): JSX.Element {
+  const navigate = useNavigate();
+  const [loadings, setLoadings] = useState<boolean[]>([]);
+  const enterLoading = (index: number) => {
+    setLoadings((prevLoadings) => {
+      const newLoadings = [...prevLoadings];
+      newLoadings[index] = true;
+      return newLoadings;
+    });
+
+    setTimeout(() => {
+      setLoadings((prevLoadings) => {
+        const newLoadings = [...prevLoadings];
+        newLoadings[index] = false;
+        navigate("/admin/themnguoidung");
+        return newLoadings;
+      });
+    }, 1000);
+  };
+  const { Search } = Input;
+  const onSearch = (value: string) => console.log(value);
   interface DataType {
     key: React.Key;
     tickets: Array<string>;
@@ -59,31 +84,39 @@ export default function QuanLyNguoiDung(): JSX.Element {
       //   sorter: (a, b) => a.age - b.age,
     },
     {
-      title: "Địa điểm",
+      title: "Địa chỉ",
       dataIndex: "address",
       width: "20%",
     },
     {
-        title: "Ngày sinh",
-        dataIndex: "birthday",
-        width:"5%",
-      },
+      title: "Ngày sinh",
+      dataIndex: "birthday",
+      width: "5%",
+    },
     {
       title: "Admin",
       dataIndex: "type",
-      width:"5%",
+      width: "5%",
     },
     {
       title: "Tương tác",
       dataIndex: "tuongTac",
-      width:"10%",
-      render: (text,object) =>{
-        return <>
-            <a className="pl-4" href=""><EditOutlined/></a>
-            <a className="pl-4" href=""><DeleteOutlined/></a>
-            <a className="pl-4" href=""><SolutionOutlined/></a>
-        </>
-      } 
+      width: "10%",
+      render: (text, object) => {
+        return (
+          <>
+            <a className="pl-4" href="">
+              <EditOutlined />
+            </a>
+            <a className="pl-4" href="">
+              <DeleteOutlined />
+            </a>
+            <a className="pl-4" href="">
+              <SolutionOutlined />
+            </a>
+          </>
+        );
+      },
     },
   ];
 
@@ -112,5 +145,27 @@ export default function QuanLyNguoiDung(): JSX.Element {
   ) => {
     console.log("params", pagination, filters, sorter, extra);
   };
-  return <Table columns={columns} dataSource={data} onChange={onChange} />;
+  return (
+    <>
+      <Space
+        style={{ width: "100%" }}
+        direction="vertical"
+        className="w-100 py-3"
+      >
+        <Button
+          type="primary"
+          loading={loadings[0]}
+          onClick={() => enterLoading(0)}
+        >
+          Thêm người dùng
+        </Button>
+        <Search
+          placeholder="input search text"
+          onSearch={onSearch}
+          enterButton
+        />
+      </Space>
+      <Table columns={columns} dataSource={data} onChange={onChange} />
+    </>
+  );
 }

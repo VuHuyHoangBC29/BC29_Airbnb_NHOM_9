@@ -1,14 +1,35 @@
-import { Table } from "antd";
+import { Table, Input, Space, Button } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import React from "react";
+import React, { useState } from "react";
 import {
   EditOutlined,
   SolutionOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 export default function QuanLyViTri(): JSX.Element {
+  const navigate = useNavigate()
+  const [loadings, setLoadings] = useState<boolean[]>([]);
+  const enterLoading = (index: number) => {
+    setLoadings((prevLoadings) => {
+      const newLoadings = [...prevLoadings];
+      newLoadings[index] = true;
+      return newLoadings;
+    });
+
+    setTimeout(() => {
+      setLoadings((prevLoadings) => {
+        const newLoadings = [...prevLoadings];
+        newLoadings[index] = false;
+        navigate("/admin/themvitri")
+        return newLoadings;
+      });
+    }, 1000);
+  };
+  const { Search } = Input;
+  const onSearch = (value: string) => console.log(value);
   interface DataType {
     key: React.Key;
     deleteAt: boolean;
@@ -52,9 +73,9 @@ export default function QuanLyViTri(): JSX.Element {
       width: "8%",
     },
     {
-        title: "Hình ảnh",
-        dataIndex: "image",
-        width: "20%",
+      title: "Hình ảnh",
+      dataIndex: "image",
+      width: "20%",
     },
     {
       title: "Quốc gia",
@@ -111,5 +132,27 @@ export default function QuanLyViTri(): JSX.Element {
   ) => {
     console.log("params", pagination, filters, sorter, extra);
   };
-  return <Table columns={columns} dataSource={data} onChange={onChange} />;
+  return (
+    <>
+      <Space
+        style={{ width: "100%" }}
+        direction="vertical"
+        className="w-100 py-3"
+      >
+        <Button
+          type="primary"
+          loading={loadings[0]}
+          onClick={() => enterLoading(0)}
+        >
+          Thêm vị trí
+        </Button>
+        <Search
+          placeholder="input search text"
+          onSearch={onSearch}
+          enterButton
+        />
+      </Space>
+      <Table columns={columns} dataSource={data} onChange={onChange} />
+    </>
+  );
 }
