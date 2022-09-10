@@ -5,9 +5,9 @@ import { LocationPOST } from "../interfaces/locationPOST";
 
 export const createLocationApi = (data: LocationPOST) => {
   return request({
-    url: `/api/locations`,
+    url: `/locations`,
     method: "POST",
-    data: data,
+    data,
   });
 };
 
