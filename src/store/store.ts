@@ -3,9 +3,13 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk, { ThunkDispatch } from "redux-thunk";
 import { locationReducer } from "./reducers/locationReducer";
+import { usersListReducer } from "./reducers/userReducer";
+import { authenticationReducer } from "./reducers/authenicationReducer";
 
 const rootReducer = combineReducers({
   locationReducer,
+  usersListReducer,
+  authenticationReducer,
 });
 
 export const store = configureStore({
@@ -13,7 +17,7 @@ export const store = configureStore({
     {
       key: "root",
       storage: storage,
-      whitelist: ["locationReducer"],
+      whitelist: ["locationReducer", "authenticationReducer"],
     },
     rootReducer
   ),

@@ -1,10 +1,21 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Button, Checkbox, Form, Input } from "antd";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { loginAction } from "../../store/reducers/authenicationReducer";
+import { USER_INFO_KEY } from "../../constants/common";
 
 export default function LoginForm() {
+  const dispatch = useDispatch<AppDispatch>();
+
   const onFinish = (values: any) => {
-    console.log("Success:", values);
+    const loginData = {
+      email: values.email,
+      password: values.password,
+    };
+
+    dispatch(loginAction(loginData));
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -26,8 +37,8 @@ export default function LoginForm() {
           style={{ width: "40%" }}
         >
           <Form.Item
-            label="Username"
-            name="username"
+            label="Email"
+            name="email"
             rules={[{ required: true, message: "Please input your username!" }]}
           >
             <Input />

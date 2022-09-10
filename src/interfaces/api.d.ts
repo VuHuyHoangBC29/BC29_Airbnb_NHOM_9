@@ -1,7 +1,7 @@
 declare type HttpResponse<D> = {
-  statusCode: number;
+  statusCode?: number;
   message: string;
   content: D;
-  dateTime: string;
+  dateTime?: string;
   messageConstants?: any;
 };
