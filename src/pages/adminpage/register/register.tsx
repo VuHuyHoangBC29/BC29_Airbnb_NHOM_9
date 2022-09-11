@@ -2,7 +2,10 @@ import React from "react";
 import "./register.scss";
 export default function Register(): JSX.Element {
   return (
-    <div className="pb-5" style={{ backgroundColor: "#eee", width: "100%", height: "100vh" }}>
+    <div
+      className="pb-5"
+      style={{ backgroundColor: "#eee", width: "100%", height: "100vh" }}
+    >
       <section
         className="gradient-form"
         style={{ backgroundColor: "#eee", width: "100%", height: "100vh" }}
