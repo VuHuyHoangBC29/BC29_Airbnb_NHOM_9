@@ -1,7 +1,7 @@
 import { UserInfoEnum } from "../enums/user-info";
 
 export interface User {
-  tickets: any[];
+  tickets:[];
   deleteAt: boolean | undefined;
   _id: string;
   name: string;

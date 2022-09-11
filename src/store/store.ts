@@ -17,7 +17,7 @@ export const store = configureStore({
     {
       key: "root",
       storage: storage,
-      whitelist: ["locationReducer", "authenticationReducer"],
+      whitelist: ["locationReducer", "authenticationReducer","usersListReducer"],
     },
     rootReducer
   ),
@@ -28,4 +28,4 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store["getState"]>;
 
 export type AppDispatch = typeof store["dispatch"] &
-  ThunkDispatch<RootState, any, AnyAction>;
+  ThunkDispatch<RootState, void, AnyAction>;

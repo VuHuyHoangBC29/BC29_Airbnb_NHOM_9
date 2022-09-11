@@ -3,6 +3,7 @@ import { AxiosPromise, AxiosResponse } from "axios";
 import { Location } from "../interfaces/location";
 import { LocationPOST } from "../interfaces/locationPOST";
 
+
 export const createLocationApi = (data: LocationPOST) => {
   return request({
     url: `/locations`,
