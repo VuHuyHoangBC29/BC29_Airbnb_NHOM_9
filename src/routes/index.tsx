@@ -1,11 +1,11 @@
 import React, { lazy } from "react";
 import { useRoutes } from "react-router-dom";
-import HomeLayout from "../layouts/home-layout";
-import Register from "../pages/adminpage/register/register";
 import Home1 from "../pages/home1/home1";
 import Home2 from "../pages/home2/home2";
 import Login from "../pages/login/login";
 
+const Register = lazy(() => import("../pages/adminpage/register/register"));
+const HomeLayout = lazy(() => import("../layouts/home-layout"));
 const Adminpage = lazy(() => import("../pages/adminpage/adminpage"));
 const ThemNguoiDung = lazy(
   () => import("../modules/them-nguoi-dung/them-nguoi-dung")
@@ -61,13 +61,13 @@ export default function Router() {
       ],
     },
     {
-      path:"/login",
-      element:<Login/>
+      path: "/login",
+      element: <Login />,
     },
     {
-      path:"/register",
-      element:<Register/>
-    }
+      path: "/register",
+      element: <Register />,
+    },
   ]);
 
   return routing;
