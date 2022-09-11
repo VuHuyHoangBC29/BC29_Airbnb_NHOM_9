@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./login.scss";
 export default function Login(): JSX.Element {
+  const navigate = useNavigate();
   return (
       <section
         className="gradient-form"
@@ -32,13 +34,13 @@ export default function Login(): JSX.Element {
                         <div className="field">
                           <input
                             type="text"
-                            name="name"
+                            name="email"
                             required
-                            placeholder="Please type your ID"
+                            placeholder="Please type your email"
                             autoComplete="off"
                           />
-                          <label htmlFor="name" className="label-wrapper">
-                            <span className="label-text">Username</span>
+                          <label htmlFor="email" className="label-wrapper">
+                            <span className="label-text">E-mail</span>
                           </label>
                         </div>
                         <div className="field">
@@ -68,6 +70,9 @@ export default function Login(): JSX.Element {
                           <button
                             type="button"
                             className="btn btn-outline-danger"
+                            onClick={()=>{
+                              navigate("/register")
+                            }}
                           >
                             Create new
                           </button>
