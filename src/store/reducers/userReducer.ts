@@ -6,9 +6,7 @@ export const fetchUsersListAction = createAsyncThunk(
   "userList/fetchUsersList",
   async () => {
     const response = await fetchUsersListApi();
-
-    console.log(response);
-
+    // console.log(response);
     return response.data;
   }
 );
@@ -28,11 +26,14 @@ const usersListSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       fetchUsersListAction.fulfilled,
-      (state: UsersListState, action: PayloadAction<User[]>) => {
+      (state: UsersListState, actions: PayloadAction<User[]>) => {
+        state.usersList = actions.payload;
         console.log("fulfilled");
-        state.usersList = action.payload;
       }
     );
+    builder.addCase(fetchUsersListAction.pending,()=>{
+      console.log("pending");
+    })
   },
 });
 

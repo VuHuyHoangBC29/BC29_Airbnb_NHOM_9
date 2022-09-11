@@ -1,6 +1,6 @@
 import { Table, Input, Space, Button } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   EditOutlined,
   SolutionOutlined,
@@ -8,9 +8,22 @@ import {
 } from "@ant-design/icons";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../store/store";
+import { fetchLocationsListAction } from "../../../store/reducers/locationReducer";
 
 export default function QuanLyViTri(): JSX.Element {
-  const navigate = useNavigate()
+  const dispatch = useDispatch<AppDispatch>();
+  const { locationsList } = useSelector(
+    (state: RootState) => state.locationReducer
+  );
+  useEffect(() => {
+    dispatch(fetchLocationsListAction());
+  }, []);
+
+  console.log(locationsList);
+
+  const navigate = useNavigate();
   const [loadings, setLoadings] = useState<boolean[]>([]);
   const enterLoading = (index: number) => {
     setLoadings((prevLoadings) => {
@@ -23,7 +36,7 @@ export default function QuanLyViTri(): JSX.Element {
       setLoadings((prevLoadings) => {
         const newLoadings = [...prevLoadings];
         newLoadings[index] = false;
-        navigate("/admin/themvitri")
+        navigate("/admin/themvitri");
         return newLoadings;
       });
     }, 1000);
@@ -34,11 +47,12 @@ export default function QuanLyViTri(): JSX.Element {
     key: React.Key;
     deleteAt: boolean;
     _id: string;
-    name: string;
-    province: string;
-    country: string;
-    image: string;
-    valueate: number;
+    name: string | undefined;
+    province: string | undefined;
+    country: string | undefined;
+    image: string | undefined;
+    valueate: number | undefined;
+    tuongTac: any;
   }
 
   const columns: ColumnsType<DataType> = [
@@ -64,7 +78,7 @@ export default function QuanLyViTri(): JSX.Element {
       // specify the condition of filtering result
       // here is that finding the name started with `value`
       //   onFilter: (value, record) => record.name.indexOf(value as string) === 0,
-      sorter: (a, b) => a.name.length - b.name.length,
+      // sorter: (a, b) => a.name.length - b.name.length,
       sortDirections: ["descend"],
     },
     {
@@ -76,6 +90,9 @@ export default function QuanLyViTri(): JSX.Element {
       title: "Hình ảnh",
       dataIndex: "image",
       width: "10%",
+      render: (text: string) => {
+        return <img src={text} style={{ width: 70, height: 50 }} />;
+      },
     },
     {
       title: "Quốc gia",
@@ -102,27 +119,25 @@ export default function QuanLyViTri(): JSX.Element {
             <a className="pl-4" href="">
               <DeleteOutlined />
             </a>
-            <a className="pl-4" href="">
-              <SolutionOutlined />
-            </a>
           </>
         );
       },
     },
   ];
 
-  const data = [
-    {
-      key: "1",
-      deleteAt: false,
-      _id: "6169521befe193001c0a5b33",
-      name: "Long Xuyen",
-      province: "An Giang",
-      country: "VN",
-      image: "https://airbnb.cybersoft.edu.vn/public/temp/1660813446779_1.jpg",
-      valueate: 9,
-    },
-  ];
+  const data = locationsList.map((ele, index) => {
+    return {
+      key: index + 1,
+      deleteAt: ele.deleteAt,
+      _id: ele._id,
+      name: ele.name,
+      province: ele.province,
+      country: ele.country,
+      image: ele.image,
+      valueate: ele.valueate,
+      tuongTac: ele._id,
+    };
+  });
 
   const onChange: TableProps<DataType>["onChange"] = (
     pagination,

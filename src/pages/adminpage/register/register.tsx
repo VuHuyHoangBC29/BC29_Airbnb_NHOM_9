@@ -1,17 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./register.scss";
 export default function Register(): JSX.Element {
+  const navigate = useNavigate();
   return (
     <div
-      className="pb-5"
-      style={{ backgroundColor: "#eee", width: "100%", height: "100vh" }}
+      className="py-5"
+      style={{ backgroundColor: "#eee", width: "100%", height: "140vh" }}
     >
       <section
         className="gradient-form"
         style={{ backgroundColor: "#eee", width: "100%", height: "100vh" }}
       >
-        <div className="container h-100">
-          <div className="row d-flex justify-content-center align-items-center h-100">
+        <div className="container ">
+          <div className="row d-flex justify-content-center align-items-center ">
             <div className="col-xl-10 ">
               <div className="card rounded-3  text-black">
                 <div className="row g-0 ">
@@ -86,14 +88,44 @@ export default function Register(): JSX.Element {
                         <div className="field">
                           <input
                             type="text"
-                            name="Phone"
+                            name="phone"
                             placeholder="Please type your Phone"
                             required
                             autoComplete="off"
                           />
-                          <label htmlFor="email" className="label-wrapper">
+                          <label htmlFor="phone" className="label-wrapper">
                             <span className="label-text">Phone</span>
                           </label>
+                        </div>
+                        <div className="field">
+                          <input
+                            type="text"
+                            name="address"
+                            placeholder="Please type your address"
+                            required
+                            autoComplete="off"
+                          />
+                          <label htmlFor="address" className="label-wrapper">
+                            <span className="label-text">Address</span>
+                          </label>
+                        </div>
+                        <div className="field">
+                          <input
+                            type="date"
+                            name="Birthday"
+                            required
+                            autoComplete="off"
+                          />
+                          <label htmlFor="Birthday" className="label-wrapper">
+                            <span className="label-text"></span>
+                          </label>
+                        </div>
+                        <div className="field py-2">
+                          <select name="gender">
+                            <option>Giới tính</option>
+                            <option value="true">Nam</option>
+                            <option value="false">Nữ</option>
+                          </select>
                         </div>
                         <div className="text-center pt-1 mb-5 pb-1">
                           <button
@@ -110,6 +142,9 @@ export default function Register(): JSX.Element {
                           <button
                             type="button"
                             className="btn btn-outline-danger"
+                            onClick={() => {
+                              navigate("/login");
+                            }}
                           >
                             Log in
                           </button>
