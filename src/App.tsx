@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Router from "./routes";
@@ -7,9 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 function App() {
   return (
     <BrowserRouter>
-      <Suspense fallback={<></>}>
-        <Router />
-      </Suspense>
+      <Router />
     </BrowserRouter>
   );
 }

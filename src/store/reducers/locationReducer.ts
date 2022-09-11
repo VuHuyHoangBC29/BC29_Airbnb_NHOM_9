@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Location } from "../../interfaces/location";
-import { fetchLocationsListApi } from "../../services/locations";
+import { LocationPOST } from "../../interfaces/locationPOST";
+import {
+  createLocationApi,
+  fetchLocationsListApi,
+} from "../../services/locations";
 
 export const fetchLocationsListAction = createAsyncThunk(
   "location/fetchLocationsList",
@@ -8,6 +12,17 @@ export const fetchLocationsListAction = createAsyncThunk(
     const response = await fetchLocationsListApi();
 
     console.log(response);
+
+    return response.data;
+  }
+);
+
+export const createLocationAction = createAsyncThunk(
+  "location/createLocation",
+  async (data: LocationPOST) => {
+    // await createLocationApi(data);
+
+    const response = await createLocationApi(data);
 
     return response.data;
   }
@@ -26,13 +41,26 @@ const locationSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      fetchLocationsListAction.fulfilled,
-      (state: LocationState, action: PayloadAction<Location[]>) => {
-        console.log("fulfilled");
-        state.locationsList = action.payload;
-      }
-    );
+    builder
+      .addCase(
+        fetchLocationsListAction.fulfilled,
+        (state: LocationState, action: PayloadAction<Location[]>) => {
+          console.log("fulfilled");
+          state.locationsList = action.payload;
+        }
+      )
+      .addCase(
+        createLocationAction.fulfilled,
+        (state: LocationState, action: PayloadAction<Location>) => {
+          console.log("fulfilled");
+
+          let newLocationList = [...state.locationsList];
+
+          newLocationList.push({ ...action.payload });
+
+          state.locationsList = newLocationList;
+        }
+      );
   },
 });
 

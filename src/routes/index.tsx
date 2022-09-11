@@ -1,8 +1,9 @@
-import React, { lazy } from "react";
+import React from "react";
 import { useRoutes } from "react-router-dom";
 import Home1 from "../pages/home1/home1";
 import Home2 from "../pages/home2/home2";
 import Login from "../pages/login/login";
+
 
 const Register = lazy(() => import("../pages/adminpage/register/register"));
 const HomeLayout = lazy(() => import("../layouts/home-layout"));
@@ -17,6 +18,7 @@ const QuanLyNguoiDung = lazy(
 const QuanLyViTri = lazy(
   () => import("../pages/adminpage/quan-ly-vi-tri/quan-ly-vi-tri")
 );
+
 
 export default function Router() {
   const routing = useRoutes([
@@ -36,27 +38,9 @@ export default function Router() {
           path: "/home2",
           element: <Home2 />,
         },
-      ],
-    },
-    {
-      path: "/admin",
-      element: <Adminpage />,
-      children: [
         {
-          path: "/admin/quanlynguoidung",
-          element: <QuanLyNguoiDung />,
-        },
-        {
-          path: "/admin/themnguoidung",
-          element: <ThemNguoiDung />,
-        },
-        {
-          path: "/admin/quanlyvitri",
-          element: <QuanLyViTri />,
-        },
-        {
-          path: "/admin/themvitri",
-          element: <ThemViTri />,
+          path: "/login",
+          element: <Login />,
         },
       ],
     },

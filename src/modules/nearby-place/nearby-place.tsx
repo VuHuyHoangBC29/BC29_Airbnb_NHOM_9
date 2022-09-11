@@ -17,20 +17,20 @@ export default function NearbyPlace() {
     background: "#364d79",
   };
 
-  const { locationsList } = useSelector(
-    (state: RootState) => state.locationReducer
-  );
-
-  console.log(locationsList);
-
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchLocationsListAction());
   }, []);
 
+  const { locationsList } = useSelector(
+    (state: RootState) => state.locationReducer
+  );
+
+  console.log(locationsList);
+
   const renderLocations = () => {
-    return locationsList.map((ele, idx) => {
+    return locationsList?.map((ele, idx) => {
       return (
         <Fragment key={idx}>
           <div className="d-flex justify-content-left align-items-center mb-3 mr-3">
