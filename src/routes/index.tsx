@@ -1,4 +1,4 @@
-import React from "react";
+import React,{lazy} from "react";
 import { useRoutes } from "react-router-dom";
 import Home1 from "../pages/home1/home1";
 import Home2 from "../pages/home2/home2";
