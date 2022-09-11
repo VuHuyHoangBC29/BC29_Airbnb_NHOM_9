@@ -1,9 +1,8 @@
-import React,{lazy} from "react";
+import React, { lazy } from "react";
 import { useRoutes } from "react-router-dom";
 import Home1 from "../pages/home1/home1";
 import Home2 from "../pages/home2/home2";
 import Login from "../pages/login/login";
-
 
 const Register = lazy(() => import("../pages/adminpage/register/register"));
 const HomeLayout = lazy(() => import("../layouts/home-layout"));
@@ -18,7 +17,6 @@ const QuanLyNguoiDung = lazy(
 const QuanLyViTri = lazy(
   () => import("../pages/adminpage/quan-ly-vi-tri/quan-ly-vi-tri")
 );
-
 
 export default function Router() {
   const routing = useRoutes([
