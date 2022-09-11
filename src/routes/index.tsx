@@ -36,9 +36,27 @@ export default function Router() {
           path: "/home2",
           element: <Home2 />,
         },
+      ],
+    },
+    {
+      path: "/admin",
+      element: <Adminpage />,
+      children: [
         {
-          path: "/login",
-          element: <Login />,
+          path: "/admin/quanlynguoidung",
+          element: <QuanLyNguoiDung />,
+        },
+        {
+          path: "/admin/themnguoidung",
+          element: <ThemNguoiDung />,
+        },
+        {
+          path: "/admin/quanlyvitri",
+          element: <QuanLyViTri />,
+        },
+        {
+          path: "/admin/themvitri",
+          element: <ThemViTri />,
         },
       ],
     },
