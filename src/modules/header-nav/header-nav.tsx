@@ -10,9 +10,32 @@ import {
   UserOutlined,
   MenuOutlined,
 } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import { USER_INFO_KEY } from "../../constants/common";
+import {
+  authenticationActions,
+  loginAction,
+} from "../../store/reducers/authenicationReducer";
 
 export default function HeaderNav(): JSX.Element {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { userInfo } = useSelector(
+    (state: RootState) => state.authenticationReducer
+  );
+
+  console.log(userInfo);
+
+  const handleLogout = () => {
+    localStorage.removeItem(USER_INFO_KEY);
+
+    dispatch(authenticationActions.handleLogout(null));
+
+    navigate("/");
+  };
 
   const userMenu = (
     <Menu
@@ -52,6 +75,72 @@ export default function HeaderNav(): JSX.Element {
     />
   );
 
+  const userMenuLogin = (
+    <Menu
+      items={
+        userInfo?.type === "ADMIN"
+          ? [
+              {
+                label: (
+                  <a href="/admin" style={{ textDecoration: "none" }}>
+                    Trang quản lý
+                  </a>
+                ),
+                key: "0",
+              },
+              {
+                label: (
+                  <a href="/" style={{ textDecoration: "none" }}>
+                    Thông tin tài khoản
+                  </a>
+                ),
+                key: "1",
+              },
+              {
+                label: (
+                  <a href="/login" style={{ textDecoration: "none" }}>
+                    Vé đã đặt
+                  </a>
+                ),
+                key: "2",
+              },
+              {
+                type: "divider",
+              },
+              {
+                label: <div onClick={handleLogout}>Đăng xuất</div>,
+                key: "3",
+              },
+            ]
+          : [
+              {
+                label: (
+                  <a href="/" style={{ textDecoration: "none" }}>
+                    Thông tin tài khoản
+                  </a>
+                ),
+                key: "0",
+              },
+              {
+                label: (
+                  <a href="/login" style={{ textDecoration: "none" }}>
+                    Vé đã đặt
+                  </a>
+                ),
+                key: "1",
+              },
+              {
+                type: "divider",
+              },
+              {
+                label: <div onClick={handleLogout}>Đăng xuất</div>,
+                key: "2",
+              },
+            ]
+      }
+    />
+  );
+
   return (
     <div>
       <Menu mode="horizontal" defaultSelectedKeys={["mail"]}>
@@ -71,12 +160,22 @@ export default function HeaderNav(): JSX.Element {
           Home 2
         </Menu.Item>
         <Menu.Item key="UserMenu">
-          <Dropdown overlay={userMenu} trigger={["click"]}>
+          <Dropdown
+            overlay={userInfo ? userMenuLogin : userMenu}
+            trigger={["click"]}
+          >
             <a onClick={(e) => e.preventDefault()}>
-              <Space>
-                <MenuOutlined />
-                <UserOutlined />
-              </Space>
+              {userInfo ? (
+                <Space>
+                  {userInfo.name}
+                  <UserOutlined />
+                </Space>
+              ) : (
+                <Space>
+                  <MenuOutlined />
+                  <UserOutlined />
+                </Space>
+              )}
             </a>
           </Dropdown>
         </Menu.Item>
