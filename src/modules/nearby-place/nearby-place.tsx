@@ -27,7 +27,7 @@ export default function NearbyPlace() {
     (state: RootState) => state.locationReducer
   );
 
-  console.log(locationsList);
+  // console.log(locationsList);
 
   const renderLocations = () => {
     return locationsList?.map((ele, idx) => {

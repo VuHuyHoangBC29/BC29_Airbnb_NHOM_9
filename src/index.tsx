@@ -8,7 +8,7 @@ import { store } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 
-import "antd/dist/antd.css";
+import "antd/dist/antd.less";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 

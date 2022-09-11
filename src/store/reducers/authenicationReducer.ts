@@ -1,5 +1,6 @@
 import { UserAddOutlined } from "@ant-design/icons";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { notification } from "antd";
 import { USER_INFO_KEY } from "../../constants/common";
 import { User } from "../../interfaces/user";
 import { UserLogin } from "../../interfaces/userLogin";
@@ -12,43 +13,40 @@ export const loginAction = createAsyncThunk(
 
     console.log(response);
 
-    localStorage.setItem(USER_INFO_KEY, JSON.stringify(response.data.content));
+    notification.success({
+      message: response.data.message,
+    });
 
-    return response.data.content;
+    localStorage.setItem(USER_INFO_KEY, JSON.stringify(response.data.user));
+
+    return response.data.user;
   }
 );
 
-let userInfo = localStorage.getItem(USER_INFO_KEY);
+// let userInfo = localStorage.getItem(USER_INFO_KEY);
 
-if (userInfo) {
-  userInfo = JSON.parse(userInfo);
-}
+// if (userInfo) {
+//   userInfo = JSON.parse(userInfo);
+// }
 
 interface UserState {
-  userInfo: User;
+  userInfo: User | null;
 }
 
 const INITIAL_STATE: UserState = {
-  userInfo: {
-    tickets: [],
-    deleteAt: undefined,
-    _id: "",
-    name: "",
-    email: "",
-    password: "",
-    phone: "",
-    birthday: "",
-    gender: undefined,
-    address: "",
-    type: "",
-    __v: 0,
-  },
+  userInfo: null,
 };
 
 const authenticationSlice = createSlice({
   name: "userAuthentication",
   initialState: INITIAL_STATE,
-  reducers: {},
+  reducers: {
+    handleLogout(state: UserState, action: PayloadAction<null>) {
+      state.userInfo = action.payload;
+
+      localStorage.removeItem(USER_INFO_KEY);
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       loginAction.fulfilled,

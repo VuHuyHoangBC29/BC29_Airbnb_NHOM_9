@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import logo from "./logo.svg";
-import "./App.css";
+import "./App.less";
 import Router from "./routes";
 import { BrowserRouter } from "react-router-dom";
 
