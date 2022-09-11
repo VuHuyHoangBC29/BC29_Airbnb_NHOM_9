@@ -1,6 +1,7 @@
 import { Table, Input, Space, Button } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { AppDispatch, RootState } from "../../../store/store";
 import {
   EditOutlined,
   SolutionOutlined,
@@ -8,8 +9,19 @@ import {
 } from "@ant-design/icons";
 import moment from "moment";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsersListAction } from "../../../store/reducers/userReducer";
 
 export default function QuanLyNguoiDung(): JSX.Element {
+  const dispatch = useDispatch<AppDispatch>();
+  const { usersList } = useSelector(
+    (state: RootState) => state.usersListReducer
+  );
+  useEffect(() => {
+    dispatch(fetchUsersListAction());
+  }, []);
+  // console.log(usersList);
+
   const navigate = useNavigate();
   const [loadings, setLoadings] = useState<boolean[]>([]);
   const enterLoading = (index: number) => {
@@ -40,7 +52,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
     password: string;
     phone: string;
     birthday: string;
-    gender: boolean;
+    gender: boolean | undefined;
     address: string;
     type: string;
   }
@@ -111,32 +123,44 @@ export default function QuanLyNguoiDung(): JSX.Element {
             <a className="pl-4" href="">
               <DeleteOutlined />
             </a>
-            <a className="pl-4" href="">
-              <SolutionOutlined />
-            </a>
           </>
         );
       },
     },
   ];
 
-  const data = [
-    {
-      key: "1",
-      tickets: [],
+  // const data = [
+  //   {
+  //     key: "1",
+  //     tickets: [],
+  //     deleteAt: false,
+  //     _id: "61604bcdd1a292001ce8f17a",
+  //     name: "Nguyễn Phong Hào Phóng",
+  //     email: "hao9x0159@gmail.com",
+  //     password: "$2a$10$9Ie16jOoUWm6opIEkbOXf.v8odVh9l2yNf.SSTwTgFaWG4t6fiFtO",
+  //     phone: "0945077142",
+  //     birthday: moment("1998-05-10T17:00:00.000Z").format("DD/MM/YYYY"),
+  //     gender: true,
+  //     address: "số 13 , 116/4 trại cá , hai bà trưng , hà nội",
+  //     type: "ADMIN",
+  //   },
+  // ];
+  const data = usersList.map((ele, index) => {
+    return {
+      key: index + 1,
+      tickets: ele.tickets,
       deleteAt: false,
-      _id: "61604bcdd1a292001ce8f17a",
-      name: "Nguyễn Phong Hào Phóng",
-      email: "hao9x0159@gmail.com",
-      password: "$2a$10$9Ie16jOoUWm6opIEkbOXf.v8odVh9l2yNf.SSTwTgFaWG4t6fiFtO",
-      phone: "0945077142",
-      birthday: moment("1998-05-10T17:00:00.000Z").format("DD/MM/YYYY"),
-      gender: true,
-      address: "số 13 , 116/4 trại cá , hai bà trưng , hà nội",
-      type: "ADMIN",
-    },
-  ];
-
+      _id: ele._id,
+      name: ele.name,
+      email: ele.email,
+      password: ele.password,
+      phone: ele.phone,
+      birthday: moment(ele.birthday).format("DD/MM/YYYY"),
+      gender: ele.gender,
+      address: ele.address,
+      type: ele.type,
+    };
+  });
   const onChange: TableProps<DataType>["onChange"] = (
     pagination,
     filters,

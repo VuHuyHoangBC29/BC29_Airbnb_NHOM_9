@@ -1,4 +1,4 @@
-declare type HttpResponse<D> = {
+export interface HttpResponse<D> {
   statusCode?: number;
   message: string;
   content: D;
