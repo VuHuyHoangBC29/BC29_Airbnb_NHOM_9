@@ -86,7 +86,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
     {
       title: "Địa chỉ",
       dataIndex: "address",
-      width: "20%",
+      width: "10%",
     },
     {
       title: "Ngày sinh",

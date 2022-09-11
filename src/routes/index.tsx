@@ -1,8 +1,10 @@
 import React, { lazy } from "react";
 import { useRoutes } from "react-router-dom";
 import HomeLayout from "../layouts/home-layout";
+import Register from "../pages/adminpage/register/register";
 import Home1 from "../pages/home1/home1";
 import Home2 from "../pages/home2/home2";
+import Login from "../pages/login/login";
 
 const Adminpage = lazy(() => import("../pages/adminpage/adminpage"));
 const ThemNguoiDung = lazy(
@@ -58,6 +60,14 @@ export default function Router() {
         },
       ],
     },
+    {
+      path:"/login",
+      element:<Login/>
+    },
+    {
+      path:"/register",
+      element:<Register/>
+    }
   ]);
 
   return routing;

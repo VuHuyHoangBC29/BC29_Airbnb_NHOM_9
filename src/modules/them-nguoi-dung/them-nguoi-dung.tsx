@@ -35,7 +35,7 @@ export default function ThemNguoiDung(): JSX.Element {
       <Form.Item
         label="Họ và tên"
         name="name"
-        rules={[{ required: true, message: "Please input your username!" }]}
+        rules={[{ required: true, message: "Chưa nhập tên!" }]}
       >
         <Input />
       </Form.Item>
@@ -43,28 +43,28 @@ export default function ThemNguoiDung(): JSX.Element {
       <Form.Item
         label="Mật khẩu"
         name="password"
-        rules={[{ required: true, message: "Please input your password!" }]}
+        rules={[{ required: true, message: "Chưa nhập mật khẩu!" }]}
       >
         <Input.Password />
       </Form.Item>
       <Form.Item
         label="Số điện thoại"
         name="phone"
-        rules={[{ required: true, message: "Please input your password!" }]}
+        rules={[{ required: true, message: "Chưa nhập số điện thoại!" }]}
       >
         <Input />
       </Form.Item>
       <Form.Item
         label="Ngày sinh"
         name="birthday"
-        rules={[{ required: true, message: "Please input your password!" }]}
+        rules={[{ required: true, message: "Chưa nhập ngày sinh!" }]}
       >
         <DatePicker onChange={onChange} />
       </Form.Item>
       <Form.Item
         label="Giới tính"
         name="gender"
-        rules={[{ required: true, message: "Please input your password!" }]}
+        rules={[{ required: true, message: "Chưa chọn giới tính!" }]}
       >
         <Select style={{ width: 120 }} onChange={handleChangeOne}>
           <Option value="true">Nam</Option>
@@ -74,7 +74,7 @@ export default function ThemNguoiDung(): JSX.Element {
       <Form.Item
         label="Loại người dùng"
         name="type"
-        rules={[{ required: true, message: "Please input your password!" }]}
+        rules={[{ required: true, message: "Chưa chọn loại người dùng!" }]}
       >
         <Select style={{ width: 120 }} onChange={handleChangeTwo}>
           <Option value="ADMIN">Admin</Option>

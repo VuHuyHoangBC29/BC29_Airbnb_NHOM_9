@@ -75,12 +75,12 @@ export default function QuanLyViTri(): JSX.Element {
     {
       title: "Hình ảnh",
       dataIndex: "image",
-      width: "20%",
+      width: "10%",
     },
     {
       title: "Quốc gia",
       dataIndex: "country",
-      width: "15%",
+      width: "5%",
       defaultSortOrder: "descend",
       //   sorter: (a, b) => a.age - b.age,
     },
