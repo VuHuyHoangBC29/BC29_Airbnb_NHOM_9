@@ -13,11 +13,11 @@ export const loginAction = createAsyncThunk(
 
     console.log(response);
 
+    localStorage.setItem(USER_INFO_KEY, JSON.stringify(response.data.user));
+
     notification.success({
       message: response.data.message,
     });
-
-    localStorage.setItem(USER_INFO_KEY, JSON.stringify(response.data.user));
 
     return response.data.user;
   }
