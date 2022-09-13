@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { Button, Checkbox, Form, Input, notification } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
 import { loginAction } from "../../store/reducers/authenicationReducer";
 import { USER_INFO_KEY } from "../../constants/common";
 
@@ -13,6 +13,16 @@ export default function LoginForm() {
 
   const navigate = useNavigate();
 
+  const { userInfo } = useSelector(
+    (state: RootState) => state.authenticationReducer
+  );
+
+  useEffect(() => {
+    if (userInfo !== null) {
+      navigate("/");
+    }
+  });
+
   const onFinish = (values: any) => {
     const loginData = {
       email: values.email,
@@ -21,7 +31,7 @@ export default function LoginForm() {
 
     dispatch(loginAction(loginData));
 
-    navigate("/");
+    console.log(userInfo);
   };
 
   const onFinishFailed = (errorInfo: any) => {

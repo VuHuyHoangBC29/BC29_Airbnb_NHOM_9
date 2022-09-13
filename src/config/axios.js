@@ -29,7 +29,7 @@ request.interceptors.response.use(
   },
   (error) => {
     notification.error({
-      message: error.response.data.content,
+      message: error.response.data.message,
     });
 
     throw new Error(error);
