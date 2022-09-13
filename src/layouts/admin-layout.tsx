@@ -9,9 +9,9 @@ import {
 import { Layout, Menu } from "antd";
 import React, { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import "./adminpage.scss";
+import "./admin-layout.scss";
 
-export default function Adminpage(): JSX.Element {
+export default function AdminLayout(): JSX.Element {
   const navigate = useNavigate();
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(false);
@@ -30,7 +30,7 @@ export default function Adminpage(): JSX.Element {
               icon: <UserOutlined />,
               label: "Quản lý người dùng",
               onClick: () => {
-                navigate("/admin/quanlynguoidung");
+                navigate("/admin/user-management");
               },
             },
             {

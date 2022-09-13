@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { create } from "domain";
 import { User } from "../../interfaces/user";
-import { fetchUsersListApi } from "../../services/user";
+import {
+  fetchUserDetailedInfoApi,
+  fetchUsersListApi,
+} from "../../services/user";
 
 export const fetchUsersListAction = createAsyncThunk(
   "userList/fetchUsersList",
@@ -31,9 +35,6 @@ const usersListSlice = createSlice({
         console.log("fulfilled");
       }
     );
-    builder.addCase(fetchUsersListAction.pending,()=>{
-      console.log("pending");
-    })
   },
 });
 

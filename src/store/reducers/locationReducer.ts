@@ -41,26 +41,25 @@ const locationSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(
-        fetchLocationsListAction.fulfilled,
-        (state: LocationState, action: PayloadAction<Location[]>) => {
-          console.log("fulfilled");
-          state.locationsList = action.payload;
-        }
-      )
-      .addCase(
-        createLocationAction.fulfilled,
-        (state: LocationState, action: PayloadAction<Location>) => {
-          console.log("fulfilled");
+    builder.addCase(
+      fetchLocationsListAction.fulfilled,
+      (state: LocationState, action: PayloadAction<Location[]>) => {
+        console.log("fulfilled");
+        state.locationsList = action.payload;
+      }
+    );
+    builder.addCase(
+      createLocationAction.fulfilled,
+      (state: LocationState, action: PayloadAction<Location>) => {
+        console.log("fulfilled");
 
-          let newLocationList = [...state.locationsList];
+        let newLocationList = [...state.locationsList];
 
-          newLocationList.push({ ...action.payload });
+        newLocationList.push({ ...action.payload });
 
-          state.locationsList = newLocationList;
-        }
-      );
+        state.locationsList = newLocationList;
+      }
+    );
   },
 });
 

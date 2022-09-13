@@ -1,7 +1,7 @@
-import { UserInfoEnum } from "../enums/user-info";
+import { UserType } from "../enums/user";
 
 export interface User {
-  tickets:[];
+  tickets: [];
   deleteAt: boolean | undefined;
   _id: string;
   name: string;
@@ -11,6 +11,6 @@ export interface User {
   birthday: string;
   gender: boolean | undefined;
   address: string;
-  type: string;
+  type: UserType;
   __v: number;
 }
