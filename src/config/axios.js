@@ -19,7 +19,7 @@ request.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${userInfo?.accessToken}`;
   }
 
-  console.log(config);
+  // console.log(config);
   return config;
 });
 

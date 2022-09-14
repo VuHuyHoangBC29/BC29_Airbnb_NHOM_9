@@ -109,7 +109,7 @@ export default function QuanLyViTri(): JSX.Element {
     {
       title: "Tương tác",
       dataIndex: "tuongTac",
-      width: "10%",
+      width: "5%",
       render: (text, object) => {
         return (
           <>

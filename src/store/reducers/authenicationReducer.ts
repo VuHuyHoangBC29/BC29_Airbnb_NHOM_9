@@ -11,7 +11,7 @@ export const loginAction = createAsyncThunk(
   async (data: UserLogin) => {
     const response = await loginApi(data);
 
-    console.log(response);
+    // console.log(response);
 
     localStorage.setItem(USER_INFO_KEY, JSON.stringify(response.data.user));
 

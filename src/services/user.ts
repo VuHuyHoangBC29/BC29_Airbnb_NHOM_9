@@ -4,7 +4,7 @@ import { User } from "../interfaces/user";
 
 export const fetchUsersListApi = (): AxiosPromise<User[]> => {
   return request({
-    url: `/users/pagination?skip=0&limit=0`,
+    url: `/users`,
     method: "GET",
   });
 };

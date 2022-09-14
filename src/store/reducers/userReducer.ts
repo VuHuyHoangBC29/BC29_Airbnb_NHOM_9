@@ -10,7 +10,7 @@ export const fetchUsersListAction = createAsyncThunk(
   "userList/fetchUsersList",
   async () => {
     const response = await fetchUsersListApi();
-    // console.log(response);
+    console.log(response);
     return response.data;
   }
 );
