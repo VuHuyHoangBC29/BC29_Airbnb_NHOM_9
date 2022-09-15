@@ -36,20 +36,19 @@ export default function Router() {
           path: "/home2",
           element: <Home2 />,
         },
-
+      ],
+    },
+    {
+      path: "/",
+      element: <NoAuthGuard />,
+      children: [
         {
-          path: "/",
-          element: <NoAuthGuard />,
-          children: [
-            {
-              path: "/login",
-              element: <Login />,
-            },
-            {
-              path: "/register",
-              element: <Register />,
-            },
-          ],
+          path: "/login",
+          element: <Login />,
+        },
+        {
+          path: "/register",
+          element: <Register />,
         },
       ],
     },

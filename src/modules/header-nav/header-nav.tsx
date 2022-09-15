@@ -77,67 +77,67 @@ export default function HeaderNav(): JSX.Element {
 
   const userMenuLogin = (
     <Menu
-      items={
-        userInfo?.type === "ADMIN"
-          ? [
-              {
-                label: (
-                  <a href="/admin" style={{ textDecoration: "none" }}>
-                    Trang quản lý
-                  </a>
-                ),
-                key: "0",
-              },
-              {
-                label: (
-                  <a href="/" style={{ textDecoration: "none" }}>
-                    Thông tin tài khoản
-                  </a>
-                ),
-                key: "1",
-              },
-              {
-                label: (
-                  <a href="/login" style={{ textDecoration: "none" }}>
-                    Vé đã đặt
-                  </a>
-                ),
-                key: "2",
-              },
-              {
-                type: "divider",
-              },
-              {
-                label: <div onClick={handleLogout}>Đăng xuất</div>,
-                key: "3",
-              },
-            ]
-          : [
-              {
-                label: (
-                  <a href="/" style={{ textDecoration: "none" }}>
-                    Thông tin tài khoản
-                  </a>
-                ),
-                key: "0",
-              },
-              {
-                label: (
-                  <a href="/login" style={{ textDecoration: "none" }}>
-                    Vé đã đặt
-                  </a>
-                ),
-                key: "1",
-              },
-              {
-                type: "divider",
-              },
-              {
-                label: <div onClick={handleLogout}>Đăng xuất</div>,
-                key: "2",
-              },
-            ]
-      }
+      // items={
+      //   userInfo? === "ADMIN"
+      //     ? [
+      //         {
+      //           label: (
+      //             <a href="/admin" style={{ textDecoration: "none" }}>
+      //               Trang quản lý
+      //             </a>
+      //           ),
+      //           key: "0",
+      //         },
+      //         {
+      //           label: (
+      //             <a href="/" style={{ textDecoration: "none" }}>
+      //               Thông tin tài khoản
+      //             </a>
+      //           ),
+      //           key: "1",
+      //         },
+      //         {
+      //           label: (
+      //             <a href="/login" style={{ textDecoration: "none" }}>
+      //               Vé đã đặt
+      //             </a>
+      //           ),
+      //           key: "2",
+      //         },
+      //         {
+      //           type: "divider",
+      //         },
+      //         {
+      //           label: <div onClick={handleLogout}>Đăng xuất</div>,
+      //           key: "3",
+      //         },
+      //       ]
+      //     : [
+      //         {
+      //           label: (
+      //             <a href="/" style={{ textDecoration: "none" }}>
+      //               Thông tin tài khoản
+      //             </a>
+      //           ),
+      //           key: "0",
+      //         },
+      //         {
+      //           label: (
+      //             <a href="/login" style={{ textDecoration: "none" }}>
+      //               Vé đã đặt
+      //             </a>
+      //           ),
+      //           key: "1",
+      //         },
+      //         {
+      //           type: "divider",
+      //         },
+      //         {
+      //           label: <div onClick={handleLogout}>Đăng xuất</div>,
+      //           key: "2",
+      //         },
+      //       ]
+      // }
     />
   );
 
@@ -167,7 +167,7 @@ export default function HeaderNav(): JSX.Element {
             <a onClick={(e) => e.preventDefault()}>
               {userInfo ? (
                 <Space>
-                  {userInfo.name}
+                  {/* {userInfo.name} */}
                   <UserOutlined />
                 </Space>
               ) : (

@@ -21,7 +21,7 @@ export default function QuanLyViTri(): JSX.Element {
     dispatch(fetchLocationsListAction());
   }, []);
 
-  console.log(locationsList);
+
 
   const navigate = useNavigate();
   const [loadings, setLoadings] = useState<boolean[]>([]);
@@ -45,14 +45,11 @@ export default function QuanLyViTri(): JSX.Element {
   const onSearch = (value: string) => console.log(value);
   interface DataType {
     key: React.Key;
-    deleteAt: boolean;
-    _id: string;
-    name: string | undefined;
-    province: string | undefined;
-    country: string | undefined;
-    image: string | undefined;
-    valueate: number | undefined;
-    tuongTac: any;
+    id: number;
+    tenViTri: string | undefined;
+    tinhThanh: string | undefined;
+    quocGia: string | undefined;
+    hinhAnh: string | undefined;
   }
 
   const columns: ColumnsType<DataType> = [
@@ -63,7 +60,7 @@ export default function QuanLyViTri(): JSX.Element {
     },
     {
       title: "Địa danh",
-      dataIndex: "name",
+      dataIndex: "tenViTri",
       width: "14%",
       //   filters: [
       //     {
@@ -82,13 +79,13 @@ export default function QuanLyViTri(): JSX.Element {
       sortDirections: ["descend"],
     },
     {
-      title: "Tỉnh",
-      dataIndex: "province",
+      title: "Tỉnh Thành",
+      dataIndex: "tinhThanh",
       width: "8%",
     },
     {
       title: "Hình ảnh",
-      dataIndex: "image",
+      dataIndex: "hinhAnh",
       width: "10%",
       render: (text: string) => {
         return <img src={text} style={{ width: 70, height: 50 }} />;
@@ -96,15 +93,10 @@ export default function QuanLyViTri(): JSX.Element {
     },
     {
       title: "Quốc gia",
-      dataIndex: "country",
+      dataIndex: "quocGia",
       width: "5%",
       defaultSortOrder: "descend",
       //   sorter: (a, b) => a.age - b.age,
-    },
-    {
-      title: "Đánh giá",
-      dataIndex: "valueate",
-      width: "5%",
     },
     {
       title: "Tương tác",
@@ -125,17 +117,14 @@ export default function QuanLyViTri(): JSX.Element {
     },
   ];
 
-  const data = locationsList.map((ele, index) => {
+  const data = locationsList?.map((ele, index) => {  
     return {
       key: index + 1,
-      deleteAt: ele.deleteAt,
-      _id: ele._id,
-      name: ele.name,
-      province: ele.province,
-      country: ele.country,
-      image: ele.image,
-      valueate: ele.valueate,
-      tuongTac: ele._id,
+      id: ele.id,
+      tenViTri: ele.tenViTri,
+      tinhThanh: ele.tinhThanh,
+      quocGia: ele.quocGia,
+      hinhAnh: ele.hinhAnh,
     };
   });
 

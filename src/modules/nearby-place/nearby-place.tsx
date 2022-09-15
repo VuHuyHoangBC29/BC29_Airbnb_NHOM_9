@@ -37,11 +37,11 @@ export default function NearbyPlace() {
             <img
               style={{ width: "100px", height: "100px" }}
               className="img-fluid rounded"
-              src={ele.image}
+              src={ele.hinhAnh}
               alt=""
             />
             <p style={{ fontWeight: "bolder" }} className="mb-0 ml-2">
-              {ele.province}
+              {ele.tinhThanh}
             </p>
           </div>
         </Fragment>

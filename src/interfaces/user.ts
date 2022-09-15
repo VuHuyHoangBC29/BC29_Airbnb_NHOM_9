@@ -1,16 +1,13 @@
 import { UserType } from "../enums/user";
 
 export interface User {
-  tickets: [];
-  deleteAt: boolean | undefined;
-  _id: string;
+  id: number;
   name: string;
   email: string;
   password: string;
-  phone: string;
+  phone: number | null;
   birthday: string;
-  gender: boolean | undefined;
-  address: string;
-  type: UserType;
-  __v: number;
+  avatar: string | null;
+  gender:boolean;
+  role: UserType;
 }

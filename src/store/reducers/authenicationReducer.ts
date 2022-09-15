@@ -13,13 +13,13 @@ export const loginAction = createAsyncThunk(
 
     // console.log(response);
 
-    localStorage.setItem(USER_INFO_KEY, JSON.stringify(response.data.user));
+    localStorage.setItem(USER_INFO_KEY, JSON.stringify(response.data.content));
 
     notification.success({
-      message: response.data.message,
+      message: "Đăng nhập thành công",
     });
 
-    return response.data.user;
+    return response.data.content;
   }
 );
 
@@ -30,11 +30,11 @@ export const loginAction = createAsyncThunk(
 // }
 
 interface UserState {
-  userInfo: User | null;
+  userInfo: User[] | null;
 }
 
 const INITIAL_STATE: UserState = {
-  userInfo: null,
+  userInfo: [],
 };
 
 const authenticationSlice = createSlice({
@@ -50,7 +50,7 @@ const authenticationSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       loginAction.fulfilled,
-      (state: UserState, action: PayloadAction<User>) => {
+      (state: UserState, action: PayloadAction<User[]>) => {
         console.log("fulfilled");
 
         state.userInfo = action.payload;

@@ -80,15 +80,15 @@ export default function UserForm(): JSX.Element {
     (state: RootState) => state.userDetailsReducer
   );
 
-  useEffect(() => {
-    if (params._id) {
-      form.setFieldsValue({
-        ...userDetail,
-        birthday: moment(userDetail?.birthday),
-        gender: true ? UserGender.true : UserGender.false,
-      });
-    }
-  }, [params._id]);
+  // useEffect(() => {
+  //   if (params._id) {
+  //     form.setFieldsValue({
+  //       ...userDetail,
+  //       birthday: moment(userDetail?.birthday),
+  //       gender: true ? UserGender.true : UserGender.false,
+  //     });
+  //   }
+  // }, [params._id]);
 
   return (
     <div>

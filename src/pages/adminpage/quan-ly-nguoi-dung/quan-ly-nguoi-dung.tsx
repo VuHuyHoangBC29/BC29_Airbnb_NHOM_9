@@ -21,9 +21,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
   useEffect(() => {
     dispatch(fetchUsersListAction());
   }, []);
-  console.log(usersList);
-  // let userAccount = localStorage.getItem(USER_INFO_KEY);
-  // console.log(userAccount);
+  
   const navigate = useNavigate();
   const [loadings, setLoadings] = useState<boolean[]>([]);
   const enterLoading = (index: number) => {
@@ -46,17 +44,15 @@ export default function QuanLyNguoiDung(): JSX.Element {
   const onSearch = (value: string) => console.log(value);
   interface DataType {
     key: React.Key;
-    tickets: Array<string>;
-    deleteAt: boolean;
-    _id: string;
-    name: string;
-    email: string;
-    password: string;
-    phone: string;
-    birthday: string;
-    gender: boolean | undefined;
-    address: string;
-    type: string;
+    id: number,
+    name: string,
+    email: string,
+    password: string | null,
+    phone: number|null,
+    birthday: string,
+    avatar: string | null,
+    gender: boolean | null,
+    role: string,
   }
 
   const columns: ColumnsType<DataType> = [
@@ -137,20 +133,18 @@ export default function QuanLyNguoiDung(): JSX.Element {
     },
   ];
 
-  const data = usersList.map((ele, index) => {
+  const data = usersList?.map((ele, index) => {
     return {
       key: index + 1,
-      tickets: ele.tickets,
-      deleteAt: false,
-      _id: ele._id,
+      id: ele.id,
       name: ele.name,
       email: ele.email,
       password: ele.password,
       phone: ele.phone,
-      birthday: moment(ele.birthday).format("DD/MM/YYYY"),
+      birthday: ele.birthday,
+      avatar: ele.avatar,
       gender: ele.gender,
-      address: ele.address,
-      type: ele.type,
+      role: ele.role,
     };
   });
   const onChange: TableProps<DataType>["onChange"] = (
