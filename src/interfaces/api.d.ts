@@ -1,8 +1,5 @@
-declare type HttpResponse<D, T> = {
+declare type HttpResponse<D> = {
   statusCode?: number;
-  message: string;
   content: D;
-  user: T;
   dateTime?: string;
-  messageConstants?: any;
 };

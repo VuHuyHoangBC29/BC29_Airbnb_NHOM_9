@@ -5,7 +5,7 @@ import { BASE_URL, TOKEN_CYBERSOFT, USER_INFO_KEY } from "../constants/common";
 export const request = axios.create({
   baseURL: BASE_URL,
   headers: {
-    tokenByClass: TOKEN_CYBERSOFT,
+    tokenCybersoft: TOKEN_CYBERSOFT,
     // Authorization: userInfo?.accessToken,
   },
 });

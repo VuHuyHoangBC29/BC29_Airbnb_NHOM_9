@@ -16,12 +16,12 @@ export default function AdminGuard() {
       return navigate("/login");
     }
 
-    if (userInfo && userInfo.type !== "ADMIN") {
-      notification.warning({
-        message: "Access denied!",
-      });
-      return navigate("/");
-    }
+    // if (userInfo && userInfo.content.role !== "ADMIN") {
+    //   notification.warning({
+    //     message: "Access denied!",
+    //   });
+    //   return navigate("/");
+    // }
   }, []);
 
   return (

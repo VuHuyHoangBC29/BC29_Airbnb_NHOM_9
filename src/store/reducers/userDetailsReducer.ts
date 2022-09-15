@@ -3,7 +3,7 @@ import { User } from "../../interfaces/user";
 import { fetchUserDetailedInfoApi } from "../../services/user";
 
 export const fetchUserDetailedInfoAction = createAsyncThunk(
-  "userList/fetchUserDetailedInfo",
+  "userDetails/fetchUserDetailedInfo",
   async (id: string) => {
     const response = await fetchUserDetailedInfoApi(id);
 
@@ -14,11 +14,11 @@ export const fetchUserDetailedInfoAction = createAsyncThunk(
 );
 
 interface UserDetailsState {
-  userDetail: User | null;
+  userDetail: User [];
 }
 
 const INITIAL_STATE: UserDetailsState = {
-  userDetail: null,
+  userDetail: [],
 };
 
 const userDetailsSlice = createSlice({
@@ -28,9 +28,8 @@ const userDetailsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       fetchUserDetailedInfoAction.fulfilled,
-      (state: UserDetailsState, action: PayloadAction<User>) => {
+      (state: UserDetailsState, action: PayloadAction<User[]>) => {
         console.log("fulfilled");
-
         state.userDetail = action.payload;
       }
     );

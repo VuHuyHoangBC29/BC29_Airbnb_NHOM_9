@@ -66,13 +66,6 @@ export default function ThemNguoiDung(): JSX.Element {
           <Input />
         </Form.Item>
         <Form.Item
-          label="Ngày sinh"
-          name="birthday"
-          rules={[{ required: true, message: "Chưa nhập ngày sinh!" }]}
-        >
-          <DatePicker onChange={onChange} />
-        </Form.Item>
-        <Form.Item
           label="Giới tính"
           name="gender"
           rules={[{ required: true, message: "Chưa chọn giới tính!" }]}
