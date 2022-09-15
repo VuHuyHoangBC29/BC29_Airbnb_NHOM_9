@@ -11,6 +11,7 @@ import moment from "moment";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsersListAction } from "../../../store/reducers/userReducer";
+import { USER_INFO_KEY } from "../../../constants/common";
 
 export default function QuanLyNguoiDung(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,8 +21,9 @@ export default function QuanLyNguoiDung(): JSX.Element {
   useEffect(() => {
     dispatch(fetchUsersListAction());
   }, []);
-  // console.log(usersList);
-
+  console.log(usersList);
+  // let userAccount = localStorage.getItem(USER_INFO_KEY);
+  // console.log(userAccount);
   const navigate = useNavigate();
   const [loadings, setLoadings] = useState<boolean[]>([]);
   const enterLoading = (index: number) => {
@@ -80,7 +82,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
       // specify the condition of filtering result
       // here is that finding the name started with `value`
       //   onFilter: (value, record) => record.name.indexOf(value as string) === 0,
-      sorter: (a, b) => a.name.length - b.name.length,
+      // sorter: (a, b) => a.name.length - b.name.length,
       sortDirections: ["descend"],
     },
     {
@@ -96,10 +98,16 @@ export default function QuanLyNguoiDung(): JSX.Element {
       //   sorter: (a, b) => a.age - b.age,
     },
     {
-      title: "Địa chỉ",
-      dataIndex: "address",
-      width: "10%",
+      title: "Password",
+      dataIndex: "password",
+      width: "5%",
+      //   sorter: (a, b) => a.age - b.age,
     },
+    // {
+    //   title: "Địa chỉ",
+    //   dataIndex: "address",
+    //   width: "10%",
+    // },
     {
       title: "Ngày sinh",
       dataIndex: "birthday",
@@ -113,7 +121,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
     {
       title: "Tương tác",
       dataIndex: "tuongTac",
-      width: "10%",
+      width: "25%",
       render: (text, object) => {
         return (
           <>
@@ -129,22 +137,6 @@ export default function QuanLyNguoiDung(): JSX.Element {
     },
   ];
 
-  // const data = [
-  //   {
-  //     key: "1",
-  //     tickets: [],
-  //     deleteAt: false,
-  //     _id: "61604bcdd1a292001ce8f17a",
-  //     name: "Nguyễn Phong Hào Phóng",
-  //     email: "hao9x0159@gmail.com",
-  //     password: "$2a$10$9Ie16jOoUWm6opIEkbOXf.v8odVh9l2yNf.SSTwTgFaWG4t6fiFtO",
-  //     phone: "0945077142",
-  //     birthday: moment("1998-05-10T17:00:00.000Z").format("DD/MM/YYYY"),
-  //     gender: true,
-  //     address: "số 13 , 116/4 trại cá , hai bà trưng , hà nội",
-  //     type: "ADMIN",
-  //   },
-  // ];
   const data = usersList.map((ele, index) => {
     return {
       key: index + 1,
