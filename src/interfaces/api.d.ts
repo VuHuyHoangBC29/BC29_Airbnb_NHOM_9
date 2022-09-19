@@ -3,3 +3,9 @@ declare type HttpResponse<D> = {
   content: D;
   dateTime?: string;
 };
+declare type HttpResponseLogin<D, T> = {
+  statusCode?: number;
+  content: D;
+  user: T;
+  dateTime?: string;
+};

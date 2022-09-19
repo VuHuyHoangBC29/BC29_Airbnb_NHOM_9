@@ -4,3 +4,5 @@ export const TOKEN_CYBERSOFT =
 export const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const USER_INFO_KEY = "USER_INFO_KEY";
+export const USER_TOKEN = "USER_TOKEN";
+
