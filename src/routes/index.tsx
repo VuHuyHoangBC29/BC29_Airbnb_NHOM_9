@@ -39,15 +39,15 @@ export default function Router() {
       ],
     },
     {
-      path: "/authguard",
+      path: "/",
       element: <NoAuthGuard />,
       children: [
         {
-          path: "/authguard/login",
+          path: "/login",
           element: <Login />,
         },
         {
-          path: "/authguard/register",
+          path: "/register",
           element: <Register />,
         },
       ],

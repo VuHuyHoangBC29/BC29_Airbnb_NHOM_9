@@ -11,19 +11,15 @@ export const loginAction = createAsyncThunk(
   "userAuthentication/userLogin",
   async (data: UserLogin) => {
     const response = await loginApi(data);
-    localStorage.setItem(
-      USER_INFO_KEY,
-      JSON.stringify(response.data.content.user)
-    );
-    localStorage.setItem(
-      USER_TOKEN,
-      JSON.stringify(response.data.content.token)
-    );
-
+    localStorage.setItem(USER_INFO_KEY, JSON.stringify(response.data.content));
+  
     notification.success({
       message: "Đăng nhập thành công",
     });
-    return response.data.content.user;
+
+    console.log(response);
+
+    return response.data.content;
   }
 );
 
@@ -34,25 +30,27 @@ if (userInfo) {
 }
 
 interface UserState {
-  userInfo: User[];
+  userInfo: User | null;
 }
 
 const INITIAL_STATE: UserState = {
-  userInfo: [],
+  userInfo: null,
 };
 
 const authenticationSlice = createSlice({
   name: "userAuthentication",
   initialState: INITIAL_STATE,
   reducers: {
-    handleLogout() {
+    handleLogout(state: UserState, action: PayloadAction<null>) {
+      state.userInfo = action.payload;
+
       localStorage.removeItem(USER_INFO_KEY);
     },
   },
   extraReducers: (builder) => {
     builder.addCase(
       loginAction.fulfilled,
-      (state: UserState, action: PayloadAction<User[]>) => {
+      (state: UserState, action: PayloadAction<User>) => {
         state.userInfo = action.payload;
         console.log("fulfilled");
       }
