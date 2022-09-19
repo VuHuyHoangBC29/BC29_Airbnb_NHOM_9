@@ -31,6 +31,7 @@ const usersListSlice = createSlice({
       fetchUsersListAction.fulfilled,
       (state: UsersListState, actions: PayloadAction<User[]>) => {
         state.usersList = actions.payload;
+        console.log(state.usersList)
         console.log("fulfilled");
       }
     );

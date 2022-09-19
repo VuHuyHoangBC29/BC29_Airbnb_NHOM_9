@@ -11,18 +11,6 @@ import "./login.scss";
 export default function LoginForm() {
   const dispatch = useDispatch<AppDispatch>();
 
-  const navigate = useNavigate();
-
-  const { userInfo } = useSelector(
-    (state: RootState) => state.authenticationReducer
-  );
-
-  useEffect(() => {
-    if (userInfo !== null) {
-      navigate("/");
-    }
-  });
-
   const onFinish = (values: any) => {
     const loginData = {
       email: values.email,
@@ -30,8 +18,6 @@ export default function LoginForm() {
     };
 
     dispatch(loginAction(loginData));
-
-    console.log(userInfo);
   };
 
   const onFinishFailed = (errorInfo: any) => {

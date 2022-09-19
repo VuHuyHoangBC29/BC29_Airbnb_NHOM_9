@@ -5,8 +5,7 @@ import { User } from "../interfaces/user";
 
 export const loginApi = (
   data: UserLogin
-): AxiosPromise<HttpResponse<User[]>> => {
-  
+): AxiosPromise<HttpResponseLogin<any, User[]>> => {
   return request({
     url: `/auth/signin`,
     method: "POST",

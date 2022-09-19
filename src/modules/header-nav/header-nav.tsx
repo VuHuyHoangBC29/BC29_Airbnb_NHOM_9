@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import type { MenuProps } from "antd";
 import { Button, Dropdown, Menu, message, Space, Tooltip } from "antd";
@@ -18,21 +18,36 @@ import {
   loginAction,
 } from "../../store/reducers/authenicationReducer";
 
+import { User } from "../../interfaces/user";
+
 export default function HeaderNav(): JSX.Element {
   const navigate = useNavigate();
-
+  const [state, setState] = useState<any>([]);
   const dispatch = useDispatch<AppDispatch>();
 
-  const { userInfo } = useSelector(
-    (state: RootState) => state.authenticationReducer
-  );
+  // const { userInfo } = useSelector(
+  //   (state: RootState) => state.authenticationReducer
+  // );
 
-  console.log(userInfo);
+  // console.log(userInfo);
+  let userInfo: any = localStorage.getItem(USER_INFO_KEY);
+
+  if (userInfo) {
+    userInfo = JSON.parse(userInfo);
+  }
+  useEffect(() => {
+
+    setState([userInfo]);
+  }, []);
+  console.log(state);
+
+  const userinfo:any = state.map((ele: any) => ele.role);
+  console.log(userinfo);
 
   const handleLogout = () => {
     localStorage.removeItem(USER_INFO_KEY);
 
-    dispatch(authenticationActions.handleLogout(null));
+    dispatch(authenticationActions.handleLogout());
 
     navigate("/");
   };
@@ -42,7 +57,7 @@ export default function HeaderNav(): JSX.Element {
       items={[
         {
           label: (
-            <a href="/register" style={{ textDecoration: "none" }}>
+            <a href="/authguard/register" style={{ textDecoration: "none" }}>
               Đăng ký
             </a>
           ),
@@ -50,7 +65,7 @@ export default function HeaderNav(): JSX.Element {
         },
         {
           label: (
-            <a href="/login" style={{ textDecoration: "none" }}>
+            <a href="/authguard/login" style={{ textDecoration: "none" }}>
               Đăng nhập
             </a>
           ),
@@ -77,67 +92,71 @@ export default function HeaderNav(): JSX.Element {
 
   const userMenuLogin = (
     <Menu
-      // items={
-      //   userInfo? === "ADMIN"
-      //     ? [
-      //         {
-      //           label: (
-      //             <a href="/admin" style={{ textDecoration: "none" }}>
-      //               Trang quản lý
-      //             </a>
-      //           ),
-      //           key: "0",
-      //         },
-      //         {
-      //           label: (
-      //             <a href="/" style={{ textDecoration: "none" }}>
-      //               Thông tin tài khoản
-      //             </a>
-      //           ),
-      //           key: "1",
-      //         },
-      //         {
-      //           label: (
-      //             <a href="/login" style={{ textDecoration: "none" }}>
-      //               Vé đã đặt
-      //             </a>
-      //           ),
-      //           key: "2",
-      //         },
-      //         {
-      //           type: "divider",
-      //         },
-      //         {
-      //           label: <div onClick={handleLogout}>Đăng xuất</div>,
-      //           key: "3",
-      //         },
-      //       ]
-      //     : [
-      //         {
-      //           label: (
-      //             <a href="/" style={{ textDecoration: "none" }}>
-      //               Thông tin tài khoản
-      //             </a>
-      //           ),
-      //           key: "0",
-      //         },
-      //         {
-      //           label: (
-      //             <a href="/login" style={{ textDecoration: "none" }}>
-      //               Vé đã đặt
-      //             </a>
-      //           ),
-      //           key: "1",
-      //         },
-      //         {
-      //           type: "divider",
-      //         },
-      //         {
-      //           label: <div onClick={handleLogout}>Đăng xuất</div>,
-      //           key: "2",
-      //         },
-      //       ]
-      // }
+      items={
+        userinfo === "ADMIN"
+          ? [
+              {
+                label: (
+                  <a href="/admin" style={{ textDecoration: "none" }}>
+                    Trang quản lý
+                  </a>
+                ),
+                key: "0",
+              },
+              {
+                label: (
+                  <a href="/" style={{ textDecoration: "none" }}>
+                    Thông tin tài khoản
+                  </a>
+                ),
+                key: "1",
+              },
+              {
+                label: (
+                  <a href="/" style={{ textDecoration: "none" }}>
+                    Vé đã đặt
+                  </a>
+                ),
+                key: "2",
+              },
+              {
+                type: "divider",
+              },
+              {
+                label: (
+                  <a href="/authguard/login" onClick={handleLogout}>
+                    Đăng xuất
+                  </a>
+                ),
+                key: "3",
+              },
+            ]
+          : [
+              {
+                label: (
+                  <a href="/" style={{ textDecoration: "none" }}>
+                    Thông tin tài khoản
+                  </a>
+                ),
+                key: "0",
+              },
+              {
+                label: (
+                  <a href="/login" style={{ textDecoration: "none" }}>
+                    Vé đã đặt
+                  </a>
+                ),
+                key: "1",
+              },
+              {
+                type: "divider",
+              },
+              {
+                label: <div onClick={handleLogout}>Đăng xuất</div>,
+                key: "2",
+              },
+            ]
+      }
     />
   );
 
@@ -159,13 +178,13 @@ export default function HeaderNav(): JSX.Element {
         >
           Home 2
         </Menu.Item>
-        <Menu.Item key="UserMenu">
+        <Menu.Item >
           <Dropdown
-            overlay={userInfo ? userMenuLogin : userMenu}
+            overlay={userInfo !== null ? userMenuLogin : userMenu}
             trigger={["click"]}
           >
             <a onClick={(e) => e.preventDefault()}>
-              {userInfo ? (
+              {"userInfo" ? (
                 <Space>
                   {/* {userInfo.name} */}
                   <UserOutlined />

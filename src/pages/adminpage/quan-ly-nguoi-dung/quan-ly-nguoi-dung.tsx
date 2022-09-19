@@ -18,6 +18,8 @@ export default function QuanLyNguoiDung(): JSX.Element {
   const { usersList } = useSelector(
     (state: RootState) => state.usersListReducer
   );
+  console.log(usersList);
+  
   useEffect(() => {
     dispatch(fetchUsersListAction());
   }, []);
