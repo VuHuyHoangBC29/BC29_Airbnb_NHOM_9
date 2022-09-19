@@ -36,13 +36,10 @@ export default function HeaderNav(): JSX.Element {
     userInfo = JSON.parse(userInfo);
   }
   useEffect(() => {
-
     setState([userInfo]);
   }, []);
-  console.log(state);
 
-  const userinfo:any = state.map((ele: any) => ele.role);
-  console.log(userinfo);
+  const userinfo: any = state.map((ele: any) => ele.role);
 
   const handleLogout = () => {
     localStorage.removeItem(USER_INFO_KEY);
@@ -178,7 +175,7 @@ export default function HeaderNav(): JSX.Element {
         >
           Home 2
         </Menu.Item>
-        <Menu.Item >
+        <Menu.Item>
           <Dropdown
             overlay={userInfo !== null ? userMenuLogin : userMenu}
             trigger={["click"]}
