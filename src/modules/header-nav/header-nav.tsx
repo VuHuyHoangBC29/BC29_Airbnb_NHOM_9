@@ -23,26 +23,29 @@ import { UserType } from "../../enums/user";
 
 export default function HeaderNav(): JSX.Element {
   const navigate = useNavigate();
-  const [state, setState] = useState<Array<string[]>>([]);
+  // const [state, setState] = useState<Array<string[]>>([]); // cách 2
   const dispatch = useDispatch<AppDispatch>();
 
   const { userInfo } = useSelector(
     (state: RootState) => state.authenticationReducer
   );
 
-  // console.log(userInfo);
+  console.log(userInfo);
   let info_user: any = localStorage.getItem(USER_INFO_KEY);
   if (info_user) {
     info_user = JSON.parse(info_user);
   }
-  useEffect(() => {
-    setState([info_user]);
-  }, []);
-  let user_state:any = "";
-  state.map((ele: any) => {
-    user_state = ele?.role;
-  });
-  console.log(user_state);
+  //cách 2
+  // // useEffect(() => {
+  // //   setState([info_user]);
+  // // }, []);
+
+  
+  // let user_state:any = "";
+  // state.map((ele: any) => {
+  //   user_state = ele?.role;
+  // });
+
   
 
   const handleLogout = () => {
@@ -95,7 +98,7 @@ export default function HeaderNav(): JSX.Element {
   const userMenuLogin = (
     <Menu
       items={
-        user_state === UserType.admin
+        userInfo?.role === UserType.admin
           ? [
               {
                 label: (

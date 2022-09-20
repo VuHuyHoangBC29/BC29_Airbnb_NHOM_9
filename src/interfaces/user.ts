@@ -8,6 +8,20 @@ export interface User {
   phone: number | null;
   birthday: string;
   avatar: string | null;
-  gender:boolean;
+  gender: boolean;
   role: UserType;
+}
+export interface UserLoginRespone {
+  user: {
+    id: number;
+    name: string;
+    email: string;
+    password: string;
+    phone: number | null;
+    birthday: string;
+    avatar: string | null;
+    gender: boolean;
+    role: UserType;
+  };
+  token: string;
 }

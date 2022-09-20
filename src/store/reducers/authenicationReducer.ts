@@ -16,10 +16,7 @@ export const loginAction = createAsyncThunk(
     notification.success({
       message: "Đăng nhập thành công",
     });
-
-    console.log(response);
-
-    return response.data.content;
+    return response.data.content.user;
   }
 );
 
