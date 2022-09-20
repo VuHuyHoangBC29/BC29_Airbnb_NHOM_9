@@ -12,7 +12,7 @@ import {
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import { USER_INFO_KEY } from "../../constants/common";
+import { USER_INFO_KEY, USER_TOKEN } from "../../constants/common";
 import {
   authenticationActions,
   loginAction,
@@ -23,17 +23,31 @@ import { UserType } from "../../enums/user";
 
 export default function HeaderNav(): JSX.Element {
   const navigate = useNavigate();
-
+  const [state, setState] = useState<Array<string[]>>([]);
   const dispatch = useDispatch<AppDispatch>();
 
   const { userInfo } = useSelector(
     (state: RootState) => state.authenticationReducer
   );
 
-  console.log(userInfo);
+  // console.log(userInfo);
+  let info_user: any = localStorage.getItem(USER_INFO_KEY);
+  if (info_user) {
+    info_user = JSON.parse(info_user);
+  }
+  useEffect(() => {
+    setState([info_user]);
+  }, []);
+  let user_state:any = "";
+  state.map((ele: any) => {
+    user_state = ele?.role;
+  });
+  console.log(user_state);
+  
 
   const handleLogout = () => {
     localStorage.removeItem(USER_INFO_KEY);
+    localStorage.removeItem(USER_TOKEN);
 
     dispatch(authenticationActions.handleLogout(null));
 
@@ -81,7 +95,7 @@ export default function HeaderNav(): JSX.Element {
   const userMenuLogin = (
     <Menu
       items={
-        userInfo?.role === UserType.admin
+        user_state === UserType.admin
           ? [
               {
                 label: (
@@ -112,7 +126,7 @@ export default function HeaderNav(): JSX.Element {
               },
               {
                 label: (
-                  <a href="/authguard/login" onClick={handleLogout}>
+                  <a onClick={handleLogout}>
                     Đăng xuất
                   </a>
                 ),
@@ -174,7 +188,7 @@ export default function HeaderNav(): JSX.Element {
             <a onClick={(e) => e.preventDefault()}>
               {"userInfo" ? (
                 <Space>
-                  {/* {userInfo.name} */}
+                  {userInfo?.name}
                   <UserOutlined />
                 </Space>
               ) : (

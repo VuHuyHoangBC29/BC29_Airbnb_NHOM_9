@@ -12,14 +12,11 @@ export const request = axios.create({
 
 request.interceptors.request.use((config) => {
   let userInfo = localStorage.getItem(USER_TOKEN);
-
   if (userInfo) {
     userInfo = JSON.parse(userInfo);
-    // console.log(userInfo.token);
     config.headers.Authorization = `Bearer ${userInfo?.token}`;
   }
 
-  // console.log(config);
   return config;
 });
 
