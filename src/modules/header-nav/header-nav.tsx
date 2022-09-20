@@ -39,14 +39,14 @@ export default function HeaderNav(): JSX.Element {
     setState([userInfo]);
   }, []);
 
-  const userinfo: any = state.map((ele: any) => ele.role);
+  const userinfo = state.map((ele: any) => ele.role);
 
   const handleLogout = () => {
     localStorage.removeItem(USER_INFO_KEY);
 
     dispatch(authenticationActions.handleLogout());
 
-    navigate("/");
+    navigate("/home1");
   };
 
   const userMenu = (
