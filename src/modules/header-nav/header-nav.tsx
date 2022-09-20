@@ -19,32 +19,23 @@ import {
 } from "../../store/reducers/authenicationReducer";
 
 import { User } from "../../interfaces/user";
+import { UserType } from "../../enums/user";
 
 export default function HeaderNav(): JSX.Element {
   const navigate = useNavigate();
-  const [state, setState] = useState<any>([]);
+
   const dispatch = useDispatch<AppDispatch>();
 
-  // const { userInfo } = useSelector(
-  //   (state: RootState) => state.authenticationReducer
-  // );
+  const { userInfo } = useSelector(
+    (state: RootState) => state.authenticationReducer
+  );
 
-  // console.log(userInfo);
-  let userInfo: any = localStorage.getItem(USER_INFO_KEY);
-
-  if (userInfo) {
-    userInfo = JSON.parse(userInfo);
-  }
-  useEffect(() => {
-    setState([userInfo]);
-  }, []);
-
-  const userinfo = state.map((ele: any) => ele.role);
+  console.log(userInfo);
 
   const handleLogout = () => {
     localStorage.removeItem(USER_INFO_KEY);
 
-    dispatch(authenticationActions.handleLogout());
+    dispatch(authenticationActions.handleLogout(null));
 
     navigate("/home1");
   };
@@ -54,7 +45,7 @@ export default function HeaderNav(): JSX.Element {
       items={[
         {
           label: (
-            <a href="/authguard/register" style={{ textDecoration: "none" }}>
+            <a href="/register" style={{ textDecoration: "none" }}>
               Đăng ký
             </a>
           ),
@@ -62,7 +53,7 @@ export default function HeaderNav(): JSX.Element {
         },
         {
           label: (
-            <a href="/authguard/login" style={{ textDecoration: "none" }}>
+            <a href="/login" style={{ textDecoration: "none" }}>
               Đăng nhập
             </a>
           ),
@@ -90,7 +81,7 @@ export default function HeaderNav(): JSX.Element {
   const userMenuLogin = (
     <Menu
       items={
-        userinfo === "ADMIN"
+        userInfo?.role === UserType.admin
           ? [
               {
                 label: (

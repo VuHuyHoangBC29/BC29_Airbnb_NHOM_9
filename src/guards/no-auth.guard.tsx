@@ -10,15 +10,12 @@ export default function NoAuthGuard() {
   );
 
   const navigate = useNavigate();
-
-
-
-
-    if (userInfo ) {
-      console.log(123);
-      
-      navigate("/home1");
+  
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
     }
+  }, []);
 
   return (
     <div>
