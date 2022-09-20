@@ -11,7 +11,7 @@ export interface User {
   gender: boolean;
   role: UserType;
 }
-export interface UserLoginRespone {
+export interface UserLoginResponse {
   user: {
     id: number;
     name: string;

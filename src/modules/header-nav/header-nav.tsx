@@ -31,22 +31,8 @@ export default function HeaderNav(): JSX.Element {
   );
 
   console.log(userInfo);
-  let info_user: any = localStorage.getItem(USER_INFO_KEY);
-  if (info_user) {
-    info_user = JSON.parse(info_user);
-  }
-  //cách 2
-  // // useEffect(() => {
-  // //   setState([info_user]);
-  // // }, []);
 
-  
-  // let user_state:any = "";
-  // state.map((ele: any) => {
-  //   user_state = ele?.role;
-  // });
-
-  
+  console.log(userInfo?.role);
 
   const handleLogout = () => {
     localStorage.removeItem(USER_INFO_KEY);
@@ -128,11 +114,7 @@ export default function HeaderNav(): JSX.Element {
                 type: "divider",
               },
               {
-                label: (
-                  <a onClick={handleLogout}>
-                    Đăng xuất
-                  </a>
-                ),
+                label: <a onClick={handleLogout}>Đăng xuất</a>,
                 key: "3",
               },
             ]

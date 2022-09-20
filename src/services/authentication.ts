@@ -1,9 +1,9 @@
 import { request } from "../config/axios";
 import { AxiosPromise } from "axios";
 import { UserLogin } from "../interfaces/userLogin";
-import { User, UserLoginRespone } from "../interfaces/user";
+import { User, UserLoginResponse } from "../interfaces/user";
 
-export const loginApi = (data: UserLogin): AxiosPromise<HttpResponseLogin<any,UserLoginRespone[]>> => {
+export const loginApi = (data: UserLogin): AxiosPromise<HttpResponse<UserLoginResponse>> => {
   return request({
     url: `/auth/signin`,
     method: "POST",
