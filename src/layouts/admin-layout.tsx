@@ -1,10 +1,10 @@
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
   UserOutlined,
   EnvironmentOutlined,
-  VideoCameraOutlined,
+  AppstoreAddOutlined,
+  BookOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import React, { useState } from "react";
@@ -39,6 +39,22 @@ export default function AdminLayout(): JSX.Element {
               label: "Quản lý vị trí",
               onClick: () => {
                 navigate("/admin/quanlyvitri");
+              },
+            },
+            {
+              key: "3",
+              icon: <AppstoreAddOutlined />,
+              label: "Quản lý phòng",
+              onClick: () => {
+                navigate("/admin/quanlyphong");
+              },
+            },
+            {
+              key: "4",
+              icon: <BookOutlined/>,
+              label: "Quản lý đặt phòng",
+              onClick: () => {
+                navigate("/admin/quanlydatphong");
               },
             },
           ]}

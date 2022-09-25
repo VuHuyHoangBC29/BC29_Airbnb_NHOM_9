@@ -1,20 +1,30 @@
-import { Button, Checkbox, Form, Input, DatePicker, Select } from "antd";
+import { Button, Checkbox, Form, Input, DatePicker, Select, Image, notification } from "antd";
 import type { DatePickerProps } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import "./themnguoidung.scss";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { fetchUserPostAction } from "../../store/reducers/userReducer";
 
 export default function ThemNguoiDung(): JSX.Element {
+  const dispatch = useDispatch<AppDispatch>();
+  const [image, setImage] = useState<string>("");
+  const [sendfile, setSendfile] = useState<string>();
+  const [form] = Form.useForm();
+  const formData = new FormData();
   const { Option } = Select;
   const onChange: DatePickerProps["onChange"] = (date, dateString) => {
     console.log(moment(date).format("DD/MM/YYYY"));
   };
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
-
-    const { name, password, phone, birthday, gender, type } = values;
-
-    console.log({ name, password, phone, birthday, gender, type });
+  const onFinish = async (values: any) => {
+    values.birthday = values.birthday.format("DD/MM/YYYY");
+    if(values){
+     await dispatch(fetchUserPostAction(values));
+     notification.success({
+      message: "Thêm người dùng thành công"
+     })
+    }    
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -27,72 +37,105 @@ export default function ThemNguoiDung(): JSX.Element {
     console.log(`selected ${value}`);
   };
 
+  const hanldeChangeImage = (event: any) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event: any) => {
+      setImage(event.target.result);
+      setSendfile(file);
+    };
+  };
   return (
-    <div>
-      <Form
-        name="basic"
-        layout="vertical"
-        // labelCol={{ span: 8 }}
-        // wrapperCol={{ span: 16 }}
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        style={{ padding: 0, width: "90%", margin: "auto" }}
-        autoComplete="off"
+    <Form
+      form={form}
+      name="basic"
+      labelCol={{ span: 8 }}
+      wrapperCol={{ span: 16 }}
+      initialValues={{
+        name: "",
+        email: "",
+        password: "",
+        phone: "",
+        birthday: "",
+        avatar: "",
+        gender: false,
+        role: "",
+      }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+      autoComplete="off"
+    >
+      <Form.Item
+        label="Họ và tên"
+        name="name"
+        rules={[{ required: true, message: "Chưa nhập tên!" }]}
       >
-        <Form.Item
-          wrapperCol={{ span: 8 }}
-          label="Họ và tên"
-          name="name"
-          rules={[{ required: true, message: "Chưa nhập tên!" }]}
-        >
-          <Input />
-        </Form.Item>
+        <Input />
+      </Form.Item>
 
-        <Form.Item
-          wrapperCol={{ span: 8 }}
-          label="Mật khẩu"
-          name="password"
-          rules={[{ required: true, message: "Chưa nhập mật khẩu!" }]}
-        >
-          <Input.Password />
-        </Form.Item>
-        <Form.Item
-          wrapperCol={{ span: 8 }}
-          label="Số điện thoại"
-          name="phone"
-          rules={[{ required: true, message: "Chưa nhập số điện thoại!" }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="Giới tính"
-          name="gender"
-          rules={[{ required: true, message: "Chưa chọn giới tính!" }]}
-        >
-          <Select style={{ width: 120 }} onChange={handleChangeOne}>
-            <Option value="true">Nam</Option>
-            <Option value="false">Nữ</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          label="Loại người dùng"
-          name="type"
-          rules={[{ required: true, message: "Chưa chọn loại người dùng!" }]}
-        >
-          <Select style={{ width: 120 }} onChange={handleChangeTwo}>
-            <Option value="ADMIN">Admin</Option>
-            <Option value="USER">User</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-        // wrapperCol={{ offset: 8, span: 16 }}
-        >
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+      <Form.Item
+        label="Mật khẩu"
+        name="password"
+        rules={[{ required: true, message: "Chưa nhập mật khẩu!" }]}
+      >
+        <Input.Password />
+      </Form.Item>
+      <Form.Item
+        label="Email"
+        name="email"
+        rules={[{ required: true, message: "Chưa nhập email!" }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Số điện thoại"
+        name="phone"
+        rules={[{ required: true, message: "Chưa nhập số điện thoại!" }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Ngày sinh"
+        name="birthday"
+        rules={[{ required: true, message: "Chưa nhập ngày sinh!" }]}
+      >
+        <DatePicker onChange={onChange} />
+      </Form.Item>
+      <Form.Item
+        label="Giới tính"
+        name="gender"
+        rules={[{ required: true, message: "Chưa chọn giới tính!" }]}
+      >
+        <Select style={{ width: 120 }} onChange={handleChangeOne}>
+          <Option value="true">Nam</Option>
+          <Option value="false">Nữ</Option>
+        </Select>
+      </Form.Item>
+      <Form.Item
+        label="Loại người dùng"
+        name="type"
+        rules={[{ required: true, message: "Chưa chọn loại người dùng!" }]}
+      >
+        <Select style={{ width: 120 }} onChange={handleChangeTwo}>
+          <Option value="ADMIN">Admin</Option>
+          <Option value="USER">User</Option>
+        </Select>
+      </Form.Item>
+      <Form.Item label="Hình ảnh">
+        <Input type="file" onChange={hanldeChangeImage} />
+        <Image
+          src={image}
+          style={{ padding: "50px" }}
+          alt="pic"
+          onChange={hanldeChangeImage}
+        />
+      </Form.Item>
+      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
   );
 }

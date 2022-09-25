@@ -10,18 +10,14 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
-import { fetchLocationsListAction } from "../../../store/reducers/locationReducer";
+import { fetchBookingRoomAction } from "../../../store/reducers/roomBookingReducer";
 
-export default function QuanLyViTri(): JSX.Element {
+export default function QuanLyDatPhong(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
-  const { locationsList } = useSelector(
-    (state: RootState) => state.locationReducer
-  );
+  const { roombookingList } = useSelector((state: RootState) => state.roomBookingReducer);
   useEffect(() => {
-    dispatch(fetchLocationsListAction());
+    dispatch(fetchBookingRoomAction());
   }, []);
-
-
 
   const navigate = useNavigate();
   const [loadings, setLoadings] = useState<boolean[]>([]);
@@ -46,10 +42,11 @@ export default function QuanLyViTri(): JSX.Element {
   interface DataType {
     key: React.Key;
     id: number;
-    tenViTri: string | undefined;
-    tinhThanh: string | undefined;
-    quocGia: string | undefined;
-    hinhAnh: string | undefined;
+    maPhong: number;
+    ngayDen: string;
+    ngayDi: string;
+    soLuongKhach: number;
+    maNguoiDung: number;
   }
 
   const columns: ColumnsType<DataType> = [
@@ -59,9 +56,9 @@ export default function QuanLyViTri(): JSX.Element {
       width: "5%",
     },
     {
-      title: "Địa danh",
-      dataIndex: "tenViTri",
-      width: "10%",
+      title: "Mã Phòng",
+      dataIndex: "maPhong",
+      width: "5%",
       //   filters: [
       //     {
       //       text: "Joe",
@@ -79,21 +76,26 @@ export default function QuanLyViTri(): JSX.Element {
       sortDirections: ["descend"],
     },
     {
-      title: "Tỉnh Thành",
-      dataIndex: "tinhThanh",
-      width: "8%",
-    },
-    {
-      title: "Hình ảnh",
-      dataIndex: "hinhAnh",
+      title: "Ngày Đến",
+      dataIndex: "ngayDen",
       width: "10%",
-      render: (text: string) => {
-        return <img src={text} style={{ width: 70, height: 50 }} />;
-      },
     },
     {
-      title: "Quốc gia",
-      dataIndex: "quocGia",
+      title: "Ngày Đi",
+      dataIndex: "ngayDi",
+      width: "10%",
+
+    },
+    {
+      title: "Số lượng khách",
+      dataIndex: "soLuongKhach",
+      width: "5%",
+      defaultSortOrder: "descend",
+      //   sorter: (a, b) => a.age - b.age,
+    },
+    {
+      title: "Mã người dùng ",
+      dataIndex: "maNguoiDung",
       width: "5%",
       defaultSortOrder: "descend",
       //   sorter: (a, b) => a.age - b.age,
@@ -104,27 +106,28 @@ export default function QuanLyViTri(): JSX.Element {
       width: "5%",
       render: (text, object) => {
         return (
-          <>
+          <div className="d-flex">
             <a className="pl-4" href="">
               <EditOutlined />
             </a>
             <a className="pl-4" href="">
               <DeleteOutlined />
             </a>
-          </>
+          </div>
         );
       },
     },
   ];
 
-  const data = locationsList?.map((ele, index) => {  
+  const data = roombookingList?.map((ele, index) => {
     return {
       key: index + 1,
       id: ele.id,
-      tenViTri: ele.tenViTri,
-      tinhThanh: ele.tinhThanh,
-      quocGia: ele.quocGia,
-      hinhAnh: ele.hinhAnh,
+      maPhong: ele.maPhong,
+      ngayDen: ele.ngayDen,
+      ngayDi: ele.ngayDi,
+      soLuongKhach: ele.soLuongKhach,
+      maNguoiDung: ele.maNguoiDung,
     };
   });
 
@@ -148,7 +151,7 @@ export default function QuanLyViTri(): JSX.Element {
           loading={loadings[0]}
           onClick={() => enterLoading(0)}
         >
-          Thêm vị trí
+          Đặt phòng
         </Button>
         <Search
           placeholder="input search text"

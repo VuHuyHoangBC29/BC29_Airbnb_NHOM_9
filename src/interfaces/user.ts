@@ -11,6 +11,19 @@ export interface User {
   gender: boolean;
   role: UserType;
 }
+
+export interface UserPost {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  phone: number | null;
+  birthday: string;
+  gender: boolean;
+  role: UserType;
+}
+
+
 export interface UserLoginResponse {
   user: {
     id: number;
