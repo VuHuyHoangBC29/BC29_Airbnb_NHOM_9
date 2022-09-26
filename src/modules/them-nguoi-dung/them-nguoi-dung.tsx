@@ -6,8 +6,12 @@ import moment from "moment";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { fetchUserPostAction } from "../../store/reducers/userReducer";
+import { useParams } from "react-router-dom";
 
 export default function ThemNguoiDung(): JSX.Element {
+  const param = useParams();
+  console.log(param);
+  
   const dispatch = useDispatch<AppDispatch>();
   const [image, setImage] = useState<string>("");
   const [sendfile, setSendfile] = useState<string>();

@@ -9,9 +9,9 @@ import {
 
 export const fetchUsersListAction = createAsyncThunk(
   "userList/fetchUsersList",
-  async () => {
-    const response = await fetchUsersListApi();
-    return response.data.content;
+  async (page:number) => {
+    const response = await fetchUsersListApi(page);    
+    return response.data.content.data;
   }
 );
 
@@ -22,6 +22,8 @@ export const fetchUserPostAction = createAsyncThunk(
     return response.data.content;
   }
 );
+
+
 
 interface UsersListState {
   usersList: User[];
@@ -59,7 +61,7 @@ const usersPostSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(
-      fetchUsersListAction.fulfilled,
+      fetchUserPostAction.fulfilled,
       (state: UsersPostState, actions: PayloadAction<UserPost[]>) => {
         state.userPost = actions.payload;
         console.log("fulfilled");

@@ -3,7 +3,7 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk, { ThunkDispatch } from "redux-thunk";
 import { locationReducer } from "./reducers/locationReducer";
-import { usersListReducer, usersPostReducer } from "./reducers/userReducer";
+import { usersListReducer } from "./reducers/userReducer";
 import { authenticationReducer } from "./reducers/authenicationReducer";
 import { userDetailsReducer } from "./reducers/userDetailsReducer";
 import { roomReducer } from "./reducers/roomInfoReducer";
@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
   userDetailsReducer,
   roomReducer,
   roomBookingReducer,
-  usersPostReducer,
+  // usersPostReducer,
 });
 
 export const store = configureStore({

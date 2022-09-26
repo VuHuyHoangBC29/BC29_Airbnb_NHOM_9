@@ -89,6 +89,10 @@ export default function Router() {
               element: <ThemNguoiDung />,
             },
             {
+              path: "/admin/:id/editnguoidung",
+              element: <ThemNguoiDung />,
+            },
+            {
               path: "/admin/themvitri",
               element: <ThemViTri />,
             },
