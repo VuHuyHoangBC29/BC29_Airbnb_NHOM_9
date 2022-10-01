@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -9,33 +10,30 @@ import {
   notification,
 } from "antd";
 import type { DatePickerProps } from "antd";
-import React, { useEffect, useState } from "react";
-import "./themnguoidung.scss";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
-import { fetchUserPostAction } from "../../store/reducers/userReducer";
 import { useParams } from "react-router-dom";
 import { fetchUserDetailedInfoAction } from "../../store/reducers/userDetailsReducer";
+import { AppDispatch, RootState } from "../../store/store";
 
-export default function ThemNguoiDung(): JSX.Element {
+export default function CapNhatNguoiDung(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const [image, setImage] = useState<string>("");
   const [sendfile, setSendfile] = useState<string>();
   const [form] = Form.useForm();
-  const formData = new FormData();
   const { Option } = Select;
   const onChange: DatePickerProps["onChange"] = (date, dateString) => {
     console.log(moment(date).format("DD/MM/YYYY"));
   };
   const onFinish = async (values: any) => {
     values.birthday = values.birthday.format("DD/MM/YYYY");
-      if (values) {
-        await dispatch(fetchUserPostAction(values));
-        notification.success({
-          message: "Thêm người dùng thành công",
-        });
-      }
+    if (values) {
+      // Post APi
+
+      notification.success({
+        message: "Thêm người dùng thành công",
+      });
+    }
   };
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
@@ -56,6 +54,24 @@ export default function ThemNguoiDung(): JSX.Element {
       setSendfile(file);
     };
   };
+  const param: any = useParams();
+  console.log(param.id);
+  const { userDetail } = useSelector(
+    (state: RootState) => state.userDetailsReducer
+  );
+  useEffect(() => {
+    dispatch(fetchUserDetailedInfoAction(param.id));
+  }, []);
+  //
+  console.log(userDetail);
+
+  useEffect(() => {
+    if (userDetail) {
+      form.setFieldsValue(userDetail);
+    }
+
+  }, [userDetail]);
+
   return (
     <Form
       form={form}
@@ -110,7 +126,8 @@ export default function ThemNguoiDung(): JSX.Element {
         name="birthday"
         rules={[{ required: true, message: "Chưa nhập ngày sinh!" }]}
       >
-        <DatePicker onChange={onChange} />
+        {/* <DatePicker onChange={onChange} format="YYYY/MM/DD" /> */}
+        <Input />
       </Form.Item>
       <Form.Item
         label="Giới tính"

@@ -2,6 +2,7 @@ import { request } from "../config/axios";
 import { AxiosPromise, AxiosResponse } from "axios";
 import { User, UserPost } from "../interfaces/user";
 
+// tải danh sách user
 export const fetchUsersListApi = (
   page: number 
 ): AxiosPromise<HttpResponsePhanTrang<any, User[]>> => {
@@ -10,14 +11,14 @@ export const fetchUsersListApi = (
     method: "GET",
   });
 };
-
-export const fetchUserDetailedInfoApi = (_id: string): AxiosPromise<User[]> => {
+// edit user
+export const fetchUserDetailedInfoApi = (_id: number): AxiosPromise<HttpResponse<User[]>> => {
   return request({
     url: `/users/${_id}`,
     method: "GET",
   });
 };
-
+// thêm user
 export const fetchUserPostApi = (data: UserPost) => {
   return request({
     url: `/users`,
@@ -25,7 +26,7 @@ export const fetchUserPostApi = (data: UserPost) => {
     data,
   });
 };
-
+// xóa
 export const fetchDeleteUserApi = (id: number) => {
   return request({
     url: `/users?id=${id}`,

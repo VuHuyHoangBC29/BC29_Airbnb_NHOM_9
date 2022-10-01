@@ -119,7 +119,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
     {
       title: "Tương tác",
       dataIndex: "tuongTac",
-      width: "10%",
+      width: "7%",
       render: (text) => {
         return (
           <>

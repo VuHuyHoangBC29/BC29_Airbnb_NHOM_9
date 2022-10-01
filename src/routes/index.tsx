@@ -7,6 +7,9 @@ import Home2 from "../pages/home2/home2";
 import Login from "../pages/login/login";
 
 /////////////////////
+const CapNhatNguoiDung = lazy(
+  () => import("../modules/cap-nhat-nguoi-dung/cap-nhat-nguoi-dung")
+);
 
 const QuanLyDatPhong = lazy(
   () => import("../pages/adminpage/quan-ly-dat-phong/quan-ly-dat-phong")
@@ -17,7 +20,9 @@ const QuanLyPhong = lazy(
 const Register = lazy(() => import("../pages/adminpage/register/register"));
 const HomeLayout = lazy(() => import("../layouts/home-layout"));
 const AdminLayout = lazy(() => import("../layouts/admin-layout"));
-const ThemNguoiDung = lazy(() => import("../modules/them-nguoi-dung/them-nguoi-dung"));
+const ThemNguoiDung = lazy(
+  () => import("../modules/them-nguoi-dung/them-nguoi-dung")
+);
 const ThemViTri = lazy(() => import("../modules/them-vi-tri/them-vi-tri"));
 const QuanLyNguoiDung = lazy(
   () => import("../pages/adminpage/quan-ly-nguoi-dung/quan-ly-nguoi-dung")
@@ -90,7 +95,7 @@ export default function Router() {
             },
             {
               path: "/admin/:id/editnguoidung",
-              element: <ThemNguoiDung />,
+              element: <CapNhatNguoiDung />,
             },
             {
               path: "/admin/themvitri",

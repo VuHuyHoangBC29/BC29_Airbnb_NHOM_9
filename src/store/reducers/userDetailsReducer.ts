@@ -4,17 +4,17 @@ import { fetchUserDetailedInfoApi } from "../../services/user";
 
 export const fetchUserDetailedInfoAction = createAsyncThunk(
   "userDetails/fetchUserDetailedInfo",
-  async (id: string) => {
+  async (id: number) => {
     const response = await fetchUserDetailedInfoApi(id);
 
-    console.log(response);
+    // console.log(response);
 
-    return response.data;
+    return response.data.content;
   }
 );
 
 interface UserDetailsState {
-  userDetail: User [];
+  userDetail: any;
 }
 
 const INITIAL_STATE: UserDetailsState = {
