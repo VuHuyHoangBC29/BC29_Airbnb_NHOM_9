@@ -15,10 +15,11 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { fetchUserPostAction } from "../../store/reducers/userReducer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchUserDetailedInfoAction } from "../../store/reducers/userDetailsReducer";
 
 export default function ThemNguoiDung(): JSX.Element {
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [image, setImage] = useState<string>("");
   const [sendfile, setSendfile] = useState<string>();
@@ -36,6 +37,7 @@ export default function ThemNguoiDung(): JSX.Element {
           message: "Thêm người dùng thành công",
         });
       }
+      navigate("/admin/quanlynguoidung");
   };
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
@@ -56,6 +58,8 @@ export default function ThemNguoiDung(): JSX.Element {
       setSendfile(file);
     };
   };
+  let allowedDateFormats = ['DD/MM/YYYY', 'D/M/YYYY', 'DD.MM.YYYY', 'D.M.YYYY', 'DD. MM. YYYY', 'D. M. YYYY','DD-MM-YYYY'];
+
   return (
     <Form
       form={form}
@@ -110,7 +114,7 @@ export default function ThemNguoiDung(): JSX.Element {
         name="birthday"
         rules={[{ required: true, message: "Chưa nhập ngày sinh!" }]}
       >
-        <DatePicker onChange={onChange} />
+        <DatePicker onChange={onChange} format={allowedDateFormats} />
       </Form.Item>
       <Form.Item
         label="Giới tính"

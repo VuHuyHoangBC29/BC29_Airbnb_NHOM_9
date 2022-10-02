@@ -3,12 +3,14 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk, { ThunkDispatch } from "redux-thunk";
 import { locationReducer } from "./reducers/locationReducer";
-import { usersListReducer } from "./reducers/userReducer";
+import { usersListReducer, usersPostReducer } from "./reducers/userReducer";
 import { authenticationReducer } from "./reducers/authenicationReducer";
-import { userDetailsReducer } from "./reducers/userDetailsReducer";
+import {
+  userDetailsReducer,
+  userUpdateReducer,
+} from "./reducers/userDetailsReducer";
 import { roomReducer } from "./reducers/roomInfoReducer";
 import { roomBookingReducer } from "./reducers/roomBookingReducer";
-
 const rootReducer = combineReducers({
   locationReducer,
   usersListReducer,
@@ -16,7 +18,8 @@ const rootReducer = combineReducers({
   userDetailsReducer,
   roomReducer,
   roomBookingReducer,
-  // usersPostReducer,
+  usersPostReducer,
+  userUpdateReducer,
 });
 
 export const store = configureStore({
@@ -30,6 +33,9 @@ export const store = configureStore({
         "usersListReducer",
         "userDetailsReducer",
         "roomReducer",
+        "roomBookingReducer",
+        "usersPostReducer",
+        "userUpdateReducer",
       ],
     },
     rootReducer

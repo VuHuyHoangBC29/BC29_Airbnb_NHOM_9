@@ -12,26 +12,38 @@ import {
 import type { DatePickerProps } from "antd";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { fetchUserDetailedInfoAction } from "../../store/reducers/userDetailsReducer";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  fetchUserDetailedInfoAction,
+  fetchUserUpdateAction,
+} from "../../store/reducers/userDetailsReducer";
 import { AppDispatch, RootState } from "../../store/store";
 
 export default function CapNhatNguoiDung(): JSX.Element {
+  const param: any = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [image, setImage] = useState<string>("");
   const [sendfile, setSendfile] = useState<string>();
   const [form] = Form.useForm();
   const { Option } = Select;
   const onChange: DatePickerProps["onChange"] = (date, dateString) => {
-    console.log(moment(date).format("DD/MM/YYYY"));
+    // console.log(moment(date).format("DD/MM/YYYY"));
   };
+
   const onFinish = async (values: any) => {
     values.birthday = values.birthday.format("DD/MM/YYYY");
-    if (values) {
-      // Post APi
+    try {
+      if (values) {
+        console.log(values);
+        // Post APi
+        await dispatch(fetchUserUpdateAction({id:param.id, data:values} ));
 
-      notification.success({
-        message: "Thêm người dùng thành công",
+        navigate("/admin/quanlynguoidung");
+      }
+    } catch (error) {
+      notification.error({
+        message: `${error}`,
       });
     }
   };
@@ -54,8 +66,7 @@ export default function CapNhatNguoiDung(): JSX.Element {
       setSendfile(file);
     };
   };
-  const param: any = useParams();
-  console.log(param.id);
+
   const { userDetail } = useSelector(
     (state: RootState) => state.userDetailsReducer
   );
@@ -67,11 +78,22 @@ export default function CapNhatNguoiDung(): JSX.Element {
 
   useEffect(() => {
     if (userDetail) {
-      form.setFieldsValue(userDetail);
+      form.setFieldsValue({
+        ...userDetail,
+        birthday: moment(userDetail.birthday, "DD-MM-YYYY"),
+      });
     }
-
   }, [userDetail]);
 
+  let allowedDateFormats = [
+    "DD/MM/YYYY",
+    "D/M/YYYY",
+    "DD.MM.YYYY",
+    "D.M.YYYY",
+    "DD. MM. YYYY",
+    "D. M. YYYY",
+    "DD-MM-YYYY",
+  ];
   return (
     <Form
       form={form}
@@ -126,8 +148,8 @@ export default function CapNhatNguoiDung(): JSX.Element {
         name="birthday"
         rules={[{ required: true, message: "Chưa nhập ngày sinh!" }]}
       >
-        {/* <DatePicker onChange={onChange} format="YYYY/MM/DD" /> */}
-        <Input />
+        <DatePicker onChange={onChange} format={allowedDateFormats} />
+        {/* <Input /> */}
       </Form.Item>
       <Form.Item
         label="Giới tính"

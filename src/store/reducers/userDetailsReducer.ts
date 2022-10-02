@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../interfaces/user";
-import { fetchUserDetailedInfoApi } from "../../services/user";
+import { User, UserPost } from "../../interfaces/user";
+import {
+  fetchUserDetailedInfoApi,
+  fetchUserUpdateApi,
+} from "../../services/user";
 
 export const fetchUserDetailedInfoAction = createAsyncThunk(
   "userDetails/fetchUserDetailedInfo",
@@ -12,6 +15,14 @@ export const fetchUserDetailedInfoAction = createAsyncThunk(
     return response.data.content;
   }
 );
+export const fetchUserUpdateAction = createAsyncThunk(
+  "userUpdate/fetchUsersUpdate",
+  async (object: any) => {
+    const response = await fetchUserUpdateApi(object.id, object.data);
+
+    return response.data.content;
+  }
+);
 
 interface UserDetailsState {
   userDetail: any;
@@ -19,6 +30,15 @@ interface UserDetailsState {
 
 const INITIAL_STATE: UserDetailsState = {
   userDetail: [],
+};
+
+//
+interface UserUpdateState {
+  userUpdate: UserPost[];
+}
+
+const INITIAL_STATE_1: UserUpdateState = {
+  userUpdate: [],
 };
 
 const userDetailsSlice = createSlice({
@@ -36,5 +56,23 @@ const userDetailsSlice = createSlice({
   },
 });
 
+const userUpdateSlice = createSlice({
+  name: "userDetails",
+  initialState: INITIAL_STATE_1,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(
+      fetchUserUpdateAction.fulfilled,
+      (state: UserUpdateState, action: PayloadAction<any>) => {
+        console.log("fulfilled");
+        state.userUpdate = action.payload;
+      }
+    );
+  },
+});
+
 export const userDetailsActions = userDetailsSlice.actions;
 export const userDetailsReducer = userDetailsSlice.reducer;
+
+export const userUpdateActions = userUpdateSlice.actions;
+export const userUpdateReducer = userUpdateSlice.reducer;

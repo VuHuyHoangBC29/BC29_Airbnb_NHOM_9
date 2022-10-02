@@ -1,16 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { create } from "domain";
 import { User, UserPost } from "../../interfaces/user";
-import {
-  fetchUserDetailedInfoApi,
-  fetchUserPostApi,
-  fetchUsersListApi,
-} from "../../services/user";
+import { fetchUserPostApi, fetchUsersListApi } from "../../services/user";
 
 export const fetchUsersListAction = createAsyncThunk(
   "userList/fetchUsersList",
-  async (page:number) => {
-    const response = await fetchUsersListApi(page);    
+  async (page: number) => {
+    const response = await fetchUsersListApi(page);
     return response.data.content.data;
   }
 );
@@ -22,8 +18,6 @@ export const fetchUserPostAction = createAsyncThunk(
     return response.data.content;
   }
 );
-
-
 
 interface UsersListState {
   usersList: User[];

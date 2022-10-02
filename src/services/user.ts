@@ -26,6 +26,14 @@ export const fetchUserPostApi = (data: UserPost) => {
     data,
   });
 };
+// cập nhật
+export const fetchUserUpdateApi = (_id:number,data: UserPost) => {
+  return request({
+    url: `/users/${_id}`,
+    method: "PUT",
+    data,
+  });
+};
 // xóa
 export const fetchDeleteUserApi = (id: number) => {
   return request({

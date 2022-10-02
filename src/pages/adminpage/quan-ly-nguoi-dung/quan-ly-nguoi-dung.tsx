@@ -66,7 +66,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
     {
       title: "Họ tên",
       dataIndex: "name",
-      width: "14%",
+      width: "10%",
       //   filters: [
       //     {
       //       text: "Joe",
@@ -91,7 +91,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
     {
       title: "Email",
       dataIndex: "email",
-      width: "15%",
+      width: "10%",
       defaultSortOrder: "descend",
       //   sorter: (a, b) => a.age - b.age,
     },
@@ -110,6 +110,18 @@ export default function QuanLyNguoiDung(): JSX.Element {
       title: "Ngày sinh",
       dataIndex: "birthday",
       width: "5%",
+    },
+    {
+      title: "Giới tính",
+      dataIndex: "gender",
+      width: "5%",
+      render:(text)=> {
+        return(
+          <>
+            {text===true? <span>Nam</span>:<span>Nữ</span>}
+          </>
+        )
+      },
     },
     {
       title: "Admin",
