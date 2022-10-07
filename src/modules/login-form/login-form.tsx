@@ -30,6 +30,8 @@ export default function LoginForm() {
     };
 
     dispatch(loginAction(loginData));
+
+    console.log(userInfo);
   };
 
   const onFinishFailed = (errorInfo: any) => {

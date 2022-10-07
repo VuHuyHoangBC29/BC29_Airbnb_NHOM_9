@@ -1,12 +1,13 @@
 import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLocationsListAction } from "../../store/reducers/locationReducer";
+import { fetchLocationsListAction } from "../../store/reducers/locationsListReducer";
 import { AppDispatch, RootState } from "../../store/store";
 import { Carousel } from "antd";
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 import { render } from "@testing-library/react";
 
 import "./nearby-place.scss";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 export default function NearbyPlace() {
   const contentStyle: React.CSSProperties = {
@@ -19,21 +20,28 @@ export default function NearbyPlace() {
 
   const dispatch = useDispatch<AppDispatch>();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(fetchLocationsListAction());
   }, []);
 
   const { locationsList } = useSelector(
-    (state: RootState) => state.locationReducer
+    (state: RootState) => state.locationsListReducer
   );
 
-  // console.log(locationsList);
+  console.log(locationsList);
 
   const renderLocations = () => {
     return locationsList?.map((ele, idx) => {
       return (
         <Fragment key={idx}>
-          <div className="d-flex justify-content-left align-items-center mb-3 mr-3">
+          <Link
+            // onClick={() => navigate(`/home2/${ele.id}`)}
+            to={`/locations/${ele.id}`}
+            className="d-flex justify-content-left align-items-center mb-3 mr-3"
+            style={{ textDecoration: "none", color: "black" }}
+          >
             <img
               style={{ width: "100px", height: "100px" }}
               className="img-fluid rounded"
@@ -43,7 +51,7 @@ export default function NearbyPlace() {
             <p style={{ fontWeight: "bolder" }} className="mb-0 ml-2">
               {ele.tinhThanh}
             </p>
-          </div>
+          </Link>
         </Fragment>
       );
     });

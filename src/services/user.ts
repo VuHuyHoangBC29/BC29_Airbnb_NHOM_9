@@ -4,14 +4,16 @@ import { User } from "../interfaces/user";
 
 export const fetchUsersListApi = (): AxiosPromise<HttpResponse<User[]>> => {
   return request({
-    url: `/users`,
+    url: `/users/`,
     method: "GET",
   });
 };
 
-export const fetchUserDetailedInfoApi = (_id: string): AxiosPromise<User[]> => {
+export const fetchUserDetailedInfoApi = (
+  id: number
+): AxiosPromise<HttpResponse<User>> => {
   return request({
-    url: `/users/${_id}`,
+    url: `/users/${id}`,
     method: "GET",
   });
 };

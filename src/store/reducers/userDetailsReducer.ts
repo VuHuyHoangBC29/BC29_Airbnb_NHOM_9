@@ -4,21 +4,21 @@ import { fetchUserDetailedInfoApi } from "../../services/user";
 
 export const fetchUserDetailedInfoAction = createAsyncThunk(
   "userDetails/fetchUserDetailedInfo",
-  async (id: string) => {
+  async (id: number) => {
     const response = await fetchUserDetailedInfoApi(id);
 
     console.log(response);
 
-    return response.data;
+    return response.data.content;
   }
 );
 
 interface UserDetailsState {
-  userDetail: User [];
+  userDetail: User | null;
 }
 
 const INITIAL_STATE: UserDetailsState = {
-  userDetail: [],
+  userDetail: null,
 };
 
 const userDetailsSlice = createSlice({
@@ -28,8 +28,9 @@ const userDetailsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       fetchUserDetailedInfoAction.fulfilled,
-      (state: UserDetailsState, action: PayloadAction<User[]>) => {
+      (state: UserDetailsState, action: PayloadAction<User>) => {
         console.log("fulfilled");
+
         state.userDetail = action.payload;
       }
     );

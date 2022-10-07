@@ -5,23 +5,9 @@ export interface User {
   name: string;
   email: string;
   password: string;
-  phone: number | null;
+  phone?: any;
   birthday: string;
-  avatar: string | null;
+  avatar?: any;
   gender: boolean;
   role: UserType;
-}
-export interface UserLoginResponse {
-  user: {
-    id: number;
-    name: string;
-    email: string;
-    password: string;
-    phone: number | null;
-    birthday: string;
-    avatar: string | null;
-    gender: boolean;
-    role: UserType;
-  };
-  token: string;
 }

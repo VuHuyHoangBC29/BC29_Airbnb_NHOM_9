@@ -20,9 +20,9 @@ export default function UserForm(): JSX.Element {
   const onFinish = (values: any) => {
     console.log("Success:", values);
 
-    const { name, password, phone, birthday, gender, type } = values;
+    const { name, password, phone, birthday, gender, role } = values;
 
-    console.log({ name, password, phone, birthday, gender, type });
+    console.log({ name, password, phone, birthday, gender, role });
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -66,29 +66,29 @@ export default function UserForm(): JSX.Element {
 
   const [state, setState] = useState();
 
-  console.log(params._id);
+  console.log(params.id);
 
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    if (params._id) {
-      dispatch(fetchUserDetailedInfoAction(params._id));
+    if (params.id) {
+      dispatch(fetchUserDetailedInfoAction(parseInt(params.id)));
     }
-  }, [params._id]);
+  }, [params.id]);
 
   const { userDetail } = useSelector(
     (state: RootState) => state.userDetailsReducer
   );
 
-  // useEffect(() => {
-  //   if (params._id) {
-  //     form.setFieldsValue({
-  //       ...userDetail,
-  //       birthday: moment(userDetail?.birthday),
-  //       gender: true ? UserGender.true : UserGender.false,
-  //     });
-  //   }
-  // }, [params._id]);
+  useEffect(() => {
+    if (params.id) {
+      form.setFieldsValue({
+        ...userDetail,
+        birthday: moment(userDetail?.birthday),
+        gender: true ? UserGender.true : UserGender.false,
+      });
+    }
+  }, [params.id]);
 
   return (
     <div>
@@ -111,7 +111,7 @@ export default function UserForm(): JSX.Element {
           <Input />
         </Form.Item>
 
-        {!params._id && (
+        {!params.id && (
           <Form.Item
             label="Mật khẩu"
             name="password"

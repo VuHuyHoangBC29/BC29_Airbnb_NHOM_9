@@ -3,7 +3,7 @@ import Carousel from "../../modules/carousel/carousel";
 import NearbyPlace from "../../modules/nearby-place/nearby-place";
 import StayEverywhere from "../../modules/stay-everywhere/stay-everywhere";
 
-export default function Home1(): JSX.Element {
+export default function Home(): JSX.Element {
   return (
     <div>
       <div>home1</div>
