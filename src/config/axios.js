@@ -1,6 +1,6 @@
 import { notification } from "antd";
 import axios from "axios";
-import { BASE_URL, TOKEN_CYBERSOFT, USER_INFO_KEY, USER_TOKEN } from "../constants/common";
+import { BASE_URL, TOKEN_CYBERSOFT, USER_INFO_KEY } from "../constants/common";
 
 export const request = axios.create({
   baseURL: BASE_URL,
@@ -11,12 +11,15 @@ export const request = axios.create({
 });
 
 request.interceptors.request.use((config) => {
-  let userInfo = localStorage.getItem(USER_TOKEN);
+  let userInfo = localStorage.getItem(USER_INFO_KEY);
+
   if (userInfo) {
     userInfo = JSON.parse(userInfo);
-    config.headers.Authorization = `Bearer ${userInfo?.token}`;
+
+    config.headers.Authorization = `Bearer ${userInfo?.accessToken}`;
   }
 
+  console.log(config);
   return config;
 });
 

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 import { RootState } from "../store/store";
 
-export default function NoAuthGuard() {
+export default function AuthGuard() {
   const { userInfo } = useSelector(
     (state: RootState) => state.authenticationReducer
   );
@@ -11,8 +11,8 @@ export default function NoAuthGuard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userInfo) {
-      navigate("/");
+    if (!userInfo) {
+      navigate("/login");
     }
   }, []);
 

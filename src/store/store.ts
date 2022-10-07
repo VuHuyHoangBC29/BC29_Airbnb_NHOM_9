@@ -2,16 +2,24 @@ import { AnyAction, combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk, { ThunkDispatch } from "redux-thunk";
-import { locationReducer } from "./reducers/locationReducer";
-import { usersListReducer } from "./reducers/userReducer";
+import { locationsListReducer } from "./reducers/locationsListReducer";
+import { locationDetailsReducer } from "./reducers/locationDetailsReducer";
+import { usersListReducer } from "./reducers/usersListReducer";
 import { authenticationReducer } from "./reducers/authenicationReducer";
 import { userDetailsReducer } from "./reducers/userDetailsReducer";
+import { roomsListReducer } from "./reducers/roomsListReducer";
+import { roomDetailsReducer } from "./reducers/roomDetailsReducer";
+import { commentsListReducer } from "./reducers/commentsListReducer";
 
 const rootReducer = combineReducers({
-  locationReducer,
-  usersListReducer,
   authenticationReducer,
+  locationsListReducer,
+  locationDetailsReducer,
+  usersListReducer,
   userDetailsReducer,
+  roomsListReducer,
+  roomDetailsReducer,
+  commentsListReducer,
 });
 
 export const store = configureStore({
@@ -20,10 +28,13 @@ export const store = configureStore({
       key: "root",
       storage: storage,
       whitelist: [
-        "locationReducer",
+        "locationsListReducer",
         "authenticationReducer",
         "usersListReducer",
         "userDetailsReducer",
+        "roomsListReducer",
+        "roomDetailsReducer",
+        "commentsListReducer",
       ],
     },
     rootReducer
