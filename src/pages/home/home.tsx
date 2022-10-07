@@ -6,7 +6,6 @@ import StayEverywhere from "../../modules/stay-everywhere/stay-everywhere";
 export default function Home(): JSX.Element {
   return (
     <div>
-      <div>home1</div>
       <Carousel />
       <div style={{ textAlign: "center" }}>
         <p style={{ fontWeight: "bolder", fontSize: "30px" }}>

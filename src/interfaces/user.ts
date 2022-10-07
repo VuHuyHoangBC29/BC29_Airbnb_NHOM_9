@@ -11,3 +11,18 @@ export interface User {
   gender: boolean;
   role: UserType;
 }
+
+export interface UserLoginResponse {
+  user: {
+    id: number;
+    name: string;
+    email: string;
+    password: string;
+    phone: number | null;
+    birthday: string;
+    avatar: string | null;
+    gender: boolean;
+    role: UserType;
+  };
+  token: string;
+}

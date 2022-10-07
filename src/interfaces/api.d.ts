@@ -1,5 +1,12 @@
 declare type HttpResponse<D> = {
-  statusCode: number;
+  statusCode?: number;
   content: D;
-  dateTime: string;
+  dateTime?: string;
+};
+
+declare type HttpResponseLogin<D,T> = {
+  statusCode?: number;
+  content: D;
+  user:T
+  dateTime?: string;
 };

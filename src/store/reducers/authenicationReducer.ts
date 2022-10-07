@@ -1,7 +1,8 @@
 import { UserAddOutlined } from "@ant-design/icons";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { notification } from "antd";
-import { USER_INFO_KEY } from "../../constants/common";
+import { useNavigate } from "react-router-dom";
+import { USER_INFO_KEY, USER_TOKEN } from "../../constants/common";
 import { User } from "../../interfaces/user";
 import { UserLogin } from "../../interfaces/userLogin";
 import { loginApi } from "../../services/authentication";
@@ -10,18 +11,14 @@ export const loginAction = createAsyncThunk(
   "userAuthentication/userLogin",
   async (data: UserLogin) => {
     const response = await loginApi(data);
-
-    console.log(response.data.content);
-
-    localStorage.setItem(
-      USER_INFO_KEY,
-      JSON.stringify(response.data.content.user)
-    );
-
+   
+    localStorage.setItem(USER_INFO_KEY, JSON.stringify(response.data.content.user));
+    
+    localStorage.setItem(USER_TOKEN, JSON.stringify(response.data.content.token));
+   
     notification.success({
-      message: "Đăng nhập thành công!",
+      message: "Đăng nhập thành công",
     });
-
     return response.data.content.user;
   }
 );
@@ -54,9 +51,8 @@ const authenticationSlice = createSlice({
     builder.addCase(
       loginAction.fulfilled,
       (state: UserState, action: PayloadAction<User>) => {
-        console.log("fulfilled");
-
         state.userInfo = action.payload;
+        console.log("fulfilled");
       }
     );
   },

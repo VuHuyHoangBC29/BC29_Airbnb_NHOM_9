@@ -30,7 +30,7 @@ export default function AdminLayout(): JSX.Element {
               icon: <UserOutlined />,
               label: "Quản lý người dùng",
               onClick: () => {
-                navigate("/admin/user-management");
+                navigate("/admin/quanlynguoidung");
               },
             },
             {
