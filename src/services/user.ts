@@ -17,3 +17,4 @@ export const fetchUserDetailedInfoApi = (
     method: "GET",
   });
 };
+

@@ -10,7 +10,7 @@ import {
 import moment from "moment";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsersListAction } from "../../../store/reducers/userReducer";
+import { fetchUsersListAction } from "../../../store/reducers/usersListReducer";
 import { USER_INFO_KEY } from "../../../constants/common";
 
 export default function QuanLyNguoiDung(): JSX.Element {
