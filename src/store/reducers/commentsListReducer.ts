@@ -29,9 +29,8 @@ const commentsListSlice = createSlice({
     builder.addCase(
       fetchCommentsListAction.fulfilled,
       (state: CommentsListState, action: PayloadAction<Comment[]>) => {
-        console.log("fulfilled");
-
         state.commentsList = action.payload;
+        console.log("fulfilled");
       }
     );
   },

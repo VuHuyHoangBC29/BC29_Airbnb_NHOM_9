@@ -5,9 +5,9 @@ export interface User {
   name: string;
   email: string;
   password: string;
-  phone?: any;
+  phone: number | null;
   birthday: string;
-  avatar?: any;
+  avatar: any;
   gender: boolean;
   role: UserType;
 }

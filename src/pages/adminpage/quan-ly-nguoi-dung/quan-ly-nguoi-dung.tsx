@@ -10,19 +10,22 @@ import {
 import moment from "moment";
 import { NavLink, Outlet, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsersListAction } from "../../../store/reducers/usersListReducer";
+
 import { USER_INFO_KEY } from "../../../constants/common";
 import { fetchDeleteUserApi } from "../../../services/user";
+import { fetchUsersListAction } from "../../../store/reducers/usersListReducer";
+import { fetchUsersSearchAction } from "../../../store/reducers/userSearchReducer";
 
 export default function QuanLyNguoiDung(): JSX.Element {
-  const [pageCurrent, setPageCurrent] = useState<number>(1);
   const dispatch = useDispatch<AppDispatch>();
-  const { usersList } = useSelector(
-    (state: RootState) => state.usersListReducer
-  );
+  const [pageCurrent, setPageCurrent] = useState<number>(1);
   useEffect(() => {
     dispatch(fetchUsersListAction(1));
   }, []);
+
+  const { usersList } = useSelector(
+    (state: RootState) => state.usersListReducer
+  );
 
   const navigate = useNavigate();
   const [loadings, setLoadings] = useState<boolean[]>([]);
@@ -43,7 +46,13 @@ export default function QuanLyNguoiDung(): JSX.Element {
     }, 1000);
   };
   const { Search } = Input;
-  const onSearch = (value: string) => console.log(value);
+  const onSearch = (value: string) => {
+    if (value !== "") {
+      dispatch(fetchUsersSearchAction(value));
+    } else {
+      dispatch(fetchUsersListAction(1));
+    }
+  };
   interface DataType {
     key: React.Key;
     id: number;
@@ -64,7 +73,6 @@ export default function QuanLyNguoiDung(): JSX.Element {
       width: "5%",
       sorter: (a, b) => a.id - b.id,
       sortDirections: ["descend"],
-
     },
     {
       title: "Họ tên",

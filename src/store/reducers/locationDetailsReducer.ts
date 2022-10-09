@@ -29,9 +29,8 @@ const locationDetailsSlice = createSlice({
     builder.addCase(
       fetchLocationDetailsAction.fulfilled,
       (state: LocationDetailsState, action: PayloadAction<Location>) => {
-        console.log("fulfilled");
-
         state.locationDetails = action.payload;
+        console.log("fulfilled");
       }
     );
   },

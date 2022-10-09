@@ -4,7 +4,7 @@ import { User, UserPost } from "../interfaces/user";
 
 // tải danh sách user
 export const fetchUsersListApi = (
-  page: number 
+  page: number
 ): AxiosPromise<HttpResponsePhanTrang<any, User[]>> => {
   return request({
     url: `/users/phan-trang-tim-kiem?pageIndex=${page}&pageSize=10`,
@@ -12,7 +12,9 @@ export const fetchUsersListApi = (
   });
 };
 // edit user
-export const fetchUserDetailedInfoApi = (_id: number): AxiosPromise<HttpResponse<User[]>> => {
+export const fetchUserDetailedInfoApi = (
+  _id: number
+): AxiosPromise<HttpResponse<User[]>> => {
   return request({
     url: `/users/${_id}`,
     method: "GET",
@@ -27,7 +29,7 @@ export const fetchUserPostApi = (data: UserPost) => {
   });
 };
 // cập nhật
-export const fetchUserUpdateApi = (_id:number,data: UserPost) => {
+export const fetchUserUpdateApi = (_id: number, data: UserPost) => {
   return request({
     url: `/users/${_id}`,
     method: "PUT",
@@ -39,5 +41,14 @@ export const fetchDeleteUserApi = (id: number) => {
   return request({
     url: `/users?id=${id}`,
     method: "DELETE",
+  });
+};
+//Tìm kiếm
+export const fetchSearchUserApi = (
+  name: string
+): AxiosPromise<HttpResponse<User[]>> => {
+  return request({
+    url: `/users/search/${name}`,
+    method: "GET",
   });
 };

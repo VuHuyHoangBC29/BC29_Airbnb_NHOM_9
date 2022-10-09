@@ -14,7 +14,7 @@ import "./themnguoidung.scss";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import { fetchUserPostAction } from "../../store/reducers/userReducer";
+import { fetchUserPostAction } from "../../store/reducers/userPostReducer";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchUserDetailedInfoAction } from "../../store/reducers/userDetailsReducer";
 

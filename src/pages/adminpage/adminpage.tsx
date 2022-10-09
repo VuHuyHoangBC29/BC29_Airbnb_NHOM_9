@@ -23,6 +23,7 @@ export default function Adminpage(): JSX.Element {
         <Menu
           theme="dark"
           mode="inline"
+          defaultOpenKeys={["1"]}
           defaultSelectedKeys={["1"]}
           items={[
             {

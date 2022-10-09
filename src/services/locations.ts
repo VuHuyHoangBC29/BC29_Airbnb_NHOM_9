@@ -19,6 +19,15 @@ export const fetchLocationsListApi = (): AxiosPromise<
     method: "GET",
   });
 };
+export const fetchPostLocationApi = (
+  data: string
+): AxiosPromise<HttpResponse<Location[]>> => {
+  return request({
+    url: `/vi-tri`,
+    method: "POST",
+    data,
+  });
+};
 
 export const fetchLocationDetailsApi = (
   id: number | undefined

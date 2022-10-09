@@ -1,35 +1,46 @@
-import { Button, Checkbox, Form, Input, DatePicker, Select, Image } from "antd";
+import { Button, Checkbox, Form, Input, DatePicker, Select, Image, notification } from "antd";
 import type { DatePickerProps } from "antd";
 import React, { useState } from "react";
 import "./themvitri.scss";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { fetchPostLocationsAction } from "../../store/reducers/locationPostReducer";
+import { useNavigate } from "react-router-dom";
 
 export default function ThemViTri(): JSX.Element {
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const [image, setImage] = useState<string>("");
-  const [sendfile, setSendfile] = useState<string>();
+  // const [sendfile, setSendfile] = useState<string>();
   const onChange: DatePickerProps["onChange"] = (date, dateString) => {
     console.log(moment(date).format("DD/MM/YYYY"));
   };
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
+
+  const onFinish = async (values: any) => {
+    values.id = 0;
+    values.hinhAnh = image;
+    console.log(values);
+    if(values){
+      await dispatch(fetchPostLocationsAction(values))
+      notification.success({
+        message: "Thêm vị trí thành công",
+      });
+    }
+    navigate("/admin/quanlyvitri");
   };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
-  const handleChangeOne = (value: string) => {
-    console.log(`selected ${value}`);
-  };
-  const handleChangeTwo = (value: string) => {
-    console.log(`selected ${value}`);
-  };
+
   const hanldeChangeImage = (event: any) => {
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (event: any) => {
       setImage(event.target.result);
-      setSendfile(file);
+      // setSendfile(file);
     };
   };
   return (

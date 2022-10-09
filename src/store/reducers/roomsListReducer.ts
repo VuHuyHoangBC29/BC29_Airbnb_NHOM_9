@@ -29,8 +29,8 @@ const roomsListSlice = createSlice({
     builder.addCase(
       fetchRoomsListAction.fulfilled,
       (state: RoomsListState, action: PayloadAction<Room[]>) => {
-        console.log("fulfilled");
         state.roomsList = action.payload;
+        console.log("fulfilled");
       }
     );
   },

@@ -4,22 +4,25 @@ import storage from "redux-persist/lib/storage";
 import thunk, { ThunkDispatch } from "redux-thunk";
 import { locationsListReducer } from "./reducers/locationsListReducer";
 import { locationDetailsReducer } from "./reducers/locationDetailsReducer";
-import { usersListReducer } from "./reducers/usersListReducer";
 import { authenticationReducer } from "./reducers/authenicationReducer";
-import { userDetailsReducer, userUpdateReducer } from "./reducers/userDetailsReducer";
+import {
+  userDetailsReducer,
+  userUpdateReducer,
+} from "./reducers/userDetailsReducer";
 import { roomsListReducer } from "./reducers/roomsListReducer";
 import { roomBookingReducer } from "./reducers/roomBookingReducer";
 import { roomReducer } from "./reducers/roomInfoReducer";
 import { roomDetailsReducer } from "./reducers/roomDetailsReducer";
 import { commentsListReducer } from "./reducers/commentsListReducer";
-import { usersPostReducer } from "./reducers/userReducer";
-
+import { usersPostReducer } from "./reducers/userPostReducer";
+import { usersListReducer } from "./reducers/usersListReducer";
+import { usersSearchReducer } from "./reducers/userSearchReducer";
+import { locationPostReducer } from "./reducers/locationPostReducer";
 
 const rootReducer = combineReducers({
   authenticationReducer,
   locationsListReducer,
   locationDetailsReducer,
-  usersListReducer,
   userDetailsReducer,
   roomsListReducer,
   roomDetailsReducer,
@@ -28,6 +31,9 @@ const rootReducer = combineReducers({
   roomBookingReducer,
   usersPostReducer,
   userUpdateReducer,
+  usersListReducer,
+  usersSearchReducer,
+  locationPostReducer,
 });
 
 export const store = configureStore({
@@ -40,6 +46,17 @@ export const store = configureStore({
         "authenticationReducer",
         "usersListReducer",
         "userDetailsReducer",
+        "locationDetailsReducer",
+        "userDetailsReducer",
+        "roomsListReducer",
+        "roomDetailsReducer",
+        "commentsListReducer",
+        "roomReducer",
+        "roomBookingReducer",
+        "usersPostReducer",
+        "userUpdateReducer",
+        "usersSearchReducer",
+        "locationPostReducer",
       ],
     },
     rootReducer
