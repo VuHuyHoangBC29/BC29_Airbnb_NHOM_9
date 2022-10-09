@@ -8,22 +8,22 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
-import { Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsersListAction } from "../../../store/reducers/usersListReducer";
 import { USER_INFO_KEY } from "../../../constants/common";
+import { fetchDeleteUserApi } from "../../../services/user";
 
 export default function QuanLyNguoiDung(): JSX.Element {
+  const [pageCurrent, setPageCurrent] = useState<number>(1);
   const dispatch = useDispatch<AppDispatch>();
   const { usersList } = useSelector(
     (state: RootState) => state.usersListReducer
   );
-  console.log(usersList);
-  
   useEffect(() => {
-    dispatch(fetchUsersListAction());
+    dispatch(fetchUsersListAction(1));
   }, []);
-  
+
   const navigate = useNavigate();
   const [loadings, setLoadings] = useState<boolean[]>([]);
   const enterLoading = (index: number) => {
@@ -46,15 +46,15 @@ export default function QuanLyNguoiDung(): JSX.Element {
   const onSearch = (value: string) => console.log(value);
   interface DataType {
     key: React.Key;
-    id: number,
-    name: string,
-    email: string,
-    password: string | null,
-    phone: number|null,
-    birthday: string,
-    avatar: string | null,
-    gender: boolean | null,
-    role: string,
+    id: number;
+    name: string;
+    email: string;
+    password: string | null;
+    phone: number | null;
+    birthday: string;
+    avatar: string | null;
+    gender: boolean | null;
+    role: string;
   }
 
   const columns: ColumnsType<DataType> = [
@@ -62,11 +62,14 @@ export default function QuanLyNguoiDung(): JSX.Element {
       title: "STT",
       dataIndex: "key",
       width: "5%",
+      sorter: (a, b) => a.id - b.id,
+      sortDirections: ["descend"],
+
     },
     {
       title: "Họ tên",
       dataIndex: "name",
-      width: "14%",
+      width: "10%",
       //   filters: [
       //     {
       //       text: "Joe",
@@ -80,7 +83,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
       // specify the condition of filtering result
       // here is that finding the name started with `value`
       //   onFilter: (value, record) => record.name.indexOf(value as string) === 0,
-      // sorter: (a, b) => a.name.length - b.name.length,
+      sorter: (a, b) => a.name.length - b.name.length,
       sortDirections: ["descend"],
     },
     {
@@ -91,7 +94,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
     {
       title: "Email",
       dataIndex: "email",
-      width: "15%",
+      width: "10%",
       defaultSortOrder: "descend",
       //   sorter: (a, b) => a.age - b.age,
     },
@@ -101,32 +104,52 @@ export default function QuanLyNguoiDung(): JSX.Element {
       width: "5%",
       //   sorter: (a, b) => a.age - b.age,
     },
-    // {
-    //   title: "Địa chỉ",
-    //   dataIndex: "address",
-    //   width: "10%",
-    // },
     {
       title: "Ngày sinh",
       dataIndex: "birthday",
       width: "5%",
     },
     {
-      title: "Admin",
-      dataIndex: "type",
+      title: "Giới tính",
+      dataIndex: "gender",
+      width: "7%",
+      render: (text) => {
+        return <>{text === true ? <span>Nam</span> : <span>Nữ</span>}</>;
+      },
+    },
+    {
+      title: "Quyền",
+      dataIndex: "role",
       width: "5%",
+      filters: [
+        {
+          text: "ADMIN",
+          value: "ADMIN",
+        },
+        {
+          text: "USER",
+          value: "USER",
+        },
+      ],
+      onFilter: (value, record) => record.role.indexOf(value as string) === 0,
     },
     {
       title: "Tương tác",
       dataIndex: "tuongTac",
-      width: "25%",
-      render: (text, object) => {
+      width: "7%",
+      render: (text) => {
         return (
           <>
-            <a className="pl-4" href="">
+            <NavLink className="pl-4" to={`/admin/${text}/editnguoidung`}>
               <EditOutlined />
-            </a>
-            <a className="pl-4" href="">
+            </NavLink>
+            <a
+              className="pl-4"
+              onClick={async () => {
+                await fetchDeleteUserApi(text);
+                await dispatch(fetchUsersListAction(pageCurrent));
+              }}
+            >
               <DeleteOutlined />
             </a>
           </>
@@ -147,6 +170,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
       avatar: ele.avatar,
       gender: ele.gender,
       role: ele.role,
+      tuongTac: ele.id,
     };
   });
   const onChange: TableProps<DataType>["onChange"] = (
@@ -155,7 +179,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
     sorter,
     extra
   ) => {
-    console.log("params", pagination, filters, sorter, extra);
+    // console.log("params", pagination, filters, sorter, extra);
   };
   return (
     <>
@@ -177,7 +201,19 @@ export default function QuanLyNguoiDung(): JSX.Element {
           enterButton
         />
       </Space>
-      <Table columns={columns} dataSource={data} onChange={onChange} />
+      <Table
+        columns={columns}
+        dataSource={data}
+        onChange={onChange}
+        pagination={{
+          pageSize: 10,
+          total: 100,
+          onChange: async (page) => {
+            await dispatch(fetchUsersListAction(page));
+            setPageCurrent(page);
+          },
+        }}
+      />
     </>
   );
 }

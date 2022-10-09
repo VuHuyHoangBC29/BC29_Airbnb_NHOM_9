@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -9,35 +10,53 @@ import {
   notification,
 } from "antd";
 import type { DatePickerProps } from "antd";
-import React, { useEffect, useState } from "react";
-import "./themnguoidung.scss";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
-import { fetchUserPostAction } from "../../store/reducers/userReducer";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchUserDetailedInfoAction } from "../../store/reducers/userDetailsReducer";
+import {
+  fetchUserDetailedInfoAction,
+  fetchUserUpdateAction,
+} from "../../store/reducers/userDetailsReducer";
+import { AppDispatch, RootState } from "../../store/store";
 
-export default function ThemNguoiDung(): JSX.Element {
+export default function CapNhatNguoiDung(): JSX.Element {
+  const param: any = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [image, setImage] = useState<string>("");
   const [sendfile, setSendfile] = useState<string>();
   const [form] = Form.useForm();
-  const formData = new FormData();
   const { Option } = Select;
   const onChange: DatePickerProps["onChange"] = (date, dateString) => {
-    console.log(moment(date).format("DD/MM/YYYY"));
+    // console.log(moment(date).format("DD/MM/YYYY"));
   };
+  const { userDetail } = useSelector(
+    (state: RootState) => state.userDetailsReducer
+  );
+  console.log(userDetail);
+
+  useEffect(() => {
+    dispatch(fetchUserDetailedInfoAction(param.id));
+  }, []);
   const onFinish = async (values: any) => {
+    console.log(values);
+    
     values.birthday = values.birthday.format("DD/MM/YYYY");
+    values.id = param.id;
+    try {
       if (values) {
-        await dispatch(fetchUserPostAction(values));
+        // Post APi
+        await dispatch(fetchUserUpdateAction({ id: param.id, data: values }));
         notification.success({
-          message: "Thêm người dùng thành công",
+          message: "Cập nhật người dùng thành công",
         });
+        navigate("/admin/quanlynguoidung");
       }
-      navigate("/admin/quanlynguoidung");
+    } catch (error) {
+      notification.error({
+        message: `${error}`,
+      });
+    }
   };
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
@@ -58,8 +77,28 @@ export default function ThemNguoiDung(): JSX.Element {
       setSendfile(file);
     };
   };
-  let allowedDateFormats = ['DD/MM/YYYY', 'D/M/YYYY', 'DD.MM.YYYY', 'D.M.YYYY', 'DD. MM. YYYY', 'D. M. YYYY','DD-MM-YYYY'];
 
+  //
+  console.log(userDetail);
+
+  useEffect(() => {
+    if (userDetail) {
+      form.setFieldsValue({
+        ...userDetail,
+        birthday: moment(userDetail.birthday, "DD-MM-YYYY"),
+      });
+    }
+  }, [userDetail]);
+
+  let allowedDateFormats = [
+    "DD/MM/YYYY",
+    "D/M/YYYY",
+    "DD.MM.YYYY",
+    "D.M.YYYY",
+    "DD. MM. YYYY",
+    "D. M. YYYY",
+    "DD-MM-YYYY",
+  ];
   return (
     <Form
       form={form}
@@ -87,14 +126,13 @@ export default function ThemNguoiDung(): JSX.Element {
       >
         <Input />
       </Form.Item>
-
-      <Form.Item
+      {/* <Form.Item
         label="Mật khẩu"
         name="password"
         rules={[{ required: true, message: "Chưa nhập mật khẩu!" }]}
       >
         <Input.Password />
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item
         label="Email"
         name="email"
@@ -115,6 +153,7 @@ export default function ThemNguoiDung(): JSX.Element {
         rules={[{ required: true, message: "Chưa nhập ngày sinh!" }]}
       >
         <DatePicker onChange={onChange} format={allowedDateFormats} />
+        {/* <Input /> */}
       </Form.Item>
       <Form.Item
         label="Giới tính"
@@ -122,18 +161,18 @@ export default function ThemNguoiDung(): JSX.Element {
         rules={[{ required: true, message: "Chưa chọn giới tính!" }]}
       >
         <Select style={{ width: 120 }} onChange={handleChangeOne}>
-          <Option value="true">Nam</Option>
-          <Option value="false">Nữ</Option>
+          <Option value={true}>Nam</Option>
+          <Option value={false}>Nữ</Option>
         </Select>
       </Form.Item>
       <Form.Item
         label="Loại người dùng"
-        name="type"
+        name="role"
         rules={[{ required: true, message: "Chưa chọn loại người dùng!" }]}
       >
         <Select style={{ width: 120 }} onChange={handleChangeTwo}>
-          <Option value="ADMIN">Admin</Option>
-          <Option value="USER">User</Option>
+          <Option value="ADMIN">ADMIN</Option>
+          <Option value="USER">USER</Option>
         </Select>
       </Form.Item>
       <Form.Item label="Hình ảnh">

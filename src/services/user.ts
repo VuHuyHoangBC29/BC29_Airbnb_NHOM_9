@@ -1,20 +1,43 @@
 import { request } from "../config/axios";
 import { AxiosPromise, AxiosResponse } from "axios";
-import { User } from "../interfaces/user";
+import { User, UserPost } from "../interfaces/user";
 
-export const fetchUsersListApi = (): AxiosPromise<HttpResponse<User[]>> => {
+// tải danh sách user
+export const fetchUsersListApi = (
+  page: number 
+): AxiosPromise<HttpResponsePhanTrang<any, User[]>> => {
   return request({
-    url: `/users/`,
+    url: `/users/phan-trang-tim-kiem?pageIndex=${page}&pageSize=10`,
     method: "GET",
   });
 };
-
-export const fetchUserDetailedInfoApi = (
-  id: number
-): AxiosPromise<HttpResponse<User>> => {
+// edit user
+export const fetchUserDetailedInfoApi = (_id: number): AxiosPromise<HttpResponse<User[]>> => {
   return request({
-    url: `/users/${id}`,
+    url: `/users/${_id}`,
     method: "GET",
   });
 };
-
+// thêm user
+export const fetchUserPostApi = (data: UserPost) => {
+  return request({
+    url: `/users`,
+    method: "POST",
+    data,
+  });
+};
+// cập nhật
+export const fetchUserUpdateApi = (_id:number,data: UserPost) => {
+  return request({
+    url: `/users/${_id}`,
+    method: "PUT",
+    data,
+  });
+};
+// xóa
+export const fetchDeleteUserApi = (id: number) => {
+  return request({
+    url: `/users?id=${id}`,
+    method: "DELETE",
+  });
+};

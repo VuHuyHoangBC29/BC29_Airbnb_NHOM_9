@@ -10,18 +10,17 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
-import { fetchLocationsListAction } from "../../../store/reducers/locationsListReducer";
+import { fetchInfoRoomAction } from "../../../store/reducers/roomInfoReducer";
 
-export default function QuanLyViTri(): JSX.Element {
+
+export default function QuanLyPhong(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
-  const { locationsList } = useSelector(
-    (state: RootState) => state.locationsListReducer
+  const { roominfoList } = useSelector(
+    (state: RootState) => state.roomReducer
   );
   useEffect(() => {
-    dispatch(fetchLocationsListAction());
+    dispatch(fetchInfoRoomAction());
   }, []);
-
-
 
   const navigate = useNavigate();
   const [loadings, setLoadings] = useState<boolean[]>([]);
@@ -46,10 +45,24 @@ export default function QuanLyViTri(): JSX.Element {
   interface DataType {
     key: React.Key;
     id: number;
-    tenViTri: string | undefined;
-    tinhThanh: string | undefined;
-    quocGia: string | undefined;
-    hinhAnh: string | undefined;
+    tenPhong: string;
+    khach: number;
+    phongNgu: number;
+    giuong: number;
+    phongTam: number;
+    moTa: string;
+    giaTien: number;
+    mayGiat: boolean;
+    banLa: boolean;
+    tivi: boolean;
+    dieuHoa: boolean;
+    wifi: boolean;
+    bep: boolean;
+    doXe: boolean;
+    hoBoi: boolean;
+    banUi: boolean;
+    maViTri: number;
+    hinhAnh: string;
   }
 
   const columns: ColumnsType<DataType> = [
@@ -59,9 +72,9 @@ export default function QuanLyViTri(): JSX.Element {
       width: "5%",
     },
     {
-      title: "Địa danh",
-      dataIndex: "tenViTri",
-      width: "10%",
+      title: "Mã vị trí",
+      dataIndex: "maViTri",
+      width: "5%",
       //   filters: [
       //     {
       //       text: "Joe",
@@ -79,21 +92,28 @@ export default function QuanLyViTri(): JSX.Element {
       sortDirections: ["descend"],
     },
     {
-      title: "Tỉnh Thành",
-      dataIndex: "tinhThanh",
-      width: "8%",
+      title: "Tên phòng",
+      dataIndex: "tenPhong",
+      width: "10%",
     },
     {
       title: "Hình ảnh",
       dataIndex: "hinhAnh",
-      width: "10%",
+      width: "5%",
       render: (text: string) => {
         return <img src={text} style={{ width: 70, height: 50 }} />;
       },
     },
     {
-      title: "Quốc gia",
-      dataIndex: "quocGia",
+      title: "Người thuê ",
+      dataIndex: "khach",
+      width: "5%",
+      defaultSortOrder: "descend",
+      //   sorter: (a, b) => a.age - b.age,
+    },
+    {
+      title: "Giá tiền ",
+      dataIndex: "giaTien",
       width: "5%",
       defaultSortOrder: "descend",
       //   sorter: (a, b) => a.age - b.age,
@@ -104,26 +124,41 @@ export default function QuanLyViTri(): JSX.Element {
       width: "5%",
       render: (text, object) => {
         return (
-          <>
+          <div className="d-flex">
+            <button>Xem chi tiết</button>
             <a className="pl-4" href="">
               <EditOutlined />
             </a>
             <a className="pl-4" href="">
               <DeleteOutlined />
             </a>
-          </>
+          </div>
         );
       },
     },
   ];
 
-  const data = locationsList?.map((ele, index) => {  
+  const data = roominfoList?.map((ele, index) => {
     return {
       key: index + 1,
       id: ele.id,
-      tenViTri: ele.tenViTri,
-      tinhThanh: ele.tinhThanh,
-      quocGia: ele.quocGia,
+      tenPhong: ele.tenPhong,
+      khach: ele.khach,
+      phongNgu: ele.phongNgu,
+      giuong: ele.giuong,
+      phongTam: ele.phongTam,
+      moTa: ele.moTa,
+      giaTien: ele.giaTien,
+      mayGiat: ele.mayGiat,
+      banLa: ele.banLa,
+      tivi: ele.tivi,
+      dieuHoa: ele.dieuHoa,
+      wifi: ele.wifi,
+      bep: ele.bep,
+      doXe: ele.doXe,
+      hoBoi: ele.hoBoi,
+      banUi: ele.banUi,
+      maViTri: ele.maViTri,
       hinhAnh: ele.hinhAnh,
     };
   });
@@ -148,7 +183,7 @@ export default function QuanLyViTri(): JSX.Element {
           loading={loadings[0]}
           onClick={() => enterLoading(0)}
         >
-          Thêm vị trí
+          Thêm phòng
         </Button>
         <Search
           placeholder="input search text"

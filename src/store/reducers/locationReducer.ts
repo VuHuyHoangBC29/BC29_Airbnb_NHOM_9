@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Location } from "../../interfaces/location";
 import { LocationPOST } from "../../interfaces/locationPOST";
 import {
-  createLocationApi,
+  fetchPostLocationApi,
   fetchLocationsListApi,
 } from "../../services/locations";
 
@@ -17,9 +17,8 @@ export const fetchLocationsListAction = createAsyncThunk(
 export const createLocationAction = createAsyncThunk(
   "location/createLocation",
   async (data: LocationPOST) => {
-    // await createLocationApi(data);
 
-    const response = await createLocationApi(data);
+    const response = await fetchPostLocationApi(data);
 
     return response.data;
   }
@@ -41,8 +40,8 @@ const locationSlice = createSlice({
     builder.addCase(
       fetchLocationsListAction.fulfilled,
       (state: LocationState, action: PayloadAction<Location[]>) => {
-        console.log("fulfilled");
         state.locationsList = action.payload;
+        console.log("fulfilled");
       }
     );
   },

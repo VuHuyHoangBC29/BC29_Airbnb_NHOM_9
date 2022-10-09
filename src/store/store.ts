@@ -6,10 +6,14 @@ import { locationsListReducer } from "./reducers/locationsListReducer";
 import { locationDetailsReducer } from "./reducers/locationDetailsReducer";
 import { usersListReducer } from "./reducers/usersListReducer";
 import { authenticationReducer } from "./reducers/authenicationReducer";
-import { userDetailsReducer } from "./reducers/userDetailsReducer";
+import { userDetailsReducer, userUpdateReducer } from "./reducers/userDetailsReducer";
 import { roomsListReducer } from "./reducers/roomsListReducer";
+import { roomBookingReducer } from "./reducers/roomBookingReducer";
+import { roomReducer } from "./reducers/roomInfoReducer";
 import { roomDetailsReducer } from "./reducers/roomDetailsReducer";
 import { commentsListReducer } from "./reducers/commentsListReducer";
+import { usersPostReducer } from "./reducers/userReducer";
+
 
 const rootReducer = combineReducers({
   authenticationReducer,
@@ -20,6 +24,10 @@ const rootReducer = combineReducers({
   roomsListReducer,
   roomDetailsReducer,
   commentsListReducer,
+  roomReducer,
+  roomBookingReducer,
+  usersPostReducer,
+  userUpdateReducer,
 });
 
 export const store = configureStore({
@@ -32,9 +40,6 @@ export const store = configureStore({
         "authenticationReducer",
         "usersListReducer",
         "userDetailsReducer",
-        "roomsListReducer",
-        "roomDetailsReducer",
-        "commentsListReducer",
       ],
     },
     rootReducer
