@@ -11,8 +11,11 @@ export const loginAction = createAsyncThunk(
   "userAuthentication/userLogin",
   async (data: UserLogin) => {
     const response = await loginApi(data);
+   
     localStorage.setItem(USER_INFO_KEY, JSON.stringify(response.data.content.user));
+    
     localStorage.setItem(USER_TOKEN, JSON.stringify(response.data.content.token));
+   
     notification.success({
       message: "Đăng nhập thành công",
     });

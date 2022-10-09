@@ -1,10 +1,9 @@
-import { notification } from "antd";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 import { RootState } from "../store/store";
 
-export default function AdminGuard() {
+export default function AuthGuard() {
   const { userInfo } = useSelector(
     (state: RootState) => state.authenticationReducer
   );
@@ -13,14 +12,7 @@ export default function AdminGuard() {
 
   useEffect(() => {
     if (!userInfo) {
-      return navigate("/login");
-    }
-
-    if (userInfo && userInfo.role !== "ADMIN") {
-      notification.warning({
-        message: "Access denied!",
-      });
-      return navigate("/");
+      navigate("/login");
     }
   }, []);
 

@@ -1,28 +1,29 @@
 import { Table, Input, Space, Button } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import React, { useEffect, useState } from "react";
-import { AppDispatch, RootState } from "../../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
 import {
   EditOutlined,
   SolutionOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
-import { NavLink, Outlet, useNavigate, useParams } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsersListAction } from "../../../store/reducers/usersListReducer";
-import { USER_INFO_KEY } from "../../../constants/common";
-import { fetchDeleteUserApi } from "../../../services/user";
+import { fetchUsersListAction } from "../../store/reducers/usersListReducer";
 
-export default function QuanLyNguoiDung(): JSX.Element {
-  const [pageCurrent, setPageCurrent] = useState<number>(1);
+export default function UserManagement(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
+
   const { usersList } = useSelector(
     (state: RootState) => state.usersListReducer
   );
+
   useEffect(() => {
-    dispatch(fetchUsersListAction(1));
+    dispatch(fetchUsersListAction());
   }, []);
+
+  console.log(usersList);
 
   const navigate = useNavigate();
   const [loadings, setLoadings] = useState<boolean[]>([]);
@@ -37,23 +38,24 @@ export default function QuanLyNguoiDung(): JSX.Element {
       setLoadings((prevLoadings) => {
         const newLoadings = [...prevLoadings];
         newLoadings[index] = false;
-        navigate("/admin/themnguoidung");
+        navigate("/admin/user-management/create-user");
         return newLoadings;
       });
     }, 1000);
   };
   const { Search } = Input;
+
   const onSearch = (value: string) => console.log(value);
+
   interface DataType {
     key: React.Key;
     id: number;
     name: string;
     email: string;
-    password: string | null;
-    phone: number | null;
+    password: string;
+    phone: string;
     birthday: string;
-    avatar: string | null;
-    gender: boolean | null;
+    gender: boolean | undefined;
     role: string;
   }
 
@@ -62,14 +64,11 @@ export default function QuanLyNguoiDung(): JSX.Element {
       title: "STT",
       dataIndex: "key",
       width: "5%",
-      sorter: (a, b) => a.id - b.id,
-      sortDirections: ["descend"],
-
     },
     {
       title: "Họ tên",
       dataIndex: "name",
-      width: "10%",
+      width: "14%",
       //   filters: [
       //     {
       //       text: "Joe",
@@ -94,14 +93,8 @@ export default function QuanLyNguoiDung(): JSX.Element {
     {
       title: "Email",
       dataIndex: "email",
-      width: "10%",
+      width: "15%",
       defaultSortOrder: "descend",
-      //   sorter: (a, b) => a.age - b.age,
-    },
-    {
-      title: "Password",
-      dataIndex: "password",
-      width: "5%",
       //   sorter: (a, b) => a.age - b.age,
     },
     {
@@ -110,46 +103,24 @@ export default function QuanLyNguoiDung(): JSX.Element {
       width: "5%",
     },
     {
-      title: "Giới tính",
-      dataIndex: "gender",
-      width: "7%",
-      render: (text) => {
-        return <>{text === true ? <span>Nam</span> : <span>Nữ</span>}</>;
-      },
-    },
-    {
-      title: "Quyền",
+      title: "Role",
       dataIndex: "role",
       width: "5%",
-      filters: [
-        {
-          text: "ADMIN",
-          value: "ADMIN",
-        },
-        {
-          text: "USER",
-          value: "USER",
-        },
-      ],
-      onFilter: (value, record) => record.role.indexOf(value as string) === 0,
     },
     {
       title: "Tương tác",
       dataIndex: "tuongTac",
-      width: "7%",
-      render: (text) => {
+      width: "10%",
+      render: (_, record) => {
         return (
           <>
-            <NavLink className="pl-4" to={`/admin/${text}/editnguoidung`}>
+            <Link to={`/admin/user-management/${record.id}/edit-user`}>
               <EditOutlined />
-            </NavLink>
-            <a
-              className="pl-4"
-              onClick={async () => {
-                await fetchDeleteUserApi(text);
-                await dispatch(fetchUsersListAction(pageCurrent));
-              }}
-            >
+            </Link>
+            {/* <a className="pl-4" href="">
+              <EditOutlined />
+            </a> */}
+            <a className="pl-4" href="">
               <DeleteOutlined />
             </a>
           </>
@@ -158,7 +129,24 @@ export default function QuanLyNguoiDung(): JSX.Element {
     },
   ];
 
-  const data = usersList?.map((ele, index) => {
+  // const data = [
+  //   {
+  //     key: "1",
+  //     tickets: [],
+  //     deleteAt: false,
+  //     _id: "61604bcdd1a292001ce8f17a",
+  //     name: "Nguyễn Phong Hào Phóng",
+  //     email: "hao9x0159@gmail.com",
+  //     password: "$2a$10$9Ie16jOoUWm6opIEkbOXf.v8odVh9l2yNf.SSTwTgFaWG4t6fiFtO",
+  //     phone: "0945077142",
+  //     birthday: moment("1998-05-10T17:00:00.000Z").format("DD/MM/YYYY"),
+  //     gender: true,
+  //     address: "số 13 , 116/4 trại cá , hai bà trưng , hà nội",
+  //     type: "ADMIN",
+  //   },
+  // ];
+
+  const data = usersList.map((ele, index) => {
     return {
       key: index + 1,
       id: ele.id,
@@ -166,11 +154,10 @@ export default function QuanLyNguoiDung(): JSX.Element {
       email: ele.email,
       password: ele.password,
       phone: ele.phone,
+      // birthday: moment(ele.birthday).format("MM/DD/YYYY"),
       birthday: ele.birthday,
-      avatar: ele.avatar,
       gender: ele.gender,
       role: ele.role,
-      tuongTac: ele.id,
     };
   });
   const onChange: TableProps<DataType>["onChange"] = (
@@ -179,7 +166,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
     sorter,
     extra
   ) => {
-    // console.log("params", pagination, filters, sorter, extra);
+    console.log("params", pagination, filters, sorter, extra);
   };
   return (
     <>
@@ -201,19 +188,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
           enterButton
         />
       </Space>
-      <Table
-        columns={columns}
-        dataSource={data}
-        onChange={onChange}
-        pagination={{
-          pageSize: 10,
-          total: 100,
-          onChange: async (page) => {
-            await dispatch(fetchUsersListAction(page));
-            setPageCurrent(page);
-          },
-        }}
-      />
+      <Table columns={columns} dataSource={data} onChange={onChange} />
     </>
   );
 }

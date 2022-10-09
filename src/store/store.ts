@@ -2,20 +2,28 @@ import { AnyAction, combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk, { ThunkDispatch } from "redux-thunk";
-import { locationReducer } from "./reducers/locationReducer";
-import { usersListReducer, usersPostReducer } from "./reducers/userReducer";
+import { locationsListReducer } from "./reducers/locationsListReducer";
+import { locationDetailsReducer } from "./reducers/locationDetailsReducer";
+import { usersListReducer } from "./reducers/usersListReducer";
 import { authenticationReducer } from "./reducers/authenicationReducer";
-import {
-  userDetailsReducer,
-  userUpdateReducer,
-} from "./reducers/userDetailsReducer";
-import { roomReducer } from "./reducers/roomInfoReducer";
+import { userDetailsReducer, userUpdateReducer } from "./reducers/userDetailsReducer";
+import { roomsListReducer } from "./reducers/roomsListReducer";
 import { roomBookingReducer } from "./reducers/roomBookingReducer";
+import { roomReducer } from "./reducers/roomInfoReducer";
+import { roomDetailsReducer } from "./reducers/roomDetailsReducer";
+import { commentsListReducer } from "./reducers/commentsListReducer";
+import { usersPostReducer } from "./reducers/userReducer";
+
+
 const rootReducer = combineReducers({
-  locationReducer,
-  usersListReducer,
   authenticationReducer,
+  locationsListReducer,
+  locationDetailsReducer,
+  usersListReducer,
   userDetailsReducer,
+  roomsListReducer,
+  roomDetailsReducer,
+  commentsListReducer,
   roomReducer,
   roomBookingReducer,
   usersPostReducer,
@@ -28,14 +36,10 @@ export const store = configureStore({
       key: "root",
       storage: storage,
       whitelist: [
-        "locationReducer",
+        "locationsListReducer",
         "authenticationReducer",
         "usersListReducer",
         "userDetailsReducer",
-        "roomReducer",
-        "roomBookingReducer",
-        "usersPostReducer",
-        "userUpdateReducer",
       ],
     },
     rootReducer

@@ -10,12 +10,12 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
-import { fetchLocationsListAction } from "../../../store/reducers/locationReducer";
+import { fetchLocationsListAction } from "../../../store/reducers/locationsListReducer";
 
 export default function QuanLyViTri(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const { locationsList } = useSelector(
-    (state: RootState) => state.locationReducer
+    (state: RootState) => state.locationsListReducer
   );
   useEffect(() => {
     dispatch(fetchLocationsListAction());

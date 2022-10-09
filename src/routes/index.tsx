@@ -1,10 +1,15 @@
 import React, { lazy } from "react";
 import { useRoutes } from "react-router-dom";
 import AdminGuard from "../guards/admin.guard";
+import AuthGuard from "../guards/auth-guard";
 import NoAuthGuard from "../guards/no-auth.guard";
-import Home1 from "../pages/home1/home1";
-import Home2 from "../pages/home2/home2";
+import Booking from "../pages/booking/booking";
+// import CreateUser from "../pages/create-user/create-user";
+// import EditUser from "../pages/edit-user/edit-user";
+import Home from "../pages/home/home";
+import Locations from "../pages/locations/locations";
 import Login from "../pages/login/login";
+// import UserManagement from "../pages/user-management/user-management";
 
 /////////////////////
 const CapNhatNguoiDung = lazy(
@@ -39,15 +44,32 @@ export default function Router() {
       children: [
         {
           path: "/",
-          element: <Home1 />,
+          element: <Home />,
         },
         {
-          path: "/home1",
-          element: <Home1 />,
+          path: "/home",
+          element: <Home />,
         },
+
         {
-          path: "/home2",
-          element: <Home2 />,
+          path: "/locations",
+          element: <Locations />,
+        },
+
+        {
+          path: "/locations/:provinceId",
+          element: <Locations />,
+        },
+
+        {
+          path: "/",
+          element: <AuthGuard />,
+          children: [
+            {
+              path: "/booking/:roomId",
+              element: <Booking />,
+            },
+          ],
         },
       ],
     },

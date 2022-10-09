@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import type { MenuProps } from "antd";
 import { Button, Dropdown, Menu, message, Space, Tooltip } from "antd";
@@ -9,38 +9,37 @@ import {
   DownOutlined,
   UserOutlined,
   MenuOutlined,
+  HomeOutlined,
+  GlobalOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import { USER_INFO_KEY, USER_TOKEN } from "../../constants/common";
+import { USER_INFO_KEY } from "../../constants/common";
 import {
   authenticationActions,
   loginAction,
 } from "../../store/reducers/authenicationReducer";
-
-import { User } from "../../interfaces/user";
 import { UserType } from "../../enums/user";
 
 export default function HeaderNav(): JSX.Element {
   const navigate = useNavigate();
-  // const [state, setState] = useState<Array<string[]>>([]); // cách 2
+
   const dispatch = useDispatch<AppDispatch>();
 
-  const { userInfo } = useSelector(
+  const { userInfo: userLogin } = useSelector(
     (state: RootState) => state.authenticationReducer
   );
 
-  console.log(userInfo);
+  console.log(userLogin);
 
-  console.log(userInfo?.role);
+  console.log(userLogin?.role);
 
   const handleLogout = () => {
     localStorage.removeItem(USER_INFO_KEY);
-    localStorage.removeItem(USER_TOKEN);
 
     dispatch(authenticationActions.handleLogout(null));
 
-    navigate("/home1");
+    navigate("/");
   };
 
   const userMenu = (
@@ -84,7 +83,7 @@ export default function HeaderNav(): JSX.Element {
   const userMenuLogin = (
     <Menu
       items={
-        userInfo?.role === UserType.admin
+        userLogin?.role === UserType.admin
           ? [
               {
                 label: (
@@ -104,7 +103,7 @@ export default function HeaderNav(): JSX.Element {
               },
               {
                 label: (
-                  <a href="/" style={{ textDecoration: "none" }}>
+                  <a href="/login" style={{ textDecoration: "none" }}>
                     Vé đã đặt
                   </a>
                 ),
@@ -114,7 +113,7 @@ export default function HeaderNav(): JSX.Element {
                 type: "divider",
               },
               {
-                label: <a onClick={handleLogout}>Đăng xuất</a>,
+                label: <div onClick={handleLogout}>Đăng xuất</div>,
                 key: "3",
               },
             ]
@@ -151,29 +150,38 @@ export default function HeaderNav(): JSX.Element {
     <div>
       <Menu mode="horizontal" defaultSelectedKeys={["mail"]}>
         <Menu.Item
-          key="Home1"
-          icon={<MailOutlined />}
-          onClick={() => navigate("/home1")}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          key="home"
+          icon={<HomeOutlined />}
+          onClick={() => navigate("/")}
         >
-          Home 1
+          Trang chủ
         </Menu.Item>
         <Menu.Item
-          key="Home2"
-          icon={<MailOutlined />}
-          onClick={() => navigate("/home2")}
-          style={{ marginRight: "auto" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          key="locations"
+          icon={<GlobalOutlined />}
+          onClick={() => navigate("/locations")}
         >
-          Home 2
+          Địa điểm
         </Menu.Item>
-        <Menu.Item>
+        <Menu.Item key="UserMenu">
           <Dropdown
-            overlay={userInfo !== null ? userMenuLogin : userMenu}
+            overlay={userLogin ? userMenuLogin : userMenu}
             trigger={["click"]}
           >
             <a onClick={(e) => e.preventDefault()}>
-              {"userInfo" ? (
+              {userLogin ? (
                 <Space>
-                  {userInfo?.name}
+                  {userLogin.name}
                   <UserOutlined />
                 </Space>
               ) : (

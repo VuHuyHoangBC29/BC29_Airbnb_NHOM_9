@@ -29,7 +29,7 @@ interface UserDetailsState {
 }
 
 const INITIAL_STATE: UserDetailsState = {
-  userDetail: [],
+  userDetail: null,
 };
 
 //
@@ -50,6 +50,7 @@ const userDetailsSlice = createSlice({
       fetchUserDetailedInfoAction.fulfilled,
       (state: UserDetailsState, action: PayloadAction<User[]>) => {
         console.log("fulfilled");
+
         state.userDetail = action.payload;
       }
     );
