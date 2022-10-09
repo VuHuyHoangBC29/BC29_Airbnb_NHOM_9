@@ -10,14 +10,14 @@ export const fetchUserDetailedInfoAction = createAsyncThunk(
   async (id: number) => {
     const response = await fetchUserDetailedInfoApi(id);
 
-    // console.log(response);
-
     return response.data.content;
   }
 );
 export const fetchUserUpdateAction = createAsyncThunk(
   "userUpdate/fetchUsersUpdate",
   async (object: any) => {
+    // console.log(object);
+    
     const response = await fetchUserUpdateApi(object.id, object.data);
 
     return response.data.content;

@@ -11,7 +11,7 @@ export const fetchLocationsListApi = (): AxiosPromise<HttpResponse<Location[]>> 
   });
 };
 
-export const createLocationApi = (data: LocationPOST) => {
+export const fetchPostLocationApi = (data: LocationPOST) => {
   return request({
     url: `/vi-tri`,
     method: "POST",

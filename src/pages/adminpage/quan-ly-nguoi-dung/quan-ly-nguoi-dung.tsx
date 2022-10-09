@@ -15,7 +15,7 @@ import { USER_INFO_KEY } from "../../../constants/common";
 import { fetchDeleteUserApi } from "../../../services/user";
 
 export default function QuanLyNguoiDung(): JSX.Element {
-  const [pageCurrent, setPageCurrent] = useState<number>(1);  
+  const [pageCurrent, setPageCurrent] = useState<number>(1);
   const dispatch = useDispatch<AppDispatch>();
   const { usersList } = useSelector(
     (state: RootState) => state.usersListReducer
@@ -62,6 +62,9 @@ export default function QuanLyNguoiDung(): JSX.Element {
       title: "STT",
       dataIndex: "key",
       width: "5%",
+      sorter: (a, b) => a.id - b.id,
+      sortDirections: ["descend"],
+
     },
     {
       title: "Họ tên",
@@ -80,7 +83,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
       // specify the condition of filtering result
       // here is that finding the name started with `value`
       //   onFilter: (value, record) => record.name.indexOf(value as string) === 0,
-      // sorter: (a, b) => a.name.length - b.name.length,
+      sorter: (a, b) => a.name.length - b.name.length,
       sortDirections: ["descend"],
     },
     {
@@ -101,11 +104,6 @@ export default function QuanLyNguoiDung(): JSX.Element {
       width: "5%",
       //   sorter: (a, b) => a.age - b.age,
     },
-    // {
-    //   title: "Địa chỉ",
-    //   dataIndex: "address",
-    //   width: "10%",
-    // },
     {
       title: "Ngày sinh",
       dataIndex: "birthday",
@@ -114,19 +112,26 @@ export default function QuanLyNguoiDung(): JSX.Element {
     {
       title: "Giới tính",
       dataIndex: "gender",
-      width: "5%",
-      render:(text)=> {
-        return(
-          <>
-            {text===true? <span>Nam</span>:<span>Nữ</span>}
-          </>
-        )
+      width: "7%",
+      render: (text) => {
+        return <>{text === true ? <span>Nam</span> : <span>Nữ</span>}</>;
       },
     },
     {
-      title: "Admin",
+      title: "Quyền",
       dataIndex: "role",
       width: "5%",
+      filters: [
+        {
+          text: "ADMIN",
+          value: "ADMIN",
+        },
+        {
+          text: "USER",
+          value: "USER",
+        },
+      ],
+      onFilter: (value, record) => record.role.indexOf(value as string) === 0,
     },
     {
       title: "Tương tác",
@@ -142,9 +147,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
               className="pl-4"
               onClick={async () => {
                 await fetchDeleteUserApi(text);
-                await dispatch(
-                  fetchUsersListAction(pageCurrent)
-                );
+                await dispatch(fetchUsersListAction(pageCurrent));
               }}
             >
               <DeleteOutlined />
@@ -176,7 +179,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
     sorter,
     extra
   ) => {
-    console.log("params", pagination, filters, sorter, extra);
+    // console.log("params", pagination, filters, sorter, extra);
   };
   return (
     <>
