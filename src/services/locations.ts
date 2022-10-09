@@ -19,12 +19,36 @@ export const fetchLocationsListApi = (): AxiosPromise<
     method: "GET",
   });
 };
+export const fetchPostLocationApi = (
+  data: string
+): AxiosPromise<HttpResponse<Location[]>> => {
+  return request({
+    url: `/vi-tri`,
+    method: "POST",
+    data,
+  });
+};
 
 export const fetchLocationDetailsApi = (
-  id: number | undefined
+  id: number
 ): AxiosPromise<HttpResponse<Location>> => {
   return request({
     url: `/vi-tri/${id}`,
     method: "GET",
+  });
+};
+
+export const fetchDeleteLocationApi = (id: number) => {
+  return request({
+    url: `/vi-tri/${id}`,
+    method: "DELETE",
+  });
+};
+
+export const fetchPutLocationApi = (id: number, data: Location) => {
+  return request({
+    url: `/vi-tri/${id}`,
+    method: "PUT",
+    data,
   });
 };

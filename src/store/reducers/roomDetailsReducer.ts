@@ -29,9 +29,8 @@ const roomDetailsSlice = createSlice({
     builder.addCase(
       fetchRoomDetailsAction.fulfilled,
       (state: RoomDetailsState, action: PayloadAction<Room>) => {
-        console.log("fulfilled");
-
         state.roomDetails = action.payload;
+        console.log("fulfilled");
       }
     );
   },

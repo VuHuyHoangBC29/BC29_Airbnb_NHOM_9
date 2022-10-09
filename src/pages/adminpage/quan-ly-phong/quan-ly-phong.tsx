@@ -7,7 +7,7 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { fetchInfoRoomAction } from "../../../store/reducers/roomInfoReducer";
@@ -35,7 +35,7 @@ export default function QuanLyPhong(): JSX.Element {
       setLoadings((prevLoadings) => {
         const newLoadings = [...prevLoadings];
         newLoadings[index] = false;
-        navigate("/admin/themvitri");
+        navigate("/admin/themphong");
         return newLoadings;
       });
     }, 1000);
@@ -69,12 +69,12 @@ export default function QuanLyPhong(): JSX.Element {
     {
       title: "STT",
       dataIndex: "key",
-      width: "5%",
+      width: "1%",
     },
     {
       title: "Mã vị trí",
       dataIndex: "maViTri",
-      width: "5%",
+      width: "3%",
       //   filters: [
       //     {
       //       text: "Joe",
@@ -125,11 +125,10 @@ export default function QuanLyPhong(): JSX.Element {
       render: (text, object) => {
         return (
           <div className="d-flex">
-            <button>Xem chi tiết</button>
-            <a className="pl-4" href="">
+            <NavLink className="pl-4" to="/">
               <EditOutlined />
-            </a>
-            <a className="pl-4" href="">
+            </NavLink>
+            <a className="pl-4" >
               <DeleteOutlined />
             </a>
           </div>
@@ -169,7 +168,7 @@ export default function QuanLyPhong(): JSX.Element {
     sorter,
     extra
   ) => {
-    console.log("params", pagination, filters, sorter, extra);
+    // console.log("params", pagination, filters, sorter, extra);
   };
   return (
     <>

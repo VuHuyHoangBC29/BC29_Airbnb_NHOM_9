@@ -49,9 +49,8 @@ const userDetailsSlice = createSlice({
     builder.addCase(
       fetchUserDetailedInfoAction.fulfilled,
       (state: UserDetailsState, action: PayloadAction<User[]>) => {
-        console.log("fulfilled");
-
         state.userDetail = action.payload;
+        console.log("fulfilled");
       }
     );
   },

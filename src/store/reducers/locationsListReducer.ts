@@ -11,8 +11,6 @@ export const fetchLocationsListAction = createAsyncThunk(
   async () => {
     const response = await fetchLocationsListApi();
 
-    console.log(response);
-
     return response.data.content;
   }
 );
@@ -44,8 +42,8 @@ const locationsListSlice = createSlice({
     builder.addCase(
       fetchLocationsListAction.fulfilled,
       (state: LocationsListState, action: PayloadAction<Location[]>) => {
-        console.log("fulfilled");
         state.locationsList = action.payload;
+        console.log("fulfilled");
       }
     );
     // builder.addCase(

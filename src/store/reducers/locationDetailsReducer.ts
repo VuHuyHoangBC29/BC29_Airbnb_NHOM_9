@@ -4,7 +4,7 @@ import { fetchLocationDetailsApi } from "../../services/locations";
 
 export const fetchLocationDetailsAction = createAsyncThunk(
   "locationDetails/fetchLocationDetails",
-  async (id: number | undefined) => {
+  async (id: number) => {
     const response = await fetchLocationDetailsApi(id);
 
     console.log(response);
@@ -29,9 +29,8 @@ const locationDetailsSlice = createSlice({
     builder.addCase(
       fetchLocationDetailsAction.fulfilled,
       (state: LocationDetailsState, action: PayloadAction<Location>) => {
-        console.log("fulfilled");
-
         state.locationDetails = action.payload;
+        console.log("fulfilled");
       }
     );
   },

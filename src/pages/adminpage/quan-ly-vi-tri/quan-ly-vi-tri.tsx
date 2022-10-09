@@ -7,10 +7,11 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { fetchLocationsListAction } from "../../../store/reducers/locationsListReducer";
+import { fetchDeleteLocationApi } from "../../../services/locations";
 
 export default function QuanLyViTri(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,8 +21,6 @@ export default function QuanLyViTri(): JSX.Element {
   useEffect(() => {
     dispatch(fetchLocationsListAction());
   }, []);
-
-
 
   const navigate = useNavigate();
   const [loadings, setLoadings] = useState<boolean[]>([]);
@@ -41,8 +40,8 @@ export default function QuanLyViTri(): JSX.Element {
       });
     }, 1000);
   };
-  const { Search } = Input;
-  const onSearch = (value: string) => console.log(value);
+  // const { Search } = Input;
+  // const onSearch = (value: string) => console.log(value);
   interface DataType {
     key: React.Key;
     id: number;
@@ -102,13 +101,19 @@ export default function QuanLyViTri(): JSX.Element {
       title: "Tương tác",
       dataIndex: "tuongTac",
       width: "5%",
-      render: (text, object) => {
+      render: (id: number) => {
         return (
           <>
-            <a className="pl-4" href="">
+            <NavLink className="pl-4" to={`/admin/${id}/editvitri`}>
               <EditOutlined />
-            </a>
-            <a className="pl-4" href="">
+            </NavLink>
+            <a
+              className="pl-4"
+              onClick={async () => {
+                await fetchDeleteLocationApi(id);
+                await dispatch(fetchLocationsListAction());
+              }}
+            >
               <DeleteOutlined />
             </a>
           </>
@@ -117,7 +122,7 @@ export default function QuanLyViTri(): JSX.Element {
     },
   ];
 
-  const data = locationsList?.map((ele, index) => {  
+  const data = locationsList?.map((ele, index) => {
     return {
       key: index + 1,
       id: ele.id,
@@ -125,6 +130,7 @@ export default function QuanLyViTri(): JSX.Element {
       tinhThanh: ele.tinhThanh,
       quocGia: ele.quocGia,
       hinhAnh: ele.hinhAnh,
+      tuongTac: ele.id,
     };
   });
 
@@ -150,11 +156,11 @@ export default function QuanLyViTri(): JSX.Element {
         >
           Thêm vị trí
         </Button>
-        <Search
+        {/* <Search
           placeholder="input search text"
           onSearch={onSearch}
           enterButton
-        />
+        /> */}
       </Space>
       <Table columns={columns} dataSource={data} onChange={onChange} />
     </>

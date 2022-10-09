@@ -1,28 +1,38 @@
-import { Button, Checkbox, Form, Input, DatePicker, Select, Image, notification } from "antd";
-import type { DatePickerProps } from "antd";
-import React, { useState } from "react";
-import "./themvitri.scss";
-import moment from "moment";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/store";
-import { fetchPostLocationsAction } from "../../store/reducers/locationPostReducer";
-import { useNavigate } from "react-router-dom";
+import { Button, Form, Input, Image, notification } from "antd";
+import React, { useEffect, useState } from "react";
+import "../../modules/them-vi-tri/themvitri.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import { useNavigate, useParams } from "react-router-dom";
+import { fetchLocationDetailsAction } from "../../store/reducers/locationDetailsReducer";
+import { fetchPutLocationAction } from "../../store/reducers/locationPutReducer";
 
-export default function ThemViTri(): JSX.Element {
+export default function CapNhatViTri(): JSX.Element {
+  const [form] = Form.useForm();
+  const params: any = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const [image, setImage] = useState<string>("");
-  // const [sendfile, setSendfile] = useState<string>();
-  const onChange: DatePickerProps["onChange"] = (date, dateString) => {
-    console.log(moment(date).format("DD/MM/YYYY"));
-  };
-
+  const [image, setImage] = useState<any>("");
+  //   const [sendfile, setSendfile] = useState<string>();
+  useEffect(() => {
+    dispatch(fetchLocationDetailsAction(params.id));
+  }, [params.id]);
+  const { locationDetails } = useSelector(
+    (state: RootState) => state.locationDetailsReducer
+  );
+  useEffect(() => {
+    if (locationDetails) {
+      form.setFieldsValue({
+        ...locationDetails,
+        hinhAnh: setImage(locationDetails.hinhAnh),
+      });
+    }
+  }, [locationDetails]);
   const onFinish = async (values: any) => {
     values.id = 0;
     values.hinhAnh = image;
-    console.log(values);
-    if(values){
-      await dispatch(fetchPostLocationsAction(values))
+    if (values) {
+      await dispatch(fetchPutLocationAction({ id: params.id, data: values }));
       notification.success({
         message: "Thêm vị trí thành công",
       });
@@ -40,11 +50,13 @@ export default function ThemViTri(): JSX.Element {
     reader.readAsDataURL(file);
     reader.onload = (event: any) => {
       setImage(event.target.result);
-      // setSendfile(file);
+      //   setSendfile(file);
     };
   };
+
   return (
     <Form
+      form={form}
       name="basic"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
@@ -76,7 +88,7 @@ export default function ThemViTri(): JSX.Element {
         <Input />
       </Form.Item>
       <Form.Item label="Hình ảnh">
-        <Input type="file" onChange={hanldeChangeImage} />
+        <Input type="file" name="hinhAnh" onChange={hanldeChangeImage} />
         <Image
           src={image}
           style={{ padding: "50px" }}
