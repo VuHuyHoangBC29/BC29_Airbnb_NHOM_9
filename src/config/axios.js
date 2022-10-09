@@ -14,7 +14,6 @@ request.interceptors.request.use((config) => {
   let userInfo = localStorage.getItem(USER_TOKEN);
   if (userInfo) {
     userInfo = JSON.parse(userInfo);
-    console.log(userInfo);
     config.headers.token = `${userInfo}`;
   }
 

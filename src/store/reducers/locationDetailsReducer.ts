@@ -4,7 +4,7 @@ import { fetchLocationDetailsApi } from "../../services/locations";
 
 export const fetchLocationDetailsAction = createAsyncThunk(
   "locationDetails/fetchLocationDetails",
-  async (id: number | undefined) => {
+  async (id: number) => {
     const response = await fetchLocationDetailsApi(id);
 
     console.log(response);

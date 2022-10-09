@@ -18,6 +18,7 @@ import { usersPostReducer } from "./reducers/userPostReducer";
 import { usersListReducer } from "./reducers/usersListReducer";
 import { usersSearchReducer } from "./reducers/userSearchReducer";
 import { locationPostReducer } from "./reducers/locationPostReducer";
+import { roomPostReducer } from "./reducers/roomPostReducer";
 
 const rootReducer = combineReducers({
   authenticationReducer,
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   roomDetailsReducer,
   commentsListReducer,
   roomReducer,
+  roomPostReducer,
   roomBookingReducer,
   usersPostReducer,
   userUpdateReducer,

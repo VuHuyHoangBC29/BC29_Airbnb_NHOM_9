@@ -12,6 +12,10 @@ import Login from "../pages/login/login";
 // import UserManagement from "../pages/user-management/user-management";
 
 /////////////////////
+const ThemPhong = lazy(() => import("../modules/them-phong/them-phong"));
+const CapNhatViTri = lazy(
+  () => import("../modules/cap-nhat-vi-tri/cap-nhat-vi-tri")
+);
 const CapNhatNguoiDung = lazy(
   () => import("../modules/cap-nhat-nguoi-dung/cap-nhat-nguoi-dung")
 );
@@ -122,6 +126,14 @@ export default function Router() {
             {
               path: "/admin/themvitri",
               element: <ThemViTri />,
+            },
+            {
+              path: "/admin/:id/editvitri",
+              element: <CapNhatViTri />,
+            },
+            {
+              path: "/admin/themphong",
+              element: <ThemPhong />,
             },
           ],
         },

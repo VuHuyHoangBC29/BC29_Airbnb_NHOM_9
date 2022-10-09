@@ -30,10 +30,25 @@ export const fetchPostLocationApi = (
 };
 
 export const fetchLocationDetailsApi = (
-  id: number | undefined
+  id: number
 ): AxiosPromise<HttpResponse<Location>> => {
   return request({
     url: `/vi-tri/${id}`,
     method: "GET",
+  });
+};
+
+export const fetchDeleteLocationApi = (id: number) => {
+  return request({
+    url: `/vi-tri/${id}`,
+    method: "DELETE",
+  });
+};
+
+export const fetchPutLocationApi = (id: number, data: Location) => {
+  return request({
+    url: `/vi-tri/${id}`,
+    method: "PUT",
+    data,
   });
 };
