@@ -17,6 +17,8 @@ import { fetchRoomsListAction } from "../../store/reducers/roomsListReducer";
 import { Link, useParams } from "react-router-dom";
 import LocationsMap from "../../modules/locations/locations-map/locations-map";
 
+import "./locations.scss";
+
 export default function Locations() {
   const style: React.CSSProperties = {
     background: "white",
@@ -145,61 +147,10 @@ export default function Locations() {
   }));
 
   return (
-    <div>
+    <div id="locations">
       <h2>Chỗ ở tại khu vực đã chọn</h2>
       <Row gutter={{ lg: 32 }}>
         <Col className="gutter-row" xs={24} lg={12}>
-          {/* <div className="locationsFilter">
-            <Button
-              style={{ marginRight: "10px" }}
-              type="primary"
-              shape="round"
-            >
-              Loại nơi ở
-            </Button>
-            <Button
-              style={{ marginRight: "10px" }}
-              type="primary"
-              shape="round"
-            >
-              Giá
-            </Button>
-            <Button
-              style={{ marginRight: "10px" }}
-              type="primary"
-              shape="round"
-            >
-              Đặt ngay
-            </Button>
-            <Button
-              style={{ marginRight: "10px" }}
-              type="primary"
-              shape="round"
-            >
-              Phòng và phòng ngủ
-            </Button>
-            <Button
-              style={{ marginRight: "10px" }}
-              type="primary"
-              shape="round"
-            >
-              Bộ lọc khác
-            </Button>
-            <Dropdown overlay={provincesMenu} trigger={["click"]}>
-              <a onClick={(e) => e.preventDefault()}>
-                <Space>
-                  <Button
-                    style={{ marginRight: "10px" }}
-                    type="primary"
-                    shape="round"
-                  >
-                    Tỉnh thành
-                  </Button>
-                </Space>
-              </a>
-            </Dropdown>
-          </div> */}
-
           <div id="locationsFilter">
             <Row justify="start" gutter={{ xs: 8, lg: 16 }}>
               <Col style={{ margin: "5px 0" }} md={24} xxl={10}>
@@ -300,8 +251,6 @@ export default function Locations() {
               </Col>
             </Row>
           </div>
-
-          {/* <LocationsNav/> */}
 
           <div className="locationsList">
             <div className="roomInfo">

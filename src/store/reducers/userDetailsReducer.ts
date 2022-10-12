@@ -1,8 +1,19 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User, UserPost } from "../../interfaces/user";
+import { notification } from "antd";
+import { create } from "domain";
+import {
+  UpdateUser,
+  UpdateUserApi,
+  UpdateUserThunk,
+  UpdateUserAvatar,
+  User,
+  UserPost,
+} from "../../interfaces/user";
 import {
   fetchUserDetailedInfoApi,
   fetchUserUpdateApi,
+  updateUserApi,
+  updateUserAvatarApi,
 } from "../../services/user";
 
 export const fetchUserDetailedInfoAction = createAsyncThunk(
@@ -10,29 +21,65 @@ export const fetchUserDetailedInfoAction = createAsyncThunk(
   async (id: number) => {
     const response = await fetchUserDetailedInfoApi(id);
 
+    console.log(response);
+
     return response.data.content;
   }
 );
+
 export const fetchUserUpdateAction = createAsyncThunk(
   "userUpdate/fetchUsersUpdate",
   async (object: any) => {
     // console.log(object);
-    
+
     const response = await fetchUserUpdateApi(object.id, object.data);
 
     return response.data.content;
   }
 );
 
+export const updateUserAction = createAsyncThunk(
+  "userDetails/updateUser",
+  async (data: UpdateUserThunk) => {
+    const response = await updateUserApi(data.submitData);
+
+    console.log(response);
+
+    notification.success({
+      message: "Cập nhật thành công!",
+    });
+
+    data.callback("/");
+
+    return response.data.content;
+  }
+);
+
+export const updateUserAvatarAction = createAsyncThunk(
+  "userDetails/updateAvatar",
+  async (data: FormData) => {
+    const response = await updateUserAvatarApi(data);
+
+    console.log(response);
+
+    notification.success({
+      message: "Cập nhật ảnh đại diện thành công!",
+    });
+
+    return response.data.content;
+  }
+);
+
 interface UserDetailsState {
-  userDetail: any;
+  userDetail: User | null;
+  // updateUser: UpdateUser | null;
 }
 
 const INITIAL_STATE: UserDetailsState = {
   userDetail: null,
+  // updateUser: null,
 };
 
-//
 interface UserUpdateState {
   userUpdate: UserPost[];
 }
@@ -48,9 +95,8 @@ const userDetailsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       fetchUserDetailedInfoAction.fulfilled,
-      (state: UserDetailsState, action: PayloadAction<User[]>) => {
+      (state: UserDetailsState, action: PayloadAction<User>) => {
         state.userDetail = action.payload;
-        console.log("fulfilled");
       }
     );
   },

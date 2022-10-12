@@ -1,18 +1,19 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { notification } from "antd";
 import { create } from "domain";
 import { User } from "../../interfaces/user";
 import {
   fetchUserDetailedInfoApi,
   fetchUsersListApi,
+  fetchUsersListByPageApi,
 } from "../../services/user";
 
-
-
-export const fetchUsersListAction = createAsyncThunk(
+export const fetchUsersListByPageAction = createAsyncThunk(
   "userList/fetchUsersList",
   async (page: number) => {
-    const response = await fetchUsersListApi(page);    
-    return response.data.content.data;
+    const response = await fetchUsersListByPageApi(page);
+    // console.log(response);
+    return response.data.content;
   }
 );
 
@@ -30,9 +31,9 @@ const usersListSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(
-      fetchUsersListAction.fulfilled,
-      (state: UsersListState, actions: PayloadAction<any>) => {
-        state.usersList = actions.payload;
+      fetchUsersListByPageAction.fulfilled,
+      (state: UsersListState, action: PayloadAction<User[]>) => {
+        state.usersList = action.payload;
         console.log("fulfilled");
       }
     );

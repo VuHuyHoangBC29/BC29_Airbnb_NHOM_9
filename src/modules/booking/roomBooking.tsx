@@ -17,6 +17,8 @@ import { useNavigate } from "react-router-dom";
 import { bookTicketAction } from "../../store/reducers/ticketsListReducer";
 import { AppDispatch, RootState } from "../../store/store";
 
+import "./booking.scss";
+
 export default function RoomBooking() {
   const { userInfo } = useSelector(
     (state: RootState) => state.authenticationReducer
@@ -29,6 +31,8 @@ export default function RoomBooking() {
   const { commentsList } = useSelector(
     (state: RootState) => state.commentsListReducer
   );
+
+  console.log(commentsList);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -136,6 +140,7 @@ export default function RoomBooking() {
 
   return (
     <Card
+      id="bookingCard"
       title={`$${roomDetails?.giaTien}/đêm`}
       extra={
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -149,28 +154,15 @@ export default function RoomBooking() {
       }
       style={{ width: 400, height: 400 }}
     >
-      <div
-        id="datePicker"
-        style={
-          {
-            // display: "flex",
-            // justifyContent: "space-between",
-          }
-        }
-      >
-        <div>
-          <RangePicker
-            placeholder={["Ngay nhận phòng", "Ngày trả phòng"]}
-            ranges={{
-              Today: [moment(), moment()],
-              "This Month": [
-                moment().startOf("month"),
-                moment().endOf("month"),
-              ],
-            }}
-            onChange={onDateChange}
-          />
-        </div>
+      <div id="datePicker">
+        <RangePicker
+          placeholder={["Ngay nhận phòng", "Ngày trả phòng"]}
+          ranges={{
+            Today: [moment(), moment()],
+            "This Month": [moment().startOf("month"), moment().endOf("month")],
+          }}
+          onChange={onDateChange}
+        />
       </div>
       <div id="guestAmount">
         <div>
@@ -178,7 +170,7 @@ export default function RoomBooking() {
           <Select
             id="guestPrice"
             defaultValue={1}
-            style={{ width: "100%" }}
+            style={{ width: "100%", margin: "10px 0" }}
             onChange={onGuestAmountChange}
           >
             {roomGuestAmountArr.map((ele, idx) => {
@@ -191,7 +183,11 @@ export default function RoomBooking() {
           </Select>
         </div>
       </div>
-      <Button onClick={onSubmit} type="primary" style={{ width: "100%" }}>
+      <Button
+        onClick={onSubmit}
+        type="primary"
+        style={{ width: "100%", margin: "10px 0" }}
+      >
         {" "}
         Đặt phòng
       </Button>

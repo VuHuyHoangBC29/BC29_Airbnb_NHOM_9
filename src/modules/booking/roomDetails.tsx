@@ -26,10 +26,11 @@ import RoomTraits from "./roomTraits";
 import RoomUtilities from "./roomUtilities";
 import RoomComments from "./roomComments";
 import RoomBooking from "./roomBooking";
+import CommentInput from "./commentInput";
 
 export default function RoomDetails(): JSX.Element {
   return (
-    <div>
+    <div id="roomDetails" style={{ margin: "40px 0" }}>
       <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 96 }}>
         <Col
           className="gutter-row"
@@ -47,8 +48,10 @@ export default function RoomDetails(): JSX.Element {
           <RoomUtilities />
 
           <Divider></Divider>
-          
+
           <RoomComments />
+
+          <CommentInput />
         </Col>
 
         <Col

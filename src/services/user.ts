@@ -1,9 +1,16 @@
 import { request } from "../config/axios";
 import { AxiosPromise, AxiosResponse } from "axios";
-import { User, UserPost } from "../interfaces/user";
+import { UpdateUserApi, User, UserPost } from "../interfaces/user";
 
 // tải danh sách user
-export const fetchUsersListApi = (
+export const fetchUsersListApi = (): AxiosPromise<HttpResponse<User[]>> => {
+  return request({
+    url: `/users/`,
+    method: "GET",
+  });
+};
+
+export const fetchUsersListByPageApi = (
   page: number
 ): AxiosPromise<HttpResponsePhanTrang<any, User[]>> => {
   return request({
@@ -11,10 +18,11 @@ export const fetchUsersListApi = (
     method: "GET",
   });
 };
-// edit user
+
+// chi tiết user
 export const fetchUserDetailedInfoApi = (
   _id: number
-): AxiosPromise<HttpResponse<User[]>> => {
+): AxiosPromise<HttpResponse<User>> => {
   return request({
     url: `/users/${_id}`,
     method: "GET",
@@ -36,6 +44,27 @@ export const fetchUserUpdateApi = (_id: number, data: UserPost) => {
     data,
   });
 };
+
+export const updateUserApi = (
+  data: UpdateUserApi
+): AxiosPromise<HttpResponse<User>> => {
+  return request({
+    url: `/users/${data.id}`,
+    method: "PUT",
+    data: data.submitData,
+  });
+};
+
+export const updateUserAvatarApi = (
+  data: FormData
+): AxiosPromise<HttpResponse<User>> => {
+  return request({
+    url: `/users/upload-avatar`,
+    method: "POST",
+    data,
+  });
+};
+
 // xóa
 export const fetchDeleteUserApi = (id: number) => {
   return request({

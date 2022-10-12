@@ -8,8 +8,6 @@ interface Props {
 export default function LocationsMap(props: Props): JSX.Element {
   const { province } = props;
 
-  console.log(province);
-
   const provinceMapURLsList = [
     {
       id: "ALL",
@@ -49,30 +47,20 @@ export default function LocationsMap(props: Props): JSX.Element {
     },
   ];
 
-  console.log(provinceMapURLsList[0].url);
-
-  // const filteredProvinceMapURLs = provinceMapURLsList
-  //   .filter((ele, idx) => ele.id === province)
-  //   .map((ele) => ele.url);
-
   const filteredProvinceMapURLs = provinceMapURLsList
     .filter((ele, idx) => ele.id === province)
     .reduce((previousValue, currentValue) => {
       return (previousValue = currentValue.url);
     }, "");
 
-  console.log(filteredProvinceMapURLs);
 
   const [provinceMapURL, setProvinceMapURL] = useState<string>(
     provinceMapURLsList[0].url
   );
 
-  console.log(provinceMapURL);
 
   const handleClick = (filteredProvinceMapURLs: string) => {
     setProvinceMapURL(filteredProvinceMapURLs);
-
-    console.log(provinceMapURL);
   };
 
   useEffect(() => {
