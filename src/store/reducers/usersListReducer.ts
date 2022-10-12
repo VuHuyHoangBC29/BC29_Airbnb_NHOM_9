@@ -13,7 +13,7 @@ export const fetchUsersListByPageAction = createAsyncThunk(
   async (page: number) => {
     const response = await fetchUsersListByPageApi(page);
     // console.log(response);
-    return response.data.content;
+    return response.data.content.data;
   }
 );
 

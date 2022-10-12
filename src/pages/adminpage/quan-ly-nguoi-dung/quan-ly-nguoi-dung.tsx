@@ -27,6 +27,8 @@ export default function QuanLyNguoiDung(): JSX.Element {
     (state: RootState) => state.usersListReducer
   );
 
+  console.log(usersList);
+
   const navigate = useNavigate();
   const [loadings, setLoadings] = useState<boolean[]>([]);
   const enterLoading = (index: number) => {
@@ -181,6 +183,8 @@ export default function QuanLyNguoiDung(): JSX.Element {
       tuongTac: ele.id,
     };
   });
+
+
   const onChange: TableProps<DataType>["onChange"] = (
     pagination,
     filters,
