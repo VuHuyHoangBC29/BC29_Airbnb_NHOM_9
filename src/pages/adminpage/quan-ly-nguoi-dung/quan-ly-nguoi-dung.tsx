@@ -13,14 +13,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { USER_INFO_KEY } from "../../../constants/common";
 import { fetchDeleteUserApi } from "../../../services/user";
-import { fetchUsersListAction } from "../../../store/reducers/usersListReducer";
+import { fetchUsersListByPageAction } from "../../../store/reducers/usersListReducer";
 import { fetchUsersSearchAction } from "../../../store/reducers/userSearchReducer";
 
 export default function QuanLyNguoiDung(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const [pageCurrent, setPageCurrent] = useState<number>(1);
   useEffect(() => {
-    dispatch(fetchUsersListAction(1));
+    dispatch(fetchUsersListByPageAction(1));
   }, []);
 
   const { usersList } = useSelector(
@@ -50,7 +50,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
     if (value !== "") {
       dispatch(fetchUsersSearchAction(value));
     } else {
-      dispatch(fetchUsersListAction(1));
+      dispatch(fetchUsersListByPageAction(1));
     }
   };
   interface DataType {
@@ -155,7 +155,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
               className="pl-4"
               onClick={async () => {
                 await fetchDeleteUserApi(text);
-                await dispatch(fetchUsersListAction(pageCurrent));
+                await dispatch(fetchUsersListByPageAction(pageCurrent));
               }}
             >
               <DeleteOutlined />
@@ -217,7 +217,7 @@ export default function QuanLyNguoiDung(): JSX.Element {
           pageSize: 10,
           total: 100,
           onChange: async (page) => {
-            await dispatch(fetchUsersListAction(page));
+            await dispatch(fetchUsersListByPageAction(page));
             setPageCurrent(page);
           },
         }}

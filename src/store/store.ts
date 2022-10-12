@@ -59,6 +59,7 @@ export const store = configureStore({
         "userUpdateReducer",
         "usersSearchReducer",
         "locationPostReducer",
+        "commentsListReducer",
       ],
     },
     rootReducer

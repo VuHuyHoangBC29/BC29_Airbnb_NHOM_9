@@ -1,12 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import type { MenuProps } from "antd";
+import { AutoComplete, Input, MenuProps } from "antd";
+import type { SelectProps } from "antd/es/select";
 import { Button, Dropdown, Menu, message, Space, Tooltip } from "antd";
 import {
-  MailOutlined,
-  AppstoreOutlined,
-  SettingOutlined,
-  DownOutlined,
   UserOutlined,
   MenuOutlined,
   HomeOutlined,
@@ -20,6 +17,8 @@ import {
   loginAction,
 } from "../../store/reducers/authenicationReducer";
 import { UserType } from "../../enums/user";
+import { fetchLocationsListAction } from "../../store/reducers/locationsListReducer";
+import { stringify } from "querystring";
 
 export default function HeaderNav(): JSX.Element {
   const navigate = useNavigate();
@@ -30,9 +29,13 @@ export default function HeaderNav(): JSX.Element {
     (state: RootState) => state.authenticationReducer
   );
 
-  console.log(userLogin);
+  useEffect(() => {
+    dispatch(fetchLocationsListAction());
+  }, []);
 
-  console.log(userLogin?.role);
+  const { locationsList } = useSelector(
+    (state: RootState) => state.locationsListReducer
+  );
 
   const handleLogout = () => {
     localStorage.removeItem(USER_INFO_KEY);
@@ -41,7 +44,6 @@ export default function HeaderNav(): JSX.Element {
 
     navigate("/");
   };
-
   const userMenu = (
     <Menu
       items={[
@@ -87,25 +89,28 @@ export default function HeaderNav(): JSX.Element {
           ? [
               {
                 label: (
-                  <a href="/admin" style={{ textDecoration: "none" }}>
+                  <Link to="/admin" style={{ textDecoration: "none" }}>
                     Trang quản lý
-                  </a>
+                  </Link>
                 ),
                 key: "0",
               },
               {
                 label: (
-                  <a href="/" style={{ textDecoration: "none" }}>
+                  <Link
+                    to={`/profile/${userLogin.id}`}
+                    style={{ textDecoration: "none" }}
+                  >
                     Thông tin tài khoản
-                  </a>
+                  </Link>
                 ),
                 key: "1",
               },
               {
                 label: (
-                  <a href="/login" style={{ textDecoration: "none" }}>
+                  <Link to="/login" style={{ textDecoration: "none" }}>
                     Vé đã đặt
-                  </a>
+                  </Link>
                 ),
                 key: "2",
               },
@@ -120,17 +125,20 @@ export default function HeaderNav(): JSX.Element {
           : [
               {
                 label: (
-                  <a href="/" style={{ textDecoration: "none" }}>
+                  <Link
+                    to={`/profile/${userLogin?.id}`}
+                    style={{ textDecoration: "none" }}
+                  >
                     Thông tin tài khoản
-                  </a>
+                  </Link>
                 ),
                 key: "0",
               },
               {
                 label: (
-                  <a href="/login" style={{ textDecoration: "none" }}>
+                  <Link to="/login" style={{ textDecoration: "none" }}>
                     Vé đã đặt
-                  </a>
+                  </Link>
                 ),
                 key: "1",
               },
@@ -145,6 +153,42 @@ export default function HeaderNav(): JSX.Element {
       }
     />
   );
+
+  //Auto-complete
+  const provinceArr = locationsList.map((ele, idx) => {
+    return { id: `${ele.id}`, tinhThanh: `${ele.tinhThanh}` };
+  });
+
+  let newProvinceArr = [
+    { id: "1", tinhThanh: "Hồ Chí Minh" },
+    { id: "45", tinhThanh: "Quảng Ninh" },
+  ];
+
+  let provinceArrFiltered = provinceArr.filter((ele) => {
+    return ele.tinhThanh !== "Quảng Ninh" && ele.tinhThanh !== "Hồ Chí Minh";
+  });
+
+  newProvinceArr = newProvinceArr.concat(provinceArrFiltered);
+
+  const options = newProvinceArr.map((ele) => {
+    return { value: `${ele.tinhThanh}` };
+  });
+
+  const onSelect = (value: string) => {
+    navigate(
+      `/locations/${newProvinceArr
+        .filter((ele, idx) => {
+          return (
+            ele.tinhThanh
+              .toLowerCase()
+              .trim()
+              .indexOf(value.toLowerCase().trim()) !== -1
+          );
+        })
+        .map((ele) => ele.id)}`
+    );
+    window.location.reload();
+  };
 
   return (
     <div>
@@ -172,6 +216,20 @@ export default function HeaderNav(): JSX.Element {
           onClick={() => navigate("/locations")}
         >
           Địa điểm
+        </Menu.Item>
+        <Menu.Item>
+          <AutoComplete
+            style={{ width: 200 }}
+            options={options}
+            placeholder="Nhập tên tỉnh thành"
+            filterOption={(inputValue, option) =>
+              option!.value
+                .toLowerCase()
+                .trim()
+                .indexOf(inputValue.toLowerCase()) !== -1
+            }
+            onSelect={onSelect}
+          />
         </Menu.Item>
         <Menu.Item key="UserMenu">
           <Dropdown
