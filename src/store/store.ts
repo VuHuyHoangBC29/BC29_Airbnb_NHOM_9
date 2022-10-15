@@ -19,6 +19,9 @@ import { usersListReducer } from "./reducers/usersListReducer";
 import { usersSearchReducer } from "./reducers/userSearchReducer";
 import { locationPostReducer } from "./reducers/locationPostReducer";
 import { roomPostReducer } from "./reducers/roomPostReducer";
+import { detailRoomReducer } from "./reducers/detailRoomReducer";
+import { locationPutReducer } from "./reducers/locationPutReducer";
+import { roomPutReducer } from "./reducers/roomPutReducer";
 
 const rootReducer = combineReducers({
   authenticationReducer,
@@ -36,6 +39,9 @@ const rootReducer = combineReducers({
   usersListReducer,
   usersSearchReducer,
   locationPostReducer,
+  detailRoomReducer,
+  locationPutReducer,
+  roomPutReducer,
 });
 
 export const store = configureStore({
@@ -60,6 +66,9 @@ export const store = configureStore({
         "usersSearchReducer",
         "locationPostReducer",
         "commentsListReducer",
+        "detailRoomReducer",
+        "locationPutReducer",
+        "roomPutReducer",
       ],
     },
     rootReducer

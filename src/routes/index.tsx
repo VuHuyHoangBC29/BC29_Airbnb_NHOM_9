@@ -3,6 +3,7 @@ import { useRoutes } from "react-router-dom";
 import AdminGuard from "../guards/admin.guard";
 import AuthGuard from "../guards/auth-guard";
 import NoAuthGuard from "../guards/no-auth.guard";
+import CapNhatPhong from "../modules/cap-nhat-phong/cap-nhat-phong";
 import Booking from "../pages/booking/booking";
 // import CreateUser from "../pages/create-user/create-user";
 // import EditUser from "../pages/edit-user/edit-user";
@@ -134,6 +135,10 @@ export default function Router() {
             {
               path: "/admin/themphong",
               element: <ThemPhong />,
+            },
+            {
+              path: "/admin/:id/capnhatphong",
+              element: <CapNhatPhong />,
             },
           ],
         },
