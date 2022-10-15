@@ -9,23 +9,41 @@ import {
 } from "antd";
 
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./themphong.scss";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/store";
-import { useNavigate } from "react-router-dom";
-import { fetchPostRoomAction } from "../../store/reducers/roomPostReducer";
-export default function ThemPhong(): JSX.Element {
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import { useNavigate, useParams } from "react-router-dom";
+import { fetchDetailsRoomAction } from "../../store/reducers/detailRoomReducer";
+import { fetchPutRoomAction } from "../../store/reducers/roomPutReducer";
+export default function CapNhatPhong(): JSX.Element {
+  const params: any = useParams();
+  const [form] = Form.useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [image, setImage] = useState<string>("");
   //
+
+  const { roomDetail } = useSelector(
+    (state: RootState) => state.detailRoomReducer
+  );
+  useEffect(() => {
+    dispatch(fetchDetailsRoomAction(params.id));
+  }, [params.id]);
+
+  useEffect(() => {
+    if (roomDetail) {
+      form.setFieldsValue({
+        ...roomDetail,
+        hinhAnh: setImage(roomDetail.hinhAnh),
+      });
+    }
+  }, [roomDetail]);
   const onFinish = async (values: any) => {
-    values.id = 0;
     values.hinhAnh = image;
     console.log(values);
     if (values) {
-      await dispatch(fetchPostRoomAction(values));
+      await dispatch(fetchPutRoomAction({ id: params.id, data: values }));
       notification.success({
         message: "Thêm thông tin phòng thành công",
       });
@@ -46,8 +64,10 @@ export default function ThemPhong(): JSX.Element {
       // setSendfile(file);
     };
   };
+
   return (
     <Form
+      form={form}
       name="basic"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}

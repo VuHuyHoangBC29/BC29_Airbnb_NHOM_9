@@ -30,3 +30,5 @@ const locationPutSlice = createSlice({
     );
   },
 });
+export const locationPutActions = locationPutSlice.actions;
+export const locationPutReducer = locationPutSlice.reducer;

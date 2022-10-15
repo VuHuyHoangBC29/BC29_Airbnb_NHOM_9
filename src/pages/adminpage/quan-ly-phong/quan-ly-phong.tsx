@@ -11,13 +11,11 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { fetchInfoRoomAction } from "../../../store/reducers/roomInfoReducer";
-
+import { fetchDeleteRoomApi } from "../../../services/roomInfo";
 
 export default function QuanLyPhong(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
-  const { roominfoList } = useSelector(
-    (state: RootState) => state.roomReducer
-  );
+  const { roominfoList } = useSelector((state: RootState) => state.roomReducer);
   useEffect(() => {
     dispatch(fetchInfoRoomAction());
   }, []);
@@ -122,13 +120,19 @@ export default function QuanLyPhong(): JSX.Element {
       title: "Tương tác",
       dataIndex: "tuongTac",
       width: "5%",
-      render: (text, object) => {
+      render: (text) => {
         return (
           <div className="d-flex">
-            <NavLink className="pl-4" to="/">
+            <NavLink className="pl-4" to={`/admin/${text}/capnhatphong`}>
               <EditOutlined />
             </NavLink>
-            <a className="pl-4" >
+            <a
+              className="pl-4"
+              onClick={async () => {
+                await fetchDeleteRoomApi(text);
+                await dispatch(fetchInfoRoomAction());
+              }}
+            >
               <DeleteOutlined />
             </a>
           </div>
@@ -159,6 +163,7 @@ export default function QuanLyPhong(): JSX.Element {
       banUi: ele.banUi,
       maViTri: ele.maViTri,
       hinhAnh: ele.hinhAnh,
+      tuongTac: ele.id,
     };
   });
 

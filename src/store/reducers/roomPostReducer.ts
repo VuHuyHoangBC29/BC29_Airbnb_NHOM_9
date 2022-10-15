@@ -7,6 +7,8 @@ export const fetchPostRoomAction = createAsyncThunk(
   "roomInfo/fetchInfoRoomList",
   async (data:any) => {
     const response = await fetchPostRoomApi(data);
+    console.log(response);
+    
     return response.data.content;
   }
 );
