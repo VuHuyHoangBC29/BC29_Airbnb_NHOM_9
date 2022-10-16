@@ -25,7 +25,7 @@ request.interceptors.request.use((config) => {
     config.headers.token = `${userInfo.token}`;
   }
 
-  console.log(config);
+  // console.log(config);
   return config;
 });
 

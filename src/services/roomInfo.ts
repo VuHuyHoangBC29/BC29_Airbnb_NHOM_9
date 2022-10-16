@@ -2,14 +2,14 @@ import { request } from "../config/axios";
 import { AxiosPromise, AxiosResponse } from "axios";
 import { RoomInfo } from "../interfaces/roomInfo";
 
-export const fetchInfoRoomApi = (): AxiosPromise<HttpResponse<RoomInfo[]>> => {
+export const fetchInfoRoomsApi = (): AxiosPromise<HttpResponse<RoomInfo[]>> => {
   return request({
     url: `/phong-thue`,
-    method: `GET`,
+    method: "GET",
   });
 };
 export const fetchPostRoomApi = (
-  data: any
+  data: RoomInfo
 ): AxiosPromise<HttpResponse<RoomInfo[]>> => {
   return request({
     url: `/phong-thue`,
@@ -27,7 +27,7 @@ export const fetchRoomDetailApi = (
 };
 export const fetchPutRoomApi = (
   id: number,
-  data: any
+  data: RoomInfo
 ): AxiosPromise<HttpResponse<RoomInfo[]>> => {
   return request({
     url: `/phong-thue/${id}`,

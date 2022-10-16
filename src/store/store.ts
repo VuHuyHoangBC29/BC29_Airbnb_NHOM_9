@@ -10,7 +10,7 @@ import {
   userUpdateReducer,
 } from "./reducers/userDetailsReducer";
 import { roomsListReducer } from "./reducers/roomsListReducer";
-import { roomBookingReducer } from "./reducers/roomBookingReducer";
+
 import { roomReducer } from "./reducers/roomInfoReducer";
 import { roomDetailsReducer } from "./reducers/roomDetailsReducer";
 import { commentsListReducer } from "./reducers/commentsListReducer";
@@ -22,8 +22,15 @@ import { roomPostReducer } from "./reducers/roomPostReducer";
 import { detailRoomReducer } from "./reducers/detailRoomReducer";
 import { locationPutReducer } from "./reducers/locationPutReducer";
 import { roomPutReducer } from "./reducers/roomPutReducer";
-
+import {
+  roomBookingDetailReducer,
+  roomBookingPostReducer,
+} from "./reducers/bookingPostReducer";
+import { roomBookingsReducer } from "./reducers/roomBookingReducer";
 const rootReducer = combineReducers({
+  roomBookingsReducer,
+  roomBookingDetailReducer,
+  roomBookingPostReducer,
   authenticationReducer,
   locationsListReducer,
   locationDetailsReducer,
@@ -33,7 +40,7 @@ const rootReducer = combineReducers({
   commentsListReducer,
   roomReducer,
   roomPostReducer,
-  roomBookingReducer,
+  
   usersPostReducer,
   userUpdateReducer,
   usersListReducer,
@@ -60,7 +67,7 @@ export const store = configureStore({
         "roomDetailsReducer",
         "commentsListReducer",
         "roomReducer",
-        "roomBookingReducer",
+        "roomBookingsReducer",
         "usersPostReducer",
         "userUpdateReducer",
         "usersSearchReducer",
@@ -69,6 +76,8 @@ export const store = configureStore({
         "detailRoomReducer",
         "locationPutReducer",
         "roomPutReducer",
+        "roomBookingPostReducer",
+        "roomBookingDetailReducer",
       ],
     },
     rootReducer

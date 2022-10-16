@@ -23,8 +23,6 @@ export default function AdminLayout(): JSX.Element {
         <Menu
           theme="dark"
           mode="inline"
-          defaultOpenKeys={["1"]}
-          defaultSelectedKeys={["1"]}
           items={[
             {
               key: "1",
