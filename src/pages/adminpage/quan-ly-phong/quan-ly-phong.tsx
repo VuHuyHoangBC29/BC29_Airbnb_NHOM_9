@@ -1,12 +1,12 @@
 import { Table, Input, Space, Button } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import React, { useEffect, useState } from "react";
 import {
   EditOutlined,
   SolutionOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
@@ -14,11 +14,13 @@ import { fetchInfoRoomAction } from "../../../store/reducers/roomInfoReducer";
 import { fetchDeleteRoomApi } from "../../../services/roomInfo";
 
 export default function QuanLyPhong(): JSX.Element {
+
   const dispatch = useDispatch<AppDispatch>();
   const { roominfoList } = useSelector((state: RootState) => state.roomReducer);
   useEffect(() => {
-    dispatch(fetchInfoRoomAction());
+     dispatch(fetchInfoRoomAction());
   }, []);
+
 
   const navigate = useNavigate();
   const [loadings, setLoadings] = useState<boolean[]>([]);
@@ -173,7 +175,7 @@ export default function QuanLyPhong(): JSX.Element {
     sorter,
     extra
   ) => {
-    // console.log("params", pagination, filters, sorter, extra);
+    console.log("params", pagination, filters, sorter, extra);
   };
   return (
     <>

@@ -3,7 +3,7 @@ import { useRoutes } from "react-router-dom";
 import AdminGuard from "../guards/admin.guard";
 import AuthGuard from "../guards/auth-guard";
 import NoAuthGuard from "../guards/no-auth.guard";
-import CapNhatPhong from "../modules/cap-nhat-phong/cap-nhat-phong";
+
 import Booking from "../pages/booking/booking";
 // import CreateUser from "../pages/create-user/create-user";
 // import EditUser from "../pages/edit-user/edit-user";
@@ -13,6 +13,16 @@ import Login from "../pages/login/login";
 // import UserManagement from "../pages/user-management/user-management";
 
 /////////////////////
+
+const CapNhatDatPhong = lazy(
+  () => import("../modules/cap-nhat-dat-phong/cap-nhat-dat-phong")
+);
+const CapNhatPhong = lazy(
+  () => import("../modules/cap-nhat-phong/cap-nhat-phong")
+);
+const ThemDatPhong = lazy(
+  () => import("../modules/them-dat-phong/them-dat-phong")
+);
 const ThemPhong = lazy(() => import("../modules/them-phong/them-phong"));
 const CapNhatViTri = lazy(
   () => import("../modules/cap-nhat-vi-tri/cap-nhat-vi-tri")
@@ -139,6 +149,14 @@ export default function Router() {
             {
               path: "/admin/:id/capnhatphong",
               element: <CapNhatPhong />,
+            },
+            {
+              path: "/admin/themdatphong",
+              element: <ThemDatPhong />,
+            },
+            {
+              path: "/admin/:id/capnhatdatphong",
+              element: <CapNhatDatPhong />,
             },
           ],
         },

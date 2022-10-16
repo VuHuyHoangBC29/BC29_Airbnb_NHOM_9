@@ -7,16 +7,19 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
-import { fetchBookingRoomAction } from "../../../store/reducers/roomBookingReducer";
+import { fetchBookingRoomsAction } from "../../../store/reducers/roomBookingReducer";
+import { fetchDeleteBookingApi } from "../../../services/roombooking";
 
 export default function QuanLyDatPhong(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
-  const { roombookingList } = useSelector((state: RootState) => state.roomBookingReducer);
+  const { roombookingList } = useSelector(
+    (state: RootState) => state.roomBookingsReducer
+  );
   useEffect(() => {
-    dispatch(fetchBookingRoomAction());
+    dispatch(fetchBookingRoomsAction());
   }, []);
 
   const navigate = useNavigate();
@@ -32,7 +35,7 @@ export default function QuanLyDatPhong(): JSX.Element {
       setLoadings((prevLoadings) => {
         const newLoadings = [...prevLoadings];
         newLoadings[index] = false;
-        navigate("/admin/themvitri");
+        navigate("/admin/themdatphong");
         return newLoadings;
       });
     }, 1000);
@@ -84,7 +87,6 @@ export default function QuanLyDatPhong(): JSX.Element {
       title: "Ngày Đi",
       dataIndex: "ngayDi",
       width: "10%",
-
     },
     {
       title: "Số lượng khách",
@@ -104,13 +106,19 @@ export default function QuanLyDatPhong(): JSX.Element {
       title: "Tương tác",
       dataIndex: "tuongTac",
       width: "5%",
-      render: (text, object) => {
+      render: (text: number) => {
         return (
           <div className="d-flex">
-            <a className="pl-4" href="">
+            <NavLink className="pl-4" to={`/admin/${text}/capnhatdatphong`}>
               <EditOutlined />
-            </a>
-            <a className="pl-4" href="">
+            </NavLink>
+            <a
+              className="pl-4"
+              onClick={async () => {
+                await fetchDeleteBookingApi(text);
+                await dispatch(fetchBookingRoomsAction());
+              }}
+            >
               <DeleteOutlined />
             </a>
           </div>
@@ -128,6 +136,7 @@ export default function QuanLyDatPhong(): JSX.Element {
       ngayDi: ele.ngayDi,
       soLuongKhach: ele.soLuongKhach,
       maNguoiDung: ele.maNguoiDung,
+      tuongTac: ele.id,
     };
   });
 
@@ -137,7 +146,7 @@ export default function QuanLyDatPhong(): JSX.Element {
     sorter,
     extra
   ) => {
-    console.log("params", pagination, filters, sorter, extra);
+    // console.log("params", pagination, filters, sorter, extra);
   };
   return (
     <>

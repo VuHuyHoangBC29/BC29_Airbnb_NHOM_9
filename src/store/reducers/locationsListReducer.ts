@@ -15,16 +15,7 @@ export const fetchLocationsListAction = createAsyncThunk(
   }
 );
 
-export const createLocationAction = createAsyncThunk(
-  "locationsList/createLocation",
-  async (data: LocationPOST) => {
-    // await createLocationApi(data);
 
-    const response = await createLocationApi(data);
-
-    return response.data;
-  }
-);
 
 interface LocationsListState {
   locationsList: Location[];
@@ -46,18 +37,7 @@ const locationsListSlice = createSlice({
         console.log("fulfilled");
       }
     );
-    // builder.addCase(
-    //   createLocationAction.fulfilled,
-    //   (state: LocationsListState, action: PayloadAction<Location>) => {
-    //     console.log("fulfilled");
 
-    //     let newLocationList = [...state.locationsList];
-
-    //     newLocationList.push({ ...action.payload });
-
-    //     state.locationsList = newLocationList;
-    //   }
-    // );
   },
 });
 

@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RoomInfo } from "../../interfaces/roomInfo";
-import { fetchInfoRoomApi } from "../../services/roomInfo";
+import { fetchInfoRoomsApi } from "../../services/roomInfo";
 
 export const fetchInfoRoomAction = createAsyncThunk(
-  "roomInfo/fetchInfoRoomList",
+  "roomsInfo/fetchInfoRoomsList",
   async () => {
-    const response = await fetchInfoRoomApi();
+    const response = await fetchInfoRoomsApi();
     return response.data.content;
   }
 );

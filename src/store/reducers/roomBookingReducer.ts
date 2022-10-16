@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RoomBooking } from "../../interfaces/roombooking";
-import { fetchRoomBookingApi } from "../../services/roombooking";
+import { fetchRoomsBookingApi } from "../../services/roombooking";
 
-export const fetchBookingRoomAction = createAsyncThunk(
-  "roomInfo/fetchInfoRoomList",
+export const fetchBookingRoomsAction = createAsyncThunk(
+  "roomBooking/fetchBookingRoomList",
   async () => {
-    const response = await fetchRoomBookingApi();
+    const response = await fetchRoomsBookingApi();
     return response.data.content;
   }
 );
@@ -18,13 +18,13 @@ const INITIAL_STATE: RoomBookingState = {
   roombookingList: [],
 };
 
-const roomBookingSlice = createSlice({
+const roomBookingsSlice = createSlice({
   name: "Room-booking",
   initialState: INITIAL_STATE,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(
-      fetchBookingRoomAction.fulfilled,
+      fetchBookingRoomsAction.fulfilled,
       (state: RoomBookingState, actions: PayloadAction<RoomBooking[]>) => {
         state.roombookingList = actions.payload;
         console.log("fulfilled");
@@ -34,5 +34,5 @@ const roomBookingSlice = createSlice({
   },
 });
 
-export const roomBookingAction = roomBookingSlice.actions;
-export const roomBookingReducer = roomBookingSlice.reducer;
+export const roomBookingsAction = roomBookingsSlice.actions;
+export const roomBookingsReducer = roomBookingsSlice.reducer;
