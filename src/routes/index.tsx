@@ -10,6 +10,7 @@ import Booking from "../pages/booking/booking";
 import Home from "../pages/home/home";
 import Locations from "../pages/locations/locations";
 import Login from "../pages/login/login";
+import ProfileInfo from "../pages/profile-info/profile-info";
 // import UserManagement from "../pages/user-management/user-management";
 
 /////////////////////
@@ -83,6 +84,10 @@ export default function Router() {
             {
               path: "/booking/:roomId",
               element: <Booking />,
+            },
+            {
+              path: "/profile/:userId",
+              element: <ProfileInfo />,
             },
           ],
         },

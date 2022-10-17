@@ -3,9 +3,10 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import { USER_INFO_KEY, USER_TOKEN } from "../../constants/common";
-import { User } from "../../interfaces/user";
+import { RegisterUserThunk, User } from "../../interfaces/user";
 import { UserLogin } from "../../interfaces/userLogin";
 import { loginApi } from "../../services/authentication";
+import { registerUserApi } from "../../services/user";
 
 export const loginAction = createAsyncThunk(
   "userAuthentication/userLogin",
@@ -23,6 +24,21 @@ export const loginAction = createAsyncThunk(
     });
 
     return response.data.content.user;
+  }
+);
+
+export const registerUserAction = createAsyncThunk(
+  "userAuthentication/registerUser",
+  async (data: RegisterUserThunk) => {
+    const response = await registerUserApi(data.submitData);
+
+    console.log(response);
+
+    notification.success({
+      message: "Đăng ký thành công!",
+    });
+
+    data.callback("/login");
   }
 );
 

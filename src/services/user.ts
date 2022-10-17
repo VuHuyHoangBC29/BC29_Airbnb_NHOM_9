@@ -1,6 +1,11 @@
 import { request } from "../config/axios";
 import { AxiosPromise, AxiosResponse } from "axios";
-import { UpdateUserApi, User, UserPost } from "../interfaces/user";
+import {
+  RegisterUser,
+  UpdateUserApi,
+  User,
+  UserPost,
+} from "../interfaces/user";
 
 // tải danh sách user
 export const fetchUsersListApi = (): AxiosPromise<HttpResponse<User[]>> => {
@@ -28,6 +33,18 @@ export const fetchUserDetailedInfoApi = (
     method: "GET",
   });
 };
+
+// đăng nhập
+export const registerUserApi = (
+  data: RegisterUser
+): AxiosPromise<HttpResponse<User>> => {
+  return request({
+    url: `/auth/signup`,
+    method: "POST",
+    data,
+  });
+};
+
 // thêm user
 export const fetchUserPostApi = (data: UserPost) => {
   return request({
