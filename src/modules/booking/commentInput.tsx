@@ -70,10 +70,6 @@ export default function CommentInput() {
     saoBinhLuan: rateValue,
   });
 
-  const handleRateChange = (value: number) => {
-    setRateValue(value);
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
 
@@ -90,6 +86,18 @@ export default function CommentInput() {
       noiDung: e.target.value,
       saoBinhLuan: rateValue,
     });
+  };
+
+  const handleRateChange = (value: number) => {
+    setComments({
+      ...comments,
+      saoBinhLuan: value,
+    });
+
+    setRateValue(value);
+
+    console.log(value);
+    console.log(comments);
   };
 
   const handleSubmit = () => {

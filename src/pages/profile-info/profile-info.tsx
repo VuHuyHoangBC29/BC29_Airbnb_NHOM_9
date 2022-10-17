@@ -4,15 +4,24 @@ import ProfileInfoForm from "../../modules/profile-info/profile-info-form";
 
 export default function ProfileInfo(): JSX.Element {
   return (
-    <div>
+    <div id="profileInfo">
       <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 0 }}>
-        <Col className="gutter-row" offset={6} span={6}>
+        <Col
+          className="gutter-row"
+          xs={{ offset: 0, span: 24 }}
+          xl={{ offset: 4, span: 8 }}
+        >
           <ProfileInfoAvatar />
         </Col>
-        <Col className="gutter-row" span={6}>
+        <Col
+          className="gutter-row"
+          xs={{ offset: 0, span: 24 }}
+          xl={{ offset: 0, span: 8 }}
+        >
           <ProfileInfoForm />
         </Col>
       </Row>
     </div>
   );
 }
+
