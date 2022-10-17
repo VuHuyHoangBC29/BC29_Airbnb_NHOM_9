@@ -19,6 +19,7 @@ import { AppDispatch, RootState } from "../../store/store";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchBookingDetailAction } from "../../store/reducers/bookingPostReducer";
 import moment from "moment";
+import { fetchPutBookingApi } from "../../services/roombooking";
 
 export default function CapNhatDatPhong(): JSX.Element {
   const params: any = useParams();
@@ -29,8 +30,8 @@ export default function CapNhatDatPhong(): JSX.Element {
   const { roombookingDetail } = useSelector(
     (state: RootState) => state.roomBookingDetailReducer
   );
-    console.log(roombookingDetail);
-    
+  console.log(roombookingDetail);
+
   useEffect(() => {
     dispatch(fetchBookingDetailAction(params.id));
   }, []);
@@ -47,7 +48,7 @@ export default function CapNhatDatPhong(): JSX.Element {
   const onFinish = async (values: any) => {
     values.id = 0;
     if (values) {
-      //   await
+      await fetchPutBookingApi( params.id,values);
       notification.success({
         message: "Thêm vị trí thành công",
       });
@@ -61,7 +62,7 @@ export default function CapNhatDatPhong(): JSX.Element {
 
   return (
     <Form
-    form={form}
+      form={form}
       name="basic"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}

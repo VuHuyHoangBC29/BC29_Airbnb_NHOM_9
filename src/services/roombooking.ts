@@ -28,6 +28,16 @@ export const fetchDetailBookingApi = (
     method: "GET",
   });
 };
+export const fetchPutBookingApi = (
+  id: number,
+  data: RoomBooking
+): AxiosPromise<HttpResponse<RoomBooking[]>> => {
+  return request({
+    url: `dat-phong/${id}`,
+    method: "PUT",
+    data,
+  });
+};
 
 export const fetchDeleteBookingApi = (id: number) => {
   return request({
