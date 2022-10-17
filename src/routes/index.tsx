@@ -11,6 +11,7 @@ import Home from "../pages/home/home";
 import Locations from "../pages/locations/locations";
 import Login from "../pages/login/login";
 import ProfileInfo from "../pages/profile-info/profile-info";
+import Register from "../pages/register/register";
 // import UserManagement from "../pages/user-management/user-management";
 
 /////////////////////
@@ -38,7 +39,6 @@ const QuanLyDatPhong = lazy(
 const QuanLyPhong = lazy(
   () => import("../pages/adminpage/quan-ly-phong/quan-ly-phong")
 );
-const Register = lazy(() => import("../pages/adminpage/register/register"));
 const HomeLayout = lazy(() => import("../layouts/home-layout"));
 const AdminLayout = lazy(() => import("../layouts/admin-layout"));
 const ThemNguoiDung = lazy(
