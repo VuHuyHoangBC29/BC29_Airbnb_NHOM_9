@@ -191,11 +191,11 @@ export default function QuanLyPhong(): JSX.Element {
         >
           Thêm phòng
         </Button>
-        <Search
+        {/* <Search
           placeholder="input search text"
           onSearch={onSearch}
           enterButton
-        />
+        /> */}
       </Space>
       <Table columns={columns} dataSource={data} onChange={onChange} />
     </>

@@ -40,8 +40,8 @@ export default function QuanLyDatPhong(): JSX.Element {
       });
     }, 1000);
   };
-  const { Search } = Input;
-  const onSearch = (value: string) => console.log(value);
+
+
   interface DataType {
     key: React.Key;
     id: number;
@@ -162,11 +162,7 @@ export default function QuanLyDatPhong(): JSX.Element {
         >
           Đặt phòng
         </Button>
-        <Search
-          placeholder="input search text"
-          onSearch={onSearch}
-          enterButton
-        />
+
       </Space>
       <Table columns={columns} dataSource={data} onChange={onChange} />
     </>
