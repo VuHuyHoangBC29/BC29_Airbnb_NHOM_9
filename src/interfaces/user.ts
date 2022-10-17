@@ -24,6 +24,22 @@ export interface User {
   role: UserType;
 }
 
+export interface RegisterUser {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  birthday: string;
+  gender: boolean;
+  role: string;
+}
+
+export interface RegisterUserThunk {
+  submitData: RegisterUser;
+  callback: Function;
+}
+
 export interface UserPost {
   id: number;
   name: string;

@@ -153,6 +153,12 @@ export default function QuanLyNguoiDung(): JSX.Element {
             <NavLink className="pl-4" to={`/admin/${text}/editnguoidung`}>
               <EditOutlined />
             </NavLink>
+            {/* <EditOutlined
+              onClick={() => {
+                console.log(text);
+              }}
+            /> */}
+
             <a
               className="pl-4"
               onClick={async () => {
@@ -183,7 +189,6 @@ export default function QuanLyNguoiDung(): JSX.Element {
       tuongTac: ele.id,
     };
   });
-
 
   const onChange: TableProps<DataType>["onChange"] = (
     pagination,
